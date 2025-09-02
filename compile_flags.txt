@@ -1,0 +1,5 @@
+-std=c2x
+-Wall
+-Wextra
+-pedantic
+-g

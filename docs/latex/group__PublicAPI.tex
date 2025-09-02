@@ -1,0 +1,119 @@
+\doxysection{public api}
+\hypertarget{group__PublicAPI}{}\label{group__PublicAPI}\index{public api@{public api}}
+\doxysubsubsection*{Files}
+\begin{DoxyCompactItemize}
+\item 
+file \mbox{\hyperlink{option_8h}{option.\+h}}
+\begin{DoxyCompactList}\small\item\em Option type.
+
+Result is a type that represents either value or nothing. \end{DoxyCompactList}\item 
+file \mbox{\hyperlink{result_8h}{result.\+h}}
+\begin{DoxyCompactList}\small\item\em Result type.
+
+Result is a type that represents either success ({\ttfamily ok}) or failure ({\ttfamily err}). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{group__PublicAPI_ga08049ca3b3469bc28a420283be89ed96}{DECLARE\+\_\+\+RESULT}}(T,  ERR)
+\begin{DoxyCompactList}\small\item\em Declare result structure of types {\ttfamily T} as {\ttfamily ok} value and {\ttfamily ERR} as {\ttfamily err} value. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__PublicAPI_ga2f59352162bb08d95adba903a57435af}{RESULT\+\_\+\+GET\+\_\+\+ERROR}}(T,  ERR,  RESULT)
+\begin{DoxyCompactList}\small\item\em Macros wrapper of result\+\_\+\+T\+\_\+\+ERR\+\_\+get\+\_\+err function with context of aborting in fail case. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{group__PublicAPI_ga39f74621284c44db4f02d882d8d8a34b}{result\+\_\+is\+\_\+ok}} (void \texorpdfstring{$\ast$}{*}result)
+\begin{DoxyCompactList}\small\item\em Returns {\ttfamily true} if the passed result instance contain {\ttfamily ok} value. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group__PublicAPI_gae07a0258fe3dcc378a4296c6abefc564}{result\+\_\+is\+\_\+err}} (void \texorpdfstring{$\ast$}{*}result)
+\begin{DoxyCompactList}\small\item\em Returns {\ttfamily true} if the passed result instance contain {\ttfamily err} value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{group__PublicAPI_ga08049ca3b3469bc28a420283be89ed96}\label{group__PublicAPI_ga08049ca3b3469bc28a420283be89ed96} 
+\index{public api@{public api}!DECLARE\_RESULT@{DECLARE\_RESULT}}
+\index{DECLARE\_RESULT@{DECLARE\_RESULT}!public api@{public api}}
+\doxysubsubsection{\texorpdfstring{DECLARE\_RESULT}{DECLARE\_RESULT}}
+{\footnotesize\ttfamily \#define DECLARE\+\_\+\+RESULT(\begin{DoxyParamCaption}\item[{}]{T,  }\item[{}]{ERR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }result\_\#\#T\#\#\_\#\#ERR\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{bool}\ is\_ok;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{union\ }\{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ T\ ok;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ ERR\ err;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \}\ \_value;\ \(\backslash\)}
+\DoxyCodeLine{\};\ \(\backslash\)}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }result\_\#\#T\#\#\_\#\#ERR\ result\_\#\#T\#\#\_\#\#ERR\#\#\_ok(T\ value);\ \(\backslash\)}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }result\_\#\#T\#\#\_\#\#ERR\ result\_\#\#T\#\#\_\#\#ERR\#\#\_err(ERR\ err\_value);\ \(\backslash\)}
+\DoxyCodeLine{ERR\ result\_\#\#T\#\#\_\#\#ERR\#\#\_get\_err(\textcolor{keyword}{struct}\ result\_\#\#T\#\#\_\#\#ERR*\ result);}
+
+\end{DoxyCode}
+
+
+Declare result structure of types {\ttfamily T} as {\ttfamily ok} value and {\ttfamily ERR} as {\ttfamily err} value. 
+
+\Hypertarget{group__PublicAPI_ga2f59352162bb08d95adba903a57435af}\label{group__PublicAPI_ga2f59352162bb08d95adba903a57435af} 
+\index{public api@{public api}!RESULT\_GET\_ERROR@{RESULT\_GET\_ERROR}}
+\index{RESULT\_GET\_ERROR@{RESULT\_GET\_ERROR}!public api@{public api}}
+\doxysubsubsection{\texorpdfstring{RESULT\_GET\_ERROR}{RESULT\_GET\_ERROR}}
+{\footnotesize\ttfamily \#define RESULT\+\_\+\+GET\+\_\+\+ERROR(\begin{DoxyParamCaption}\item[{}]{T,  }\item[{}]{ERR,  }\item[{}]{RESULT }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\ \mbox{\hyperlink{group__PublicAPI_gae07a0258fe3dcc378a4296c6abefc564}{result\_is\_err}}(RESULT)\ ?\ result\_\#\#T\#\#\_\#\#ERR\#\#\_get\_err(RESULT)\ \(\backslash\)}
+\DoxyCodeLine{\ \ :\ (\mbox{\hyperlink{other_8h_a4902c4c3316d140bbfeb760b9ebed96f}{abort\_with\_error\_at}}(\textcolor{stringliteral}{"{}An\ attempt\ to\ access\ an\ inactive\ \`{}ERR`\ value\ of\ the\ result\ structure\ at\ \%s:\%zu\(\backslash\)n"{}},\ \_\_FILE\_\_,\ \_\_LINE\_\_),\ (ERR)\{\})\ );}
+
+\end{DoxyCode}
+
+
+Macros wrapper of result\+\_\+\+T\+\_\+\+ERR\+\_\+get\+\_\+err function with context of aborting in fail case. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{group__PublicAPI_gae07a0258fe3dcc378a4296c6abefc564}\label{group__PublicAPI_gae07a0258fe3dcc378a4296c6abefc564} 
+\index{public api@{public api}!result\_is\_err@{result\_is\_err}}
+\index{result\_is\_err@{result\_is\_err}!public api@{public api}}
+\doxysubsubsection{\texorpdfstring{result\_is\_err()}{result\_is\_err()}}
+{\footnotesize\ttfamily bool result\+\_\+is\+\_\+err (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{result }\end{DoxyParamCaption})}
+
+
+
+Returns {\ttfamily true} if the passed result instance contain {\ttfamily err} value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em result} & Instance of any result structure \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if passed result instance contain {\ttfamily err} value 
+
+false if passed result instance contain {\ttfamily ok} value 
+\end{DoxyReturn}
+\Hypertarget{group__PublicAPI_ga39f74621284c44db4f02d882d8d8a34b}\label{group__PublicAPI_ga39f74621284c44db4f02d882d8d8a34b} 
+\index{public api@{public api}!result\_is\_ok@{result\_is\_ok}}
+\index{result\_is\_ok@{result\_is\_ok}!public api@{public api}}
+\doxysubsubsection{\texorpdfstring{result\_is\_ok()}{result\_is\_ok()}}
+{\footnotesize\ttfamily bool result\+\_\+is\+\_\+ok (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{result }\end{DoxyParamCaption})}
+
+
+
+Returns {\ttfamily true} if the passed result instance contain {\ttfamily ok} value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em result} & Instance of any result structure \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if passed result instance contain {\ttfamily ok} value 
+
+false if passed result instance contain {\ttfamily err} value 
+\end{DoxyReturn}
