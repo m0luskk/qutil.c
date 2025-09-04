@@ -39,8 +39,7 @@ IMPL_RESULT(user_ok_type, user_err_type);
 // void hello_world();
 
 
-#include <stdio.h>
-#include "../include/other.h"
+#include <stdlib.h>
 
 #define RESULT_OK_BODY(T, ERR) { return (struct result_##T##_##ERR){ .is_ok = true, ._value.ok = value }; }
 
@@ -57,14 +56,15 @@ IMPL_RESULT(user_ok_type, user_err_type);
 #define RESULT_INSPECT_ERR_ARGS(T, ERR) struct result_##T##_##ERR* result, f_result_##T##_##ERR##_inspect_err f
 
 #define RESULT_METHODS(T, ERR) \
-  X(struct result_##T##_##ERR, result_##T##_##ERR##_ok, T value, RESULT_OK_BODY(T, ERR)) \
-  X(struct result_##T##_##ERR, result_##T##_##ERR##_err, ERR err_value, RESULT_ERR_BODY(T, ERR) ) \
-  X(ERR, result_##T##_##ERR##_get_err, struct result_##T##_##ERR* result, RESULT_GET_ERR_BODY(T, ERR) ) \
-  X(T, result_##T##_##ERR##_get_value, struct result_##T##_##ERR* result, RESULT_GET_VALUE_BODY(T, ERR) ) \
-  X(void, result_##T##_##ERR##_inspect, RESULT_INSPECT_ARGS(T, ERR), RESULT_INSPECT_BODY(T, ERR)) \
-  X(void, result_##T##_##ERR##_inspect_err, RESULT_INSPECT_ERR_ARGS(T, ERR), RESULT_INSPECT_ERR_BODY(T, ERR))
+  R_M(struct result_##T##_##ERR, result_##T##_##ERR##_ok, T value, RESULT_OK_BODY(T, ERR)) \
+  R_M(struct result_##T##_##ERR, result_##T##_##ERR##_err, ERR err_value, RESULT_ERR_BODY(T, ERR) ) \
+  R_M(ERR, result_##T##_##ERR##_get_err, struct result_##T##_##ERR* result, RESULT_GET_ERR_BODY(T, ERR) ) \
+  R_M(T, result_##T##_##ERR##_get_value, struct result_##T##_##ERR* result, RESULT_GET_VALUE_BODY(T, ERR) ) \
+  R_M(void, result_##T##_##ERR##_inspect, RESULT_INSPECT_ARGS(T, ERR), RESULT_INSPECT_BODY(T, ERR)) \
+  R_M(void, result_##T##_##ERR##_inspect_err, RESULT_INSPECT_ERR_ARGS(T, ERR), RESULT_INSPECT_ERR_BODY(T, ERR))
 
-#define X(RET, NAME, ARGS, DEF) RET NAME(ARGS);
+// #define X(RET, NAME, ARGS, DEF) RET NAME(ARGS);
+#define R_M(RET, NAME, ARGS, DEF) inline RET NAME(ARGS) DEF
 
 /**
  * @ingroup PublicAPI
@@ -103,7 +103,6 @@ enum result_enum {
   RES_ERR,
 };
 
-enum result_enum result_match(void* result);
 
 /**
  * @ingroup PublicAPI
@@ -113,7 +112,9 @@ enum result_enum result_match(void* result);
  * @return true if passed result instance contain `ok` value
  * @return false if passed result instance contain `err` value
  */
-bool result_is_ok(void* result);
+inline bool result_is_ok(void* result) {
+  return *((bool*)result);
+}
 
 /**
  * @ingroup PublicAPI
@@ -123,10 +124,19 @@ bool result_is_ok(void* result);
  * @return true if passed result instance contain `err` value
  * @return false if passed result instance contain `ok` value
  */
-bool result_is_err(void* result);
+inline bool result_is_err(void* result) {
+  return !result_is_ok(result);
+}
+
+
+inline enum result_enum result_match(void* result) {
+  if (result_is_ok(result)) {
+    return RES_OK;
+  } else {
+    return RES_ERR;
+  }
+}
+
 
 DECLARE_RESULT(int, double)
-#undef X
-
-#define IMPL_RESULT(T, ERR) RESULT_METHODS(T, ERR)
 

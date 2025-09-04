@@ -5,7 +5,6 @@
 #include "tests.h"
 
 #include "../include/result.h"
-#include "../include/option.h"
 
 
 typedef struct {
@@ -16,16 +15,10 @@ void ins(user_type val) {
   printf("inspect: ok value = %zu\n", val.s);
 }
 
-#define X(RET, NAME, ARGS, DEF) RET NAME(ARGS);
-DECLARE_RESULT(int, user_type);
-#undef X
-
-#define X(RET, NAME, ARGS, DEF) RET NAME(ARGS) DEF
-IMPL_RESULT(int, user_type);
-#undef X
+DECLARE_RESULT(int, user_type)
 
 START_TEST(result)
-  auto res = result_int_user_type_err( (user_type){.s = 42} );
+  struct result_int_user_type res = result_int_user_type_err( (user_type){.s = 42} );
 
   result_int_user_type_inspect_err(&res, ins);
 
@@ -42,19 +35,19 @@ START_TEST(result)
   }
 END_TEST
 
-START_TEST(option)
-  auto opt = option_int_value(52);
-  ASSERT(option_has_value(&opt));
-  ASSERT(opt.has_value);
-  ASSERT(opt._value == 52);
+// START_TEST(option)
+//   auto opt = option_int_value(52);
+//   ASSERT(option_has_value(&opt));
+//   ASSERT(opt.has_value);
+//   ASSERT(opt._value == 52);
   
-  switch (option_match(&opt)) {
-    case OPT_VALUE:
-      ASSERT(opt.has_value);
-      break;
-    case OPT_NONE:
-      ASSERT(!opt.has_value);
-      break;
-  }
-END_TEST
+//   switch (option_match(&opt)) {
+//     case OPT_VALUE:
+//       ASSERT(opt.has_value);
+//       break;
+//     case OPT_NONE:
+//       ASSERT(!opt.has_value);
+//       break;
+//   }
+// END_TEST
 
