@@ -112,7 +112,7 @@ Macros</h2></td></tr>
 <tr class="memdesc:ga08049ca3b3469bc28a420283be89ed96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declare result structure of types <code>T</code> as <code>ok</code> value and <code>ERR</code> as <code>err</code> value.  <br /></td></tr>
 <tr class="separator:ga08049ca3b3469bc28a420283be89ed96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2f59352162bb08d95adba903a57435af" id="r_ga2f59352162bb08d95adba903a57435af"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__PublicAPI.html#ga2f59352162bb08d95adba903a57435af">RESULT_GET_ERROR</a>(T,  ERR,  RESULT)</td></tr>
-<tr class="memdesc:ga2f59352162bb08d95adba903a57435af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macros wrapper of result_T_ERR_get_err function with context of aborting in fail case.  <br /></td></tr>
+<tr class="memdesc:ga2f59352162bb08d95adba903a57435af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macros-wrapper of result_T_ERR_get_err function with context of aborting in fail case.  <br /></td></tr>
 <tr class="separator:ga2f59352162bb08d95adba903a57435af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -158,9 +158,9 @@ Functions</h2></td></tr>
 <div class="line">    ERR err; \</div>
 <div class="line">  } _value; \</div>
 <div class="line">}; \</div>
-<div class="line"><span class="keyword">struct </span>result_##T##_##ERR result_##T##_##ERR##_ok(T value); \</div>
-<div class="line"><span class="keyword">struct </span>result_##T##_##ERR result_##T##_##ERR##_err(ERR err_value); \</div>
-<div class="line">ERR result_##T##_##ERR##_get_err(<span class="keyword">struct</span> result_##T##_##ERR* result);</div>
+<div class="line"><span class="keyword">typedef</span> void(*f_result_##T##_##ERR##_inspect_err)(ERR); \</div>
+<div class="line"><span class="keyword">typedef</span> void(*f_result_##T##_##ERR##_inspect)(T); \</div>
+<div class="line">RESULT_METHODS(T, ERR)</div>
 </div><!-- fragment -->
 <p>Declare result structure of types <code>T</code> as <code>ok</code> value and <code>ERR</code> as <code>err</code> value. </p>
 
@@ -198,11 +198,10 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">( <a class="code hl_function" href="group__PublicAPI.html#gae07a0258fe3dcc378a4296c6abefc564">result_is_err</a>(RESULT) ? result_##T##_##ERR##_get_err(RESULT) \</div>
-<div class="line">  : (<a class="code hl_function" href="other_8h.html#a4902c4c3316d140bbfeb760b9ebed96f">abort_with_error_at</a>(<span class="stringliteral">&quot;An attempt to access an inactive `ERR` value of the result structure at %s:%zu\n&quot;</span>, __FILE__, __LINE__), (ERR){}) );</div>
+<div class="line">  : (abort_with_error_at(<span class="stringliteral">&quot;An attempt to access an inactive `err` value of the result structure at %s:%zu\n&quot;</span>, __FILE__, __LINE__), (ERR){}) );</div>
 <div class="ttc" id="agroup__PublicAPI_html_gae07a0258fe3dcc378a4296c6abefc564"><div class="ttname"><a href="group__PublicAPI.html#gae07a0258fe3dcc378a4296c6abefc564">result_is_err</a></div><div class="ttdeci">bool result_is_err(void *result)</div><div class="ttdoc">Returns true if the passed result instance contain err value.</div><div class="ttdef"><b>Definition</b> result.c:10</div></div>
-<div class="ttc" id="aother_8h_html_a4902c4c3316d140bbfeb760b9ebed96f"><div class="ttname"><a href="other_8h.html#a4902c4c3316d140bbfeb760b9ebed96f">abort_with_error_at</a></div><div class="ttdeci">void abort_with_error_at(const char msg[static 1], const char file[static 1], size_t line)</div><div class="ttdef"><b>Definition</b> other.c:14</div></div>
 </div><!-- fragment -->
-<p>Macros wrapper of result_T_ERR_get_err function with context of aborting in fail case. </p>
+<p>Macros-wrapper of result_T_ERR_get_err function with context of aborting in fail case. </p>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
 </div>

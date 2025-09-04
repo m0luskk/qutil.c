@@ -19,4 +19,8 @@ enum result_enum result_match(void* result) {
   }
 }
 
+#define X(RET, NAME, ARGS, DEF) RET NAME(ARGS) DEF
+
 IMPL_RESULT(int, double)
+
+#undef X

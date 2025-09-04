@@ -99,80 +99,86 @@ $(document).ready(function(){initNavTree('result_8h_source.html',''); initResiza
 <div class="contents">
 <a href="result_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment">// /**</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment">//  * @ingroup PublicAPI</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment">//  * @brief Функция для пользователя.</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment">//  */</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment">// void hello_world();</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#include &quot;../include/other.h&quot;</span></div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="foldopen" id="foldopen00035" data-start="" data-end="">
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="group__PublicAPI.html#ga08049ca3b3469bc28a420283be89ed96">   35</a></span><span class="preprocessor">#define DECLARE_RESULT(T, ERR) \</span></div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">struct result_##T##_##ERR { \</span></div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">  bool is_ok; \</span></div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">  union { \</span></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">    T ok; \</span></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">    ERR err; \</span></div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">  } _value; \</span></div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">}; \</span></div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">struct result_##T##_##ERR result_##T##_##ERR##_ok(T value); \</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">struct result_##T##_##ERR result_##T##_##ERR##_err(ERR err_value); \</span></div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">ERR result_##T##_##ERR##_get_err(struct result_##T##_##ERR* result);</span></div>
-</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="comment">// /**</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="comment">//  * @ingroup PublicAPI</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="comment">//  * @brief Функция для пользователя.</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="comment">//  */</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="comment">// void hello_world();</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#include &quot;../include/other.h&quot;</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">#define RESULT_OK_BODY(T, ERR) { return (struct result_##T##_##ERR){ .is_ok = true, ._value.ok = value }; }</span></div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="foldopen" id="foldopen00047" data-start="" data-end="">
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="result_8h.html#a28a4cb2cf7e8200319c350e9824bb24f">   47</a></span><span class="preprocessor">#define IMPL_RESULT(T, ERR) \</span></div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">struct result_##T##_##ERR result_##T##_##ERR##_ok(T value) { \</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="preprocessor">  return (struct result_##T##_##ERR){ \</span></div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="preprocessor">    .is_ok = true, \</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">    ._value.ok = value \</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">  }; \</span></div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">} \</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="preprocessor">struct result_##T##_##ERR result_##T##_##ERR##_err(ERR err_value) { \</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">  return (struct result_##T##_##ERR){ \</span></div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">    .is_ok = false, \</span></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">    ._value.err = err_value \</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">  }; \</span></div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="preprocessor">} \</span></div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">ERR result_##T##_##ERR##_get_err(struct result_##T##_##ERR* result) { \</span></div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="preprocessor"> if (!result_is_err(result)) { \</span></div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">    abort(); \</span></div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor"> } \</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor"> return result-&gt;_value.err; \</span></div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">}</span></div>
-</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">#define RESULT_ERR_BODY(T, ERR) { return (struct result_##T##_##ERR){ .is_ok = false, ._value.err = err_value }; }</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="preprocessor">#define RESULT_GET_ERR_BODY(T, ERR) { return (result-&gt;is_ok ? (abort(), (ERR){}) : result-&gt;_value.err); }</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#define RESULT_GET_VALUE_BODY(T, ERR) { return (!result-&gt;is_ok ? (abort(), (T){}) : result-&gt;_value.ok); }</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">#define RESULT_INSPECT_BODY(T, ERR) { if (result-&gt;is_ok) f(result-&gt;_value.ok); }</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="preprocessor">#define RESULT_INSPECT_ARGS(T, ERR) struct result_##T##_##ERR* result, f_result_##T##_##ERR##_inspect f</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">#define RESULT_INSPECT_ERR_BODY(T, ERR) { if (!result-&gt;is_ok) f(result-&gt;_value.err); }</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#define RESULT_INSPECT_ERR_ARGS(T, ERR) struct result_##T##_##ERR* result, f_result_##T##_##ERR##_inspect_err f</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="preprocessor">#define RESULT_METHODS(T, ERR) \</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">  X(struct result_##T##_##ERR, result_##T##_##ERR##_ok, T value, RESULT_OK_BODY(T, ERR)) \</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="preprocessor">  X(struct result_##T##_##ERR, result_##T##_##ERR##_err, ERR err_value, RESULT_ERR_BODY(T, ERR) ) \</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">  X(ERR, result_##T##_##ERR##_get_err, struct result_##T##_##ERR* result, RESULT_GET_ERR_BODY(T, ERR) ) \</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">  X(T, result_##T##_##ERR##_get_value, struct result_##T##_##ERR* result, RESULT_GET_VALUE_BODY(T, ERR) ) \</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor">  X(void, result_##T##_##ERR##_inspect, RESULT_INSPECT_ARGS(T, ERR), RESULT_INSPECT_BODY(T, ERR)) \</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">  X(void, result_##T##_##ERR##_inspect_err, RESULT_INSPECT_ERR_ARGS(T, ERR), RESULT_INSPECT_ERR_BODY(T, ERR))</span></div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
-<div class="foldopen" id="foldopen00072" data-start="" data-end="">
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="group__PublicAPI.html#ga2f59352162bb08d95adba903a57435af">   72</a></span><span class="preprocessor">#define RESULT_GET_ERROR(T, ERR, RESULT) \</span></div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="preprocessor">( result_is_err(RESULT) ? result_##T##_##ERR##_get_err(RESULT) \</span></div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="preprocessor">  : (abort_with_error_at(&quot;An attempt to access an inactive `ERR` value of the result structure at %s:%zu\n&quot;, __FILE__, __LINE__), (ERR){}) );</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="preprocessor">#define X(RET, NAME, ARGS, DEF) RET NAME(ARGS);</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="foldopen" id="foldopen00073" data-start="" data-end="">
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="group__PublicAPI.html#ga08049ca3b3469bc28a420283be89ed96">   73</a></span><span class="preprocessor">#define DECLARE_RESULT(T, ERR) \</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="preprocessor">struct result_##T##_##ERR { \</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="preprocessor">  bool is_ok; \</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="preprocessor">  union { \</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="preprocessor">    T ok; \</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="preprocessor">    ERR err; \</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="preprocessor">  } _value; \</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="preprocessor">}; \</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="preprocessor">typedef void(*f_result_##T##_##ERR##_inspect_err)(ERR); \</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="preprocessor">typedef void(*f_result_##T##_##ERR##_inspect)(T); \</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="preprocessor">RESULT_METHODS(T, ERR)</span></div>
 </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
-<div class="foldopen" id="foldopen00076" data-start="{" data-end="};">
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="result_8h.html#a9dfd764217c2c915cba60224369342fd">   76</a></span><span class="keyword">enum</span> <a class="code hl_enumeration" href="result_8h.html#a9dfd764217c2c915cba60224369342fd">result_enum</a> {</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="result_8h.html#a9dfd764217c2c915cba60224369342fda2ea4b6ef3fffc17dd1d38ab5c2837737">   77</a></span>  <a class="code hl_enumvalue" href="result_8h.html#a9dfd764217c2c915cba60224369342fda2ea4b6ef3fffc17dd1d38ab5c2837737">RES_OK</a>,</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="result_8h.html#a9dfd764217c2c915cba60224369342fdaecff6e8c93a5895522ba737bb5c89e2a">   78</a></span>  <a class="code hl_enumvalue" href="result_8h.html#a9dfd764217c2c915cba60224369342fdaecff6e8c93a5895522ba737bb5c89e2a">RES_ERR</a>,</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>};</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="comment">//#undef X // undef for IMPL macro</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
+<div class="foldopen" id="foldopen00093" data-start="" data-end="">
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="group__PublicAPI.html#ga2f59352162bb08d95adba903a57435af">   93</a></span><span class="preprocessor">#define RESULT_GET_ERROR(T, ERR, RESULT) \</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="preprocessor">( result_is_err(RESULT) ? result_##T##_##ERR##_get_err(RESULT) \</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="preprocessor">  : (abort_with_error_at(&quot;An attempt to access an inactive `err` value of the result structure at %s:%zu\n&quot;, __FILE__, __LINE__), (ERR){}) );</span></div>
 </div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="keyword">enum</span> <a class="code hl_enumeration" href="result_8h.html#a9dfd764217c2c915cba60224369342fd">result_enum</a> <a class="code hl_function" href="result_8h.html#a570bc76d798cc356eb18bcf295e3e91f">result_match</a>(<span class="keywordtype">void</span>* result);</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__PublicAPI.html#ga39f74621284c44db4f02d882d8d8a34b">result_is_ok</a>(<span class="keywordtype">void</span>* result);</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__PublicAPI.html#gae07a0258fe3dcc378a4296c6abefc564">result_is_err</a>(<span class="keywordtype">void</span>* result);</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><a class="code hl_define" href="group__PublicAPI.html#ga08049ca3b3469bc28a420283be89ed96">DECLARE_RESULT</a>(<span class="keywordtype">int</span>, <span class="keywordtype">double</span>)</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
-<div class="ttc" id="agroup__PublicAPI_html_ga08049ca3b3469bc28a420283be89ed96"><div class="ttname"><a href="group__PublicAPI.html#ga08049ca3b3469bc28a420283be89ed96">DECLARE_RESULT</a></div><div class="ttdeci">#define DECLARE_RESULT(T, ERR)</div><div class="ttdoc">Declare result structure of types T as ok value and ERR as err value.</div><div class="ttdef"><b>Definition</b> result.h:35</div></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="preprocessor">#define RESULT_GET_VALUE(T, ERR, RESULT) \</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="preprocessor">( result_is_ok(RESULT) ? result_##T##_##ERR##_get_value(RESULT) \</span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="preprocessor">  : (abort_with_error_at(&quot;An attempt to access an inactive `ok` value of the result structure at %s:%zu\n&quot;, __FILE__, __LINE__), (ERR){}) );</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="keyword">enum</span> result_enum {</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>  RES_OK,</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  RES_ERR,</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>};</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span><span class="keyword">enum</span> result_enum result_match(<span class="keywordtype">void</span>* result);</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__PublicAPI.html#ga39f74621284c44db4f02d882d8d8a34b">result_is_ok</a>(<span class="keywordtype">void</span>* result);</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__PublicAPI.html#gae07a0258fe3dcc378a4296c6abefc564">result_is_err</a>(<span class="keywordtype">void</span>* result);</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><a class="code hl_define" href="group__PublicAPI.html#ga08049ca3b3469bc28a420283be89ed96">DECLARE_RESULT</a>(<span class="keywordtype">int</span>, <span class="keywordtype">double</span>)</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="preprocessor">#undef X</span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span><span class="preprocessor">#define IMPL_RESULT(T, ERR) RESULT_METHODS(T, ERR)</span></div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
+<div class="ttc" id="agroup__PublicAPI_html_ga08049ca3b3469bc28a420283be89ed96"><div class="ttname"><a href="group__PublicAPI.html#ga08049ca3b3469bc28a420283be89ed96">DECLARE_RESULT</a></div><div class="ttdeci">#define DECLARE_RESULT(T, ERR)</div><div class="ttdoc">Declare result structure of types T as ok value and ERR as err value.</div><div class="ttdef"><b>Definition</b> result.h:73</div></div>
 <div class="ttc" id="agroup__PublicAPI_html_ga39f74621284c44db4f02d882d8d8a34b"><div class="ttname"><a href="group__PublicAPI.html#ga39f74621284c44db4f02d882d8d8a34b">result_is_ok</a></div><div class="ttdeci">bool result_is_ok(void *result)</div><div class="ttdoc">Returns true if the passed result instance contain ok value.</div><div class="ttdef"><b>Definition</b> result.c:7</div></div>
 <div class="ttc" id="agroup__PublicAPI_html_gae07a0258fe3dcc378a4296c6abefc564"><div class="ttname"><a href="group__PublicAPI.html#gae07a0258fe3dcc378a4296c6abefc564">result_is_err</a></div><div class="ttdeci">bool result_is_err(void *result)</div><div class="ttdoc">Returns true if the passed result instance contain err value.</div><div class="ttdef"><b>Definition</b> result.c:10</div></div>
-<div class="ttc" id="aresult_8h_html_a570bc76d798cc356eb18bcf295e3e91f"><div class="ttname"><a href="result_8h.html#a570bc76d798cc356eb18bcf295e3e91f">result_match</a></div><div class="ttdeci">enum result_enum result_match(void *result)</div><div class="ttdef"><b>Definition</b> result.c:14</div></div>
-<div class="ttc" id="aresult_8h_html_a9dfd764217c2c915cba60224369342fd"><div class="ttname"><a href="result_8h.html#a9dfd764217c2c915cba60224369342fd">result_enum</a></div><div class="ttdeci">result_enum</div><div class="ttdef"><b>Definition</b> result.h:76</div></div>
-<div class="ttc" id="aresult_8h_html_a9dfd764217c2c915cba60224369342fda2ea4b6ef3fffc17dd1d38ab5c2837737"><div class="ttname"><a href="result_8h.html#a9dfd764217c2c915cba60224369342fda2ea4b6ef3fffc17dd1d38ab5c2837737">RES_OK</a></div><div class="ttdeci">@ RES_OK</div><div class="ttdef"><b>Definition</b> result.h:77</div></div>
-<div class="ttc" id="aresult_8h_html_a9dfd764217c2c915cba60224369342fdaecff6e8c93a5895522ba737bb5c89e2a"><div class="ttname"><a href="result_8h.html#a9dfd764217c2c915cba60224369342fdaecff6e8c93a5895522ba737bb5c89e2a">RES_ERR</a></div><div class="ttdeci">@ RES_ERR</div><div class="ttdef"><b>Definition</b> result.h:78</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

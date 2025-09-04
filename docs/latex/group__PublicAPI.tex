@@ -17,7 +17,7 @@ Result is a type that represents either success ({\ttfamily ok}) or failure ({\t
 \#define \mbox{\hyperlink{group__PublicAPI_ga08049ca3b3469bc28a420283be89ed96}{DECLARE\+\_\+\+RESULT}}(T,  ERR)
 \begin{DoxyCompactList}\small\item\em Declare result structure of types {\ttfamily T} as {\ttfamily ok} value and {\ttfamily ERR} as {\ttfamily err} value. \end{DoxyCompactList}\item 
 \#define \mbox{\hyperlink{group__PublicAPI_ga2f59352162bb08d95adba903a57435af}{RESULT\+\_\+\+GET\+\_\+\+ERROR}}(T,  ERR,  RESULT)
-\begin{DoxyCompactList}\small\item\em Macros wrapper of result\+\_\+\+T\+\_\+\+ERR\+\_\+get\+\_\+err function with context of aborting in fail case. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Macros-\/wrapper of result\+\_\+\+T\+\_\+\+ERR\+\_\+get\+\_\+err function with context of aborting in fail case. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -46,9 +46,9 @@ bool \mbox{\hyperlink{group__PublicAPI_gae07a0258fe3dcc378a4296c6abefc564}{resul
 \DoxyCodeLine{\ \ \ \ ERR\ err;\ \(\backslash\)}
 \DoxyCodeLine{\ \ \}\ \_value;\ \(\backslash\)}
 \DoxyCodeLine{\};\ \(\backslash\)}
-\DoxyCodeLine{\textcolor{keyword}{struct\ }result\_\#\#T\#\#\_\#\#ERR\ result\_\#\#T\#\#\_\#\#ERR\#\#\_ok(T\ value);\ \(\backslash\)}
-\DoxyCodeLine{\textcolor{keyword}{struct\ }result\_\#\#T\#\#\_\#\#ERR\ result\_\#\#T\#\#\_\#\#ERR\#\#\_err(ERR\ err\_value);\ \(\backslash\)}
-\DoxyCodeLine{ERR\ result\_\#\#T\#\#\_\#\#ERR\#\#\_get\_err(\textcolor{keyword}{struct}\ result\_\#\#T\#\#\_\#\#ERR*\ result);}
+\DoxyCodeLine{\textcolor{keyword}{typedef}\ void(*f\_result\_\#\#T\#\#\_\#\#ERR\#\#\_inspect\_err)(ERR);\ \(\backslash\)}
+\DoxyCodeLine{\textcolor{keyword}{typedef}\ void(*f\_result\_\#\#T\#\#\_\#\#ERR\#\#\_inspect)(T);\ \(\backslash\)}
+\DoxyCodeLine{RESULT\_METHODS(T,\ ERR)}
 
 \end{DoxyCode}
 
@@ -64,12 +64,12 @@ Declare result structure of types {\ttfamily T} as {\ttfamily ok} value and {\tt
 {\bfseries Value\+:}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{(\ \mbox{\hyperlink{group__PublicAPI_gae07a0258fe3dcc378a4296c6abefc564}{result\_is\_err}}(RESULT)\ ?\ result\_\#\#T\#\#\_\#\#ERR\#\#\_get\_err(RESULT)\ \(\backslash\)}
-\DoxyCodeLine{\ \ :\ (\mbox{\hyperlink{other_8h_a4902c4c3316d140bbfeb760b9ebed96f}{abort\_with\_error\_at}}(\textcolor{stringliteral}{"{}An\ attempt\ to\ access\ an\ inactive\ \`{}ERR`\ value\ of\ the\ result\ structure\ at\ \%s:\%zu\(\backslash\)n"{}},\ \_\_FILE\_\_,\ \_\_LINE\_\_),\ (ERR)\{\})\ );}
+\DoxyCodeLine{\ \ :\ (abort\_with\_error\_at(\textcolor{stringliteral}{"{}An\ attempt\ to\ access\ an\ inactive\ \`{}err`\ value\ of\ the\ result\ structure\ at\ \%s:\%zu\(\backslash\)n"{}},\ \_\_FILE\_\_,\ \_\_LINE\_\_),\ (ERR)\{\})\ );}
 
 \end{DoxyCode}
 
 
-Macros wrapper of result\+\_\+\+T\+\_\+\+ERR\+\_\+get\+\_\+err function with context of aborting in fail case. 
+Macros-\/wrapper of result\+\_\+\+T\+\_\+\+ERR\+\_\+get\+\_\+err function with context of aborting in fail case. 
 
 \begin{DoxyReturn}{Returns}
 

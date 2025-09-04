@@ -1,19 +1,33 @@
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "tests.h"
 
 #include "../include/result.h"
 #include "../include/option.h"
 
+
+typedef struct {
+  size_t s;
+} user_type;
+
+void ins(user_type val) {
+  printf("inspect: ok value = %zu\n", val.s);
+}
+
+#define X(RET, NAME, ARGS, DEF) RET NAME(ARGS);
+DECLARE_RESULT(int, user_type);
+#undef X
+
+#define X(RET, NAME, ARGS, DEF) RET NAME(ARGS) DEF
+IMPL_RESULT(int, user_type);
+#undef X
+
 START_TEST(result)
-  auto res = result_int_double_ok(52);
+  auto res = result_int_user_type_err( (user_type){.s = 42} );
 
-  // double s = result_int_double_get_err(&res);
-  double s = RESULT_GET_VALUE(int, double, &res);
-  (void)s; // unused
-
-  printf("%f\n", s);
+  result_int_user_type_inspect_err(&res, ins);
 
   //ASSERT(res.is_ok);
   //ASSERT(res._value.ok == 52);

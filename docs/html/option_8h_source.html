@@ -99,45 +99,33 @@ $(document).ready(function(){initNavTree('option_8h_source.html',''); initResiza
 <div class="contents">
 <a href="option_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="foldopen" id="foldopen00010" data-start="" data-end="">
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="option_8h.html#ac569340811d1ad46ade7483a8e27c426">   10</a></span><span class="preprocessor">#define DECLARE_OPTION(T) \</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#define DECLARE_OPTION(T) \</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">struct option_##T { \</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">  bool has_value; \</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">  T _value; \</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">}; \</span></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">struct option_##T option_##T##_value(T val); \</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">struct option_##T option_##T##_none();</span></div>
-</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="foldopen" id="foldopen00018" data-start="" data-end="">
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="option_8h.html#ac45f95d388e5d03ae79b9660852d8eab">   18</a></span><span class="preprocessor">#define IMPL_OPTION(T) \</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#define IMPL_OPTION(T) \</span></div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">struct option_##T option_##T##_value(T val) { \</span></div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">  return (struct option_##T){.has_value = true, ._value = val}; \</span></div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">} \</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">struct option_##T option_##T##_none() { \</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">  return (struct option_##T){.has_value = false}; \</span></div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">}</span></div>
-</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="foldopen" id="foldopen00026" data-start="{" data-end="};">
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="option_8h.html#a9462c0f1555c2833a36f0286400cdd89">   26</a></span><span class="keyword">enum</span> <a class="code hl_enumeration" href="option_8h.html#a9462c0f1555c2833a36f0286400cdd89">option_enum</a> {</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="option_8h.html#a9462c0f1555c2833a36f0286400cdd89a997a46a56264122ca65fdc4d70c5e21f">   27</a></span>  <a class="code hl_enumvalue" href="option_8h.html#a9462c0f1555c2833a36f0286400cdd89a997a46a56264122ca65fdc4d70c5e21f">OPT_VALUE</a>,</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  <a class="code hl_enumvalue" href="option_8h.html#a9462c0f1555c2833a36f0286400cdd89a2ed357c9466d276e4ed1141e49f2f530">OPT_NONE</a></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="option_8h.html#a9462c0f1555c2833a36f0286400cdd89a2ed357c9466d276e4ed1141e49f2f530">   29</a></span>};</div>
-</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">enum</span> option_enum {</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  OPT_VALUE,</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  OPT_NONE</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>};</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">enum</span> <a class="code hl_enumeration" href="option_8h.html#a9462c0f1555c2833a36f0286400cdd89">option_enum</a> <a class="code hl_function" href="option_8h.html#a286473700f5b3405402caeb8dbf44728">option_match</a>(<span class="keywordtype">void</span>* option);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">enum</span> option_enum option_match(<span class="keywordtype">void</span>* option);</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keywordtype">bool</span> <a class="code hl_function" href="option_8h.html#afe4fc76155eaf20dbd7ec5d9848cef3c">option_has_value</a>(<span class="keywordtype">void</span>* option);</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keywordtype">bool</span> option_has_value(<span class="keywordtype">void</span>* option);</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><a class="code hl_define" href="option_8h.html#ac569340811d1ad46ade7483a8e27c426">DECLARE_OPTION</a>(<span class="keywordtype">int</span>)</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>DECLARE_OPTION(<span class="keywordtype">int</span>)</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="ttc" id="aoption_8h_html_a286473700f5b3405402caeb8dbf44728"><div class="ttname"><a href="option_8h.html#a286473700f5b3405402caeb8dbf44728">option_match</a></div><div class="ttdeci">enum option_enum option_match(void *option)</div><div class="ttdef"><b>Definition</b> option.c:7</div></div>
-<div class="ttc" id="aoption_8h_html_a9462c0f1555c2833a36f0286400cdd89"><div class="ttname"><a href="option_8h.html#a9462c0f1555c2833a36f0286400cdd89">option_enum</a></div><div class="ttdeci">option_enum</div><div class="ttdef"><b>Definition</b> option.h:26</div></div>
-<div class="ttc" id="aoption_8h_html_a9462c0f1555c2833a36f0286400cdd89a2ed357c9466d276e4ed1141e49f2f530"><div class="ttname"><a href="option_8h.html#a9462c0f1555c2833a36f0286400cdd89a2ed357c9466d276e4ed1141e49f2f530">OPT_NONE</a></div><div class="ttdeci">@ OPT_NONE</div><div class="ttdef"><b>Definition</b> option.h:28</div></div>
-<div class="ttc" id="aoption_8h_html_a9462c0f1555c2833a36f0286400cdd89a997a46a56264122ca65fdc4d70c5e21f"><div class="ttname"><a href="option_8h.html#a9462c0f1555c2833a36f0286400cdd89a997a46a56264122ca65fdc4d70c5e21f">OPT_VALUE</a></div><div class="ttdeci">@ OPT_VALUE</div><div class="ttdef"><b>Definition</b> option.h:27</div></div>
-<div class="ttc" id="aoption_8h_html_ac569340811d1ad46ade7483a8e27c426"><div class="ttname"><a href="option_8h.html#ac569340811d1ad46ade7483a8e27c426">DECLARE_OPTION</a></div><div class="ttdeci">#define DECLARE_OPTION(T)</div><div class="ttdef"><b>Definition</b> option.h:10</div></div>
-<div class="ttc" id="aoption_8h_html_afe4fc76155eaf20dbd7ec5d9848cef3c"><div class="ttname"><a href="option_8h.html#afe4fc76155eaf20dbd7ec5d9848cef3c">option_has_value</a></div><div class="ttdeci">bool option_has_value(void *option)</div><div class="ttdef"><b>Definition</b> option.c:3</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

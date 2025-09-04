@@ -8,7 +8,7 @@ digraph "include/result.h"
   Node1 -> Node2 [id="edge4_Node000001_Node000002",color="steelblue1",style="solid",tooltip=" "];
   Node2 [id="Node000002",label="stdio.h",height=0.2,width=0.4,color="grey60", fillcolor="#E0E0E0", style="filled",tooltip=" "];
   Node1 -> Node3 [id="edge5_Node000001_Node000003",color="steelblue1",style="solid",tooltip=" "];
-  Node3 [id="Node000003",label="../include/other.h",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$other_8h.html",tooltip=" "];
+  Node3 [id="Node000003",label="../include/other.h",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$other_8h_source.html",tooltip=" "];
   Node3 -> Node4 [id="edge6_Node000003_Node000004",color="steelblue1",style="solid",tooltip=" "];
   Node4 [id="Node000004",label="stddef.h",height=0.2,width=0.4,color="grey60", fillcolor="#E0E0E0", style="filled",tooltip=" "];
 }

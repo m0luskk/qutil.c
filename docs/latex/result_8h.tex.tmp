@@ -1,0 +1,127 @@
+\doxysection{include/result.h File Reference}
+\hypertarget{result_8h}{}\label{result_8h}\index{include/result.h@{include/result.h}}
+
+
+Result type.
+
+Result is a type that represents either success ({\ttfamily ok}) or failure ({\ttfamily err}).  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include "{}../include/other.\+h"{}}\newline
+Include dependency graph for result.\+h\+:
+% FIG 0
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{result_8h_a7abce9781ac2204f3eb022347a636cf0}\label{result_8h_a7abce9781ac2204f3eb022347a636cf0} 
+\#define {\bfseries RESULT\+\_\+\+OK\+\_\+\+BODY}(T,  ERR)~\{ return (struct result\+\_\+\#\#T\#\#\+\_\+\#\#ERR)\{ .is\+\_\+ok = true, .\+\_\+value.\+ok = value \}; \}
+\item 
+\Hypertarget{result_8h_a3aac89620660c8d83058e235f816ea03}\label{result_8h_a3aac89620660c8d83058e235f816ea03} 
+\#define {\bfseries RESULT\+\_\+\+ERR\+\_\+\+BODY}(T,  ERR)~\{ return (struct result\+\_\+\#\#T\#\#\+\_\+\#\#ERR)\{ .is\+\_\+ok = false, .\+\_\+value.\+err = err\+\_\+value \}; \}
+\item 
+\Hypertarget{result_8h_a055f622ecd52b4d55215c8752fddffa0}\label{result_8h_a055f622ecd52b4d55215c8752fddffa0} 
+\#define {\bfseries RESULT\+\_\+\+GET\+\_\+\+ERR\+\_\+\+BODY}(T,  ERR)~\{ return (result-\/$>$is\+\_\+ok ? (abort(), (ERR)\{\}) \+: result-\/$>$\+\_\+value.\+err); \}
+\item 
+\Hypertarget{result_8h_a0d1df375c06a423ab8d88ae33b73cf40}\label{result_8h_a0d1df375c06a423ab8d88ae33b73cf40} 
+\#define {\bfseries RESULT\+\_\+\+GET\+\_\+\+VALUE\+\_\+\+BODY}(T,  ERR)~\{ return (!result-\/$>$is\+\_\+ok ? (abort(), (T)\{\}) \+: result-\/$>$\+\_\+value.\+ok); \}
+\item 
+\Hypertarget{result_8h_aa9f91a856d10fa403d054bac285226c5}\label{result_8h_aa9f91a856d10fa403d054bac285226c5} 
+\#define {\bfseries RESULT\+\_\+\+INSPECT\+\_\+\+BODY}(T,  ERR)~\{ if (result-\/$>$is\+\_\+ok) f(result-\/$>$\+\_\+value.\+ok); \}
+\item 
+\Hypertarget{result_8h_a6d1415a7d10a404217cdf6f10ef4bfa9}\label{result_8h_a6d1415a7d10a404217cdf6f10ef4bfa9} 
+\#define {\bfseries RESULT\+\_\+\+INSPECT\+\_\+\+ARGS}(T,  ERR)~struct result\+\_\+\#\#T\#\#\+\_\+\#\#ERR\texorpdfstring{$\ast$}{*} result, f\+\_\+result\+\_\+\#\#T\#\#\+\_\+\#\#ERR\#\#\+\_\+inspect f
+\item 
+\Hypertarget{result_8h_a474236b8f3d97163292cd4640d663fd7}\label{result_8h_a474236b8f3d97163292cd4640d663fd7} 
+\#define {\bfseries RESULT\+\_\+\+INSPECT\+\_\+\+ERR\+\_\+\+BODY}(T,  ERR)~\{ if (!result-\/$>$is\+\_\+ok) f(result-\/$>$\+\_\+value.\+err); \}
+\item 
+\Hypertarget{result_8h_a859a211be9ca2593b1a3c8cbe9560692}\label{result_8h_a859a211be9ca2593b1a3c8cbe9560692} 
+\#define {\bfseries RESULT\+\_\+\+INSPECT\+\_\+\+ERR\+\_\+\+ARGS}(T,  ERR)~struct result\+\_\+\#\#T\#\#\+\_\+\#\#ERR\texorpdfstring{$\ast$}{*} result, f\+\_\+result\+\_\+\#\#T\#\#\+\_\+\#\#ERR\#\#\+\_\+inspect\+\_\+err f
+\item 
+\#define \mbox{\hyperlink{result_8h_a31f29c34fead26a1363272d9f27c23e1}{RESULT\+\_\+\+METHODS}}(T,  ERR)
+\item 
+\Hypertarget{result_8h_a79338461f628e034c712251e21ab8541}\label{result_8h_a79338461f628e034c712251e21ab8541} 
+\#define {\bfseries X}(RET,  NAME,  ARGS,  DEF)~RET NAME(ARGS);
+\item 
+\#define \mbox{\hyperlink{group__PublicAPI_ga08049ca3b3469bc28a420283be89ed96}{DECLARE\+\_\+\+RESULT}}(T,  ERR)
+\begin{DoxyCompactList}\small\item\em Declare result structure of types {\ttfamily T} as {\ttfamily ok} value and {\ttfamily ERR} as {\ttfamily err} value. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__PublicAPI_ga2f59352162bb08d95adba903a57435af}{RESULT\+\_\+\+GET\+\_\+\+ERROR}}(T,  ERR,  RESULT)
+\begin{DoxyCompactList}\small\item\em Macros-\/wrapper of result\+\_\+\+T\+\_\+\+ERR\+\_\+get\+\_\+err function with context of aborting in fail case. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{result_8h_a5c8f9bc2e1a37be3bf8be72567cb5b62}{RESULT\+\_\+\+GET\+\_\+\+VALUE}}(T,  ERR,  RESULT)
+\item 
+\Hypertarget{result_8h_a28a4cb2cf7e8200319c350e9824bb24f}\label{result_8h_a28a4cb2cf7e8200319c350e9824bb24f} 
+\#define {\bfseries IMPL\+\_\+\+RESULT}(T,  ERR)~RESULT\+\_\+\+METHODS(T, ERR)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{result_8h_a9dfd764217c2c915cba60224369342fd}\label{result_8h_a9dfd764217c2c915cba60224369342fd} 
+enum {\bfseries result\+\_\+enum} \{ {\bfseries RES\+\_\+\+OK}
+, {\bfseries RES\+\_\+\+ERR}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{result_8h_a570bc76d798cc356eb18bcf295e3e91f}\label{result_8h_a570bc76d798cc356eb18bcf295e3e91f} 
+enum result\+\_\+enum {\bfseries result\+\_\+match} (void \texorpdfstring{$\ast$}{*}result)
+\item 
+bool \mbox{\hyperlink{group__PublicAPI_ga39f74621284c44db4f02d882d8d8a34b}{result\+\_\+is\+\_\+ok}} (void \texorpdfstring{$\ast$}{*}result)
+\begin{DoxyCompactList}\small\item\em Returns {\ttfamily true} if the passed result instance contain {\ttfamily ok} value. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group__PublicAPI_gae07a0258fe3dcc378a4296c6abefc564}{result\+\_\+is\+\_\+err}} (void \texorpdfstring{$\ast$}{*}result)
+\begin{DoxyCompactList}\small\item\em Returns {\ttfamily true} if the passed result instance contain {\ttfamily err} value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Result type.
+
+Result is a type that represents either success ({\ttfamily ok}) or failure ({\ttfamily err}). 
+
+\hypertarget{result_8h_autotoc_md0}{}\doxysubsubsection{\texorpdfstring{User-\/defined result type}{User-defined result type}}\label{result_8h_autotoc_md0}
+\begin{DoxyAttention}{Attention}
+{\ttfamily user\+\_\+ok\+\_\+type} and {\ttfamily user\+\_\+err\+\_\+type} must not contain whitespaces and special characters ({\ttfamily const char \texorpdfstring{$\ast$}{*}} or {\ttfamily int\mbox{[}\mbox{]}} for example)
+\end{DoxyAttention}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ my\_result.h}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define\ X(RET,\ NAME,\ ARGS,\ DEF)\ RET\ NAME(ARGS);}}
+\DoxyCodeLine{\mbox{\hyperlink{group__PublicAPI_ga08049ca3b3469bc28a420283be89ed96}{DECLARE\_RESULT}}(user\_ok\_type,\ user\_err\_type);}
+\DoxyCodeLine{\textcolor{preprocessor}{\#undef\ X}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ my\_result.c}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define\ X(RET,\ NAME,\ ARGS,\ DEF)\ RET\ NAME(ARGS)\ DEF}}
+\DoxyCodeLine{IMPL\_RESULT(user\_ok\_type,\ user\_err\_type);}
+\DoxyCodeLine{\textcolor{preprocessor}{\#undef\ X}}
+
+\end{DoxyCode}
+ 
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{result_8h_a5c8f9bc2e1a37be3bf8be72567cb5b62}\label{result_8h_a5c8f9bc2e1a37be3bf8be72567cb5b62} 
+\index{result.h@{result.h}!RESULT\_GET\_VALUE@{RESULT\_GET\_VALUE}}
+\index{RESULT\_GET\_VALUE@{RESULT\_GET\_VALUE}!result.h@{result.h}}
+\doxysubsubsection{\texorpdfstring{RESULT\_GET\_VALUE}{RESULT\_GET\_VALUE}}
+{\footnotesize\ttfamily \#define RESULT\+\_\+\+GET\+\_\+\+VALUE(\begin{DoxyParamCaption}\item[{}]{T,  }\item[{}]{ERR,  }\item[{}]{RESULT }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(\ \mbox{\hyperlink{group__PublicAPI_ga39f74621284c44db4f02d882d8d8a34b}{result\_is\_ok}}(RESULT)\ ?\ result\_\#\#T\#\#\_\#\#ERR\#\#\_get\_value(RESULT)\ \(\backslash\)}
+\DoxyCodeLine{\ \ :\ (abort\_with\_error\_at(\textcolor{stringliteral}{"{}An\ attempt\ to\ access\ an\ inactive\ \`{}ok`\ value\ of\ the\ result\ structure\ at\ \%s:\%zu\(\backslash\)n"{}},\ \_\_FILE\_\_,\ \_\_LINE\_\_),\ (ERR)\{\})\ );}
+
+\end{DoxyCode}
+\Hypertarget{result_8h_a31f29c34fead26a1363272d9f27c23e1}\label{result_8h_a31f29c34fead26a1363272d9f27c23e1} 
+\index{result.h@{result.h}!RESULT\_METHODS@{RESULT\_METHODS}}
+\index{RESULT\_METHODS@{RESULT\_METHODS}!result.h@{result.h}}
+\doxysubsubsection{\texorpdfstring{RESULT\_METHODS}{RESULT\_METHODS}}
+{\footnotesize\ttfamily \#define RESULT\+\_\+\+METHODS(\begin{DoxyParamCaption}\item[{}]{T,  }\item[{}]{ERR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ X(\textcolor{keyword}{struct}\ result\_\#\#T\#\#\_\#\#ERR,\ result\_\#\#T\#\#\_\#\#ERR\#\#\_ok,\ T\ value,\ RESULT\_OK\_BODY(T,\ ERR))\ \(\backslash\)}
+\DoxyCodeLine{\ \ X(\textcolor{keyword}{struct}\ result\_\#\#T\#\#\_\#\#ERR,\ result\_\#\#T\#\#\_\#\#ERR\#\#\_err,\ ERR\ err\_value,\ RESULT\_ERR\_BODY(T,\ ERR)\ )\ \(\backslash\)}
+\DoxyCodeLine{\ \ X(ERR,\ result\_\#\#T\#\#\_\#\#ERR\#\#\_get\_err,\ \textcolor{keyword}{struct}\ result\_\#\#T\#\#\_\#\#ERR*\ result,\ RESULT\_GET\_ERR\_BODY(T,\ ERR)\ )\ \(\backslash\)}
+\DoxyCodeLine{\ \ X(T,\ result\_\#\#T\#\#\_\#\#ERR\#\#\_get\_value,\ \textcolor{keyword}{struct}\ result\_\#\#T\#\#\_\#\#ERR*\ result,\ RESULT\_GET\_VALUE\_BODY(T,\ ERR)\ )\ \(\backslash\)}
+\DoxyCodeLine{\ \ X(\textcolor{keywordtype}{void},\ result\_\#\#T\#\#\_\#\#ERR\#\#\_inspect,\ RESULT\_INSPECT\_ARGS(T,\ ERR),\ RESULT\_INSPECT\_BODY(T,\ ERR))\ \(\backslash\)}
+\DoxyCodeLine{\ \ X(\textcolor{keywordtype}{void},\ result\_\#\#T\#\#\_\#\#ERR\#\#\_inspect\_err,\ RESULT\_INSPECT\_ERR\_ARGS(T,\ ERR),\ RESULT\_INSPECT\_ERR\_BODY(T,\ ERR))}
+
+\end{DoxyCode}

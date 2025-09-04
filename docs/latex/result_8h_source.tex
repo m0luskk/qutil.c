@@ -4,64 +4,78 @@
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00021\ \textcolor{comment}{//\ /**}}
-\DoxyCodeLine{00022\ \textcolor{comment}{//\ \ *\ @ingroup\ PublicAPI}}
-\DoxyCodeLine{00023\ \textcolor{comment}{//\ \ *\ @brief\ Функция\ для\ пользователя.}}
-\DoxyCodeLine{00024\ \textcolor{comment}{//\ \ */}}
-\DoxyCodeLine{00025\ \textcolor{comment}{//\ void\ hello\_world();}}
-\DoxyCodeLine{00026\ }
-\DoxyCodeLine{00027\ }
-\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
-\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#include\ "{}../include/other.h"{}}}
-\DoxyCodeLine{00030\ }
-\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ DECLARE\_RESULT(T,\ ERR)\ \(\backslash\)}}
-\DoxyCodeLine{00036\ \textcolor{preprocessor}{struct\ result\_\#\#T\#\#\_\#\#ERR\ \{\ \(\backslash\)}}
-\DoxyCodeLine{00037\ \textcolor{preprocessor}{\ \ bool\ is\_ok;\ \(\backslash\)}}
-\DoxyCodeLine{00038\ \textcolor{preprocessor}{\ \ union\ \{\ \(\backslash\)}}
-\DoxyCodeLine{00039\ \textcolor{preprocessor}{\ \ \ \ T\ ok;\ \(\backslash\)}}
-\DoxyCodeLine{00040\ \textcolor{preprocessor}{\ \ \ \ ERR\ err;\ \(\backslash\)}}
-\DoxyCodeLine{00041\ \textcolor{preprocessor}{\ \ \}\ \_value;\ \(\backslash\)}}
-\DoxyCodeLine{00042\ \textcolor{preprocessor}{\};\ \(\backslash\)}}
-\DoxyCodeLine{00043\ \textcolor{preprocessor}{struct\ result\_\#\#T\#\#\_\#\#ERR\ result\_\#\#T\#\#\_\#\#ERR\#\#\_ok(T\ value);\ \(\backslash\)}}
-\DoxyCodeLine{00044\ \textcolor{preprocessor}{struct\ result\_\#\#T\#\#\_\#\#ERR\ result\_\#\#T\#\#\_\#\#ERR\#\#\_err(ERR\ err\_value);\ \(\backslash\)}}
-\DoxyCodeLine{00045\ \textcolor{preprocessor}{ERR\ result\_\#\#T\#\#\_\#\#ERR\#\#\_get\_err(struct\ result\_\#\#T\#\#\_\#\#ERR*\ result);}}
+\DoxyCodeLine{00035\ \textcolor{comment}{//\ /**}}
+\DoxyCodeLine{00036\ \textcolor{comment}{//\ \ *\ @ingroup\ PublicAPI}}
+\DoxyCodeLine{00037\ \textcolor{comment}{//\ \ *\ @brief\ Функция\ для\ пользователя.}}
+\DoxyCodeLine{00038\ \textcolor{comment}{//\ \ */}}
+\DoxyCodeLine{00039\ \textcolor{comment}{//\ void\ hello\_world();}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ "{}../include/other.h"{}}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#define\ RESULT\_OK\_BODY(T,\ ERR)\ \{\ return\ (struct\ result\_\#\#T\#\#\_\#\#ERR)\{\ .is\_ok\ =\ true,\ .\_value.ok\ =\ value\ \};\ \}}}
 \DoxyCodeLine{00046\ }
-\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#define\ IMPL\_RESULT(T,\ ERR)\ \(\backslash\)}}
-\DoxyCodeLine{00048\ \textcolor{preprocessor}{struct\ result\_\#\#T\#\#\_\#\#ERR\ result\_\#\#T\#\#\_\#\#ERR\#\#\_ok(T\ value)\ \{\ \(\backslash\)}}
-\DoxyCodeLine{00049\ \textcolor{preprocessor}{\ \ return\ (struct\ result\_\#\#T\#\#\_\#\#ERR)\{\ \(\backslash\)}}
-\DoxyCodeLine{00050\ \textcolor{preprocessor}{\ \ \ \ .is\_ok\ =\ true,\ \(\backslash\)}}
-\DoxyCodeLine{00051\ \textcolor{preprocessor}{\ \ \ \ .\_value.ok\ =\ value\ \(\backslash\)}}
-\DoxyCodeLine{00052\ \textcolor{preprocessor}{\ \ \};\ \(\backslash\)}}
-\DoxyCodeLine{00053\ \textcolor{preprocessor}{\}\ \(\backslash\)}}
-\DoxyCodeLine{00054\ \textcolor{preprocessor}{struct\ result\_\#\#T\#\#\_\#\#ERR\ result\_\#\#T\#\#\_\#\#ERR\#\#\_err(ERR\ err\_value)\ \{\ \(\backslash\)}}
-\DoxyCodeLine{00055\ \textcolor{preprocessor}{\ \ return\ (struct\ result\_\#\#T\#\#\_\#\#ERR)\{\ \(\backslash\)}}
-\DoxyCodeLine{00056\ \textcolor{preprocessor}{\ \ \ \ .is\_ok\ =\ false,\ \(\backslash\)}}
-\DoxyCodeLine{00057\ \textcolor{preprocessor}{\ \ \ \ .\_value.err\ =\ err\_value\ \(\backslash\)}}
-\DoxyCodeLine{00058\ \textcolor{preprocessor}{\ \ \};\ \(\backslash\)}}
-\DoxyCodeLine{00059\ \textcolor{preprocessor}{\}\ \(\backslash\)}}
-\DoxyCodeLine{00060\ \textcolor{preprocessor}{ERR\ result\_\#\#T\#\#\_\#\#ERR\#\#\_get\_err(struct\ result\_\#\#T\#\#\_\#\#ERR*\ result)\ \{\ \(\backslash\)}}
-\DoxyCodeLine{00061\ \textcolor{preprocessor}{\ if\ (!result\_is\_err(result))\ \{\ \(\backslash\)}}
-\DoxyCodeLine{00062\ \textcolor{preprocessor}{\ \ \ \ abort();\ \(\backslash\)}}
-\DoxyCodeLine{00063\ \textcolor{preprocessor}{\ \}\ \(\backslash\)}}
-\DoxyCodeLine{00064\ \textcolor{preprocessor}{\ return\ result-\/>\_value.err;\ \(\backslash\)}}
-\DoxyCodeLine{00065\ \textcolor{preprocessor}{\}}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#define\ RESULT\_ERR\_BODY(T,\ ERR)\ \{\ return\ (struct\ result\_\#\#T\#\#\_\#\#ERR)\{\ .is\_ok\ =\ false,\ .\_value.err\ =\ err\_value\ \};\ \}}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#define\ RESULT\_GET\_ERR\_BODY(T,\ ERR)\ \{\ return\ (result-\/>is\_ok\ ?\ (abort(),\ (ERR)\{\})\ :\ result-\/>\_value.err);\ \}}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#define\ RESULT\_GET\_VALUE\_BODY(T,\ ERR)\ \{\ return\ (!result-\/>is\_ok\ ?\ (abort(),\ (T)\{\})\ :\ result-\/>\_value.ok);\ \}}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#define\ RESULT\_INSPECT\_BODY(T,\ ERR)\ \{\ if\ (result-\/>is\_ok)\ f(result-\/>\_value.ok);\ \}}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#define\ RESULT\_INSPECT\_ARGS(T,\ ERR)\ struct\ result\_\#\#T\#\#\_\#\#ERR*\ result,\ f\_result\_\#\#T\#\#\_\#\#ERR\#\#\_inspect\ f}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ RESULT\_INSPECT\_ERR\_BODY(T,\ ERR)\ \{\ if\ (!result-\/>is\_ok)\ f(result-\/>\_value.err);\ \}}}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#define\ RESULT\_INSPECT\_ERR\_ARGS(T,\ ERR)\ struct\ result\_\#\#T\#\#\_\#\#ERR*\ result,\ f\_result\_\#\#T\#\#\_\#\#ERR\#\#\_inspect\_err\ f}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#define\ RESULT\_METHODS(T,\ ERR)\ \(\backslash\)}}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\ \ X(struct\ result\_\#\#T\#\#\_\#\#ERR,\ result\_\#\#T\#\#\_\#\#ERR\#\#\_ok,\ T\ value,\ RESULT\_OK\_BODY(T,\ ERR))\ \(\backslash\)}}
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\ \ X(struct\ result\_\#\#T\#\#\_\#\#ERR,\ result\_\#\#T\#\#\_\#\#ERR\#\#\_err,\ ERR\ err\_value,\ RESULT\_ERR\_BODY(T,\ ERR)\ )\ \(\backslash\)}}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\ \ X(ERR,\ result\_\#\#T\#\#\_\#\#ERR\#\#\_get\_err,\ struct\ result\_\#\#T\#\#\_\#\#ERR*\ result,\ RESULT\_GET\_ERR\_BODY(T,\ ERR)\ )\ \(\backslash\)}}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\ \ X(T,\ result\_\#\#T\#\#\_\#\#ERR\#\#\_get\_value,\ struct\ result\_\#\#T\#\#\_\#\#ERR*\ result,\ RESULT\_GET\_VALUE\_BODY(T,\ ERR)\ )\ \(\backslash\)}}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\ \ X(void,\ result\_\#\#T\#\#\_\#\#ERR\#\#\_inspect,\ RESULT\_INSPECT\_ARGS(T,\ ERR),\ RESULT\_INSPECT\_BODY(T,\ ERR))\ \(\backslash\)}}
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\ \ X(void,\ result\_\#\#T\#\#\_\#\#ERR\#\#\_inspect\_err,\ RESULT\_INSPECT\_ERR\_ARGS(T,\ ERR),\ RESULT\_INSPECT\_ERR\_BODY(T,\ ERR))}}
 \DoxyCodeLine{00066\ }
-\DoxyCodeLine{00072\ \textcolor{preprocessor}{\#define\ RESULT\_GET\_ERROR(T,\ ERR,\ RESULT)\ \(\backslash\)}}
-\DoxyCodeLine{00073\ \textcolor{preprocessor}{(\ result\_is\_err(RESULT)\ ?\ result\_\#\#T\#\#\_\#\#ERR\#\#\_get\_err(RESULT)\ \(\backslash\)}}
-\DoxyCodeLine{00074\ \textcolor{preprocessor}{\ \ :\ (abort\_with\_error\_at("{}An\ attempt\ to\ access\ an\ inactive\ \`{}ERR`\ value\ of\ the\ result\ structure\ at\ \%s:\%zu\(\backslash\)n"{},\ \_\_FILE\_\_,\ \_\_LINE\_\_),\ (ERR)\{\})\ );}}
-\DoxyCodeLine{00075\ }
-\DoxyCodeLine{00076\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{result_8h_a9dfd764217c2c915cba60224369342fd}{result\_enum}}\ \{}
-\DoxyCodeLine{00077\ \ \ \mbox{\hyperlink{result_8h_a9dfd764217c2c915cba60224369342fda2ea4b6ef3fffc17dd1d38ab5c2837737}{RES\_OK}},}
-\DoxyCodeLine{00078\ \ \ \mbox{\hyperlink{result_8h_a9dfd764217c2c915cba60224369342fdaecff6e8c93a5895522ba737bb5c89e2a}{RES\_ERR}},}
-\DoxyCodeLine{00079\ \};}
-\DoxyCodeLine{00080\ }
-\DoxyCodeLine{00081\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{result_8h_a9dfd764217c2c915cba60224369342fd}{result\_enum}}\ \mbox{\hyperlink{result_8h_a570bc76d798cc356eb18bcf295e3e91f}{result\_match}}(\textcolor{keywordtype}{void}*\ result);}
-\DoxyCodeLine{00082\ }
-\DoxyCodeLine{00091\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{group__PublicAPI_ga39f74621284c44db4f02d882d8d8a34b}{result\_is\_ok}}(\textcolor{keywordtype}{void}*\ result);}
-\DoxyCodeLine{00092\ }
-\DoxyCodeLine{00101\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{group__PublicAPI_gae07a0258fe3dcc378a4296c6abefc564}{result\_is\_err}}(\textcolor{keywordtype}{void}*\ result);}
-\DoxyCodeLine{00102\ }
-\DoxyCodeLine{00103\ \mbox{\hyperlink{group__PublicAPI_ga08049ca3b3469bc28a420283be89ed96}{DECLARE\_RESULT}}(\textcolor{keywordtype}{int},\ \textcolor{keywordtype}{double})}
-\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\#define\ X(RET,\ NAME,\ ARGS,\ DEF)\ RET\ NAME(ARGS);}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00073\ \textcolor{preprocessor}{\#define\ DECLARE\_RESULT(T,\ ERR)\ \(\backslash\)}}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{struct\ result\_\#\#T\#\#\_\#\#ERR\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\ \ bool\ is\_ok;\ \(\backslash\)}}
+\DoxyCodeLine{00076\ \textcolor{preprocessor}{\ \ union\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00077\ \textcolor{preprocessor}{\ \ \ \ T\ ok;\ \(\backslash\)}}
+\DoxyCodeLine{00078\ \textcolor{preprocessor}{\ \ \ \ ERR\ err;\ \(\backslash\)}}
+\DoxyCodeLine{00079\ \textcolor{preprocessor}{\ \ \}\ \_value;\ \(\backslash\)}}
+\DoxyCodeLine{00080\ \textcolor{preprocessor}{\};\ \(\backslash\)}}
+\DoxyCodeLine{00081\ \textcolor{preprocessor}{typedef\ void(*f\_result\_\#\#T\#\#\_\#\#ERR\#\#\_inspect\_err)(ERR);\ \(\backslash\)}}
+\DoxyCodeLine{00082\ \textcolor{preprocessor}{typedef\ void(*f\_result\_\#\#T\#\#\_\#\#ERR\#\#\_inspect)(T);\ \(\backslash\)}}
+\DoxyCodeLine{00083\ \textcolor{preprocessor}{RESULT\_METHODS(T,\ ERR)}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \textcolor{comment}{//\#undef\ X\ //\ undef\ for\ IMPL\ macro}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00093\ \textcolor{preprocessor}{\#define\ RESULT\_GET\_ERROR(T,\ ERR,\ RESULT)\ \(\backslash\)}}
+\DoxyCodeLine{00094\ \textcolor{preprocessor}{(\ result\_is\_err(RESULT)\ ?\ result\_\#\#T\#\#\_\#\#ERR\#\#\_get\_err(RESULT)\ \(\backslash\)}}
+\DoxyCodeLine{00095\ \textcolor{preprocessor}{\ \ :\ (abort\_with\_error\_at("{}An\ attempt\ to\ access\ an\ inactive\ \`{}err`\ value\ of\ the\ result\ structure\ at\ \%s:\%zu\(\backslash\)n"{},\ \_\_FILE\_\_,\ \_\_LINE\_\_),\ (ERR)\{\})\ );}}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \textcolor{preprocessor}{\#define\ RESULT\_GET\_VALUE(T,\ ERR,\ RESULT)\ \(\backslash\)}}
+\DoxyCodeLine{00098\ \textcolor{preprocessor}{(\ result\_is\_ok(RESULT)\ ?\ result\_\#\#T\#\#\_\#\#ERR\#\#\_get\_value(RESULT)\ \(\backslash\)}}
+\DoxyCodeLine{00099\ \textcolor{preprocessor}{\ \ :\ (abort\_with\_error\_at("{}An\ attempt\ to\ access\ an\ inactive\ \`{}ok`\ value\ of\ the\ result\ structure\ at\ \%s:\%zu\(\backslash\)n"{},\ \_\_FILE\_\_,\ \_\_LINE\_\_),\ (ERR)\{\})\ );}}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \textcolor{keyword}{enum}\ result\_enum\ \{}
+\DoxyCodeLine{00102\ \ \ RES\_OK,}
+\DoxyCodeLine{00103\ \ \ RES\_ERR,}
+\DoxyCodeLine{00104\ \};}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \textcolor{keyword}{enum}\ result\_enum\ result\_match(\textcolor{keywordtype}{void}*\ result);}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00116\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{group__PublicAPI_ga39f74621284c44db4f02d882d8d8a34b}{result\_is\_ok}}(\textcolor{keywordtype}{void}*\ result);}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00126\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{group__PublicAPI_gae07a0258fe3dcc378a4296c6abefc564}{result\_is\_err}}(\textcolor{keywordtype}{void}*\ result);}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \mbox{\hyperlink{group__PublicAPI_ga08049ca3b3469bc28a420283be89ed96}{DECLARE\_RESULT}}(\textcolor{keywordtype}{int},\ \textcolor{keywordtype}{double})}
+\DoxyCodeLine{00129\ \textcolor{preprocessor}{\#undef\ X}}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \textcolor{preprocessor}{\#define\ IMPL\_RESULT(T,\ ERR)\ RESULT\_METHODS(T,\ ERR)}}
+\DoxyCodeLine{00132\ }
 
 \end{DoxyCode}
