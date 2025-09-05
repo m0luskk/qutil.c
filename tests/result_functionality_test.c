@@ -2,25 +2,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "tests.h"
 
-#include "../include/result.h"
 
 
 typedef struct {
   size_t s;
 } user_type;
 
-void ins(user_type val) {
-  printf("inspect: ok value = %zu\n", val.s);
+void ins(double val) {
+  printf("inspect: ok value = %f\n", val);
 }
 
-DECLARE_RESULT(int, user_type)
+//DECLARE_RESULT(int, user_type)
+#include "tests.h"
+#include "../include/result.h"
 
 START_TEST(result)
-  struct result_int_user_type res = result_int_user_type_err( (user_type){.s = 42} );
+//struct result_int_user_type res = result_int_user_type_err( (user_type){.s = 42} );
+  auto res = result_int_double_err( 5.2 );
 
-  result_int_user_type_inspect_err(&res, ins);
+  result_int_double_inspect_err(&res, ins);
 
   //ASSERT(res.is_ok);
   //ASSERT(res._value.ok == 52);

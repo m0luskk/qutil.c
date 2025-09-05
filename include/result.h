@@ -38,8 +38,13 @@ IMPL_RESULT(user_ok_type, user_err_type);
 //  */
 // void hello_world();
 
-
 #include <stdlib.h>
+
+#if __has_attribute(unsequenced)
+  #define UNSEQUENCED_ATTR() [[unsequenced]]
+#else
+  #define UNSEQUENCED_ATTR()
+#endif
 
 #define RESULT_OK_BODY(T, ERR) { return (struct result_##T##_##ERR){ .is_ok = true, ._value.ok = value }; }
 
@@ -55,20 +60,20 @@ IMPL_RESULT(user_ok_type, user_err_type);
 #define RESULT_INSPECT_ERR_BODY(T, ERR) { if (!result->is_ok) f(result->_value.err); }
 #define RESULT_INSPECT_ERR_ARGS(T, ERR) struct result_##T##_##ERR* result, f_result_##T##_##ERR##_inspect_err f
 
+// R_M(ATTR, RET, NAME, ARGS, BODY)
 #define RESULT_METHODS(T, ERR) \
-  R_M(struct result_##T##_##ERR, result_##T##_##ERR##_ok, T value, RESULT_OK_BODY(T, ERR)) \
-  R_M(struct result_##T##_##ERR, result_##T##_##ERR##_err, ERR err_value, RESULT_ERR_BODY(T, ERR) ) \
-  R_M(ERR, result_##T##_##ERR##_get_err, struct result_##T##_##ERR* result, RESULT_GET_ERR_BODY(T, ERR) ) \
-  R_M(T, result_##T##_##ERR##_get_value, struct result_##T##_##ERR* result, RESULT_GET_VALUE_BODY(T, ERR) ) \
-  R_M(void, result_##T##_##ERR##_inspect, RESULT_INSPECT_ARGS(T, ERR), RESULT_INSPECT_BODY(T, ERR)) \
-  R_M(void, result_##T##_##ERR##_inspect_err, RESULT_INSPECT_ERR_ARGS(T, ERR), RESULT_INSPECT_ERR_BODY(T, ERR))
+  R_M(, struct result_##T##_##ERR, result_##T##_##ERR##_ok, T value, RESULT_OK_BODY(T, ERR)) \
+  R_M(, struct result_##T##_##ERR, result_##T##_##ERR##_err, ERR err_value, RESULT_ERR_BODY(T, ERR) ) \
+  R_M(UNSEQUENCED_ATTR(), ERR, result_##T##_##ERR##_get_err, struct result_##T##_##ERR* result, RESULT_GET_ERR_BODY(T, ERR) ) \
+  R_M(UNSEQUENCED_ATTR(), T, result_##T##_##ERR##_get_value, struct result_##T##_##ERR* result, RESULT_GET_VALUE_BODY(T, ERR) ) \
+  R_M(UNSEQUENCED_ATTR(), void, result_##T##_##ERR##_inspect, RESULT_INSPECT_ARGS(T, ERR), RESULT_INSPECT_BODY(T, ERR)) \
+  R_M(UNSEQUENCED_ATTR(), void, result_##T##_##ERR##_inspect_err, RESULT_INSPECT_ERR_ARGS(T, ERR), RESULT_INSPECT_ERR_BODY(T, ERR))
 
-// #define X(RET, NAME, ARGS, DEF) RET NAME(ARGS);
-#define R_M(RET, NAME, ARGS, DEF) inline RET NAME(ARGS) DEF
+#define R_M(ATTR, RET, NAME, ARGS, DEF) ATTR static inline RET NAME(ARGS) DEF
 
 /**
  * @ingroup PublicAPI
- * @brief Declare result structure of types `T` as `ok` value and `ERR` as `err` value.
+ * @brief Declare result structure of types `T` as `ok` variant and `ERR` as `err` variant.
  */
 #define DECLARE_RESULT(T, ERR) \
 struct result_##T##_##ERR { \
@@ -82,8 +87,6 @@ typedef void(*f_result_##T##_##ERR##_inspect_err)(ERR); \
 typedef void(*f_result_##T##_##ERR##_inspect)(T); \
 RESULT_METHODS(T, ERR)
 
-
-//#undef X // undef for IMPL macro
 
 /**
  * @ingroup PublicAPI
@@ -106,30 +109,40 @@ enum result_enum {
 
 /**
  * @ingroup PublicAPI
- * @brief Returns `true` if the passed result instance contain `ok` value.
+ * @brief Returns `true` if the passed result instance contain `ok` variant.
  * 
  * @param result Instance of any result structure
- * @return true if passed result instance contain `ok` value
- * @return false if passed result instance contain `err` value
+ * @return true if passed result instance contain `ok` variant
+ * @return false if passed result instance contain `err` variant
  */
-inline bool result_is_ok(void* result) {
-  return *((bool*)result);
+static inline bool result_is_ok(void* result) {
+  if (result) {
+    return *((bool*)result);
+  } else {
+    return false;
+  }
 }
 
 /**
  * @ingroup PublicAPI
- * @brief Returns `true` if the passed result instance contain `err` value.
+ * @brief Returns `true` if the passed result instance contain `err` variant.
  * 
  * @param result Instance of any result structure
- * @return true if passed result instance contain `err` value
- * @return false if passed result instance contain `ok` value
+ * @return true if passed result instance contain `err` variant
+ * @return false if passed result instance contain `ok` variant
  */
-inline bool result_is_err(void* result) {
+static inline bool result_is_err(void* result) {
   return !result_is_ok(result);
 }
 
-
-inline enum result_enum result_match(void* result) {
+/**
+ * @ingroup PublicAPI
+ * @brief Returns enum thats corresponds result's containing variant
+ * @param result Instance of any result structure
+ * @return `RES_OK` if passed result instance contain `err` variant
+ * @return `RES_ERR` if passed result instance contain `ok` variant
+ */
+static inline enum result_enum result_match(void* result) {
   if (result_is_ok(result)) {
     return RES_OK;
   } else {
