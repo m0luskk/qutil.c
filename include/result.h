@@ -40,6 +40,8 @@ IMPL_RESULT(user_ok_type, user_err_type);
 
 #include <stdlib.h>
 
+#include "other.h"
+
 #if __has_attribute(unsequenced)
   #define UNSEQUENCED_ATTR() [[unsequenced]]
 #else
@@ -86,6 +88,25 @@ struct result_##T##_##ERR { \
 typedef void(*f_result_##T##_##ERR##_inspect_err)(ERR); \
 typedef void(*f_result_##T##_##ERR##_inspect)(T); \
 RESULT_METHODS(T, ERR)
+
+/**
+ * @brief Contain static error string
+ */
+typedef struct r_string_error {
+  const char* const err;
+} serror;
+
+/**
+ * @brief Make `serror` instance
+ */
+#define MAKE_ERROR_MSG(STATIC_STR) (struct r_string_error){ .err = STATIC_STR }
+
+/**
+ * @brief Contain constant `void*`
+ */
+typedef struct r_void_pointer {
+  void* const p;
+} p_void;
 
 
 /**
@@ -151,5 +172,13 @@ static inline enum result_enum result_match(void* result) {
 }
 
 
-DECLARE_RESULT(int, double)
+DECLARE_RESULT(int, serror)
+DECLARE_RESULT(size_t, serror)
+DECLARE_RESULT(char, serror)
+DECLARE_RESULT(double, serror)
+DECLARE_RESULT(bool, serror)
+DECLARE_RESULT(p_void, serror)
+DECLARE_RESULT(int_array, serror)
+DECLARE_RESULT(double_array, serror)
+DECLARE_RESULT(char_array, serror)
 

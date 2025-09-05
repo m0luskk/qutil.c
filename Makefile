@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -pedantic -std=c2x -Iinclude
+CFLAGS = -fstrict-aliasing -Wstrict-aliasing -Wall -Wextra -pedantic -std=c2x -Iinclude # -O2
 AR = ar
 ARFLAGS = rcs
 

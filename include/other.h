@@ -1,12 +1,33 @@
 #pragma once
 
+/**
+ * @file other.h
+ * @brief Some helpful types. 
+ * @ingroup PublicAPI
+ */
+
+
 #include <stddef.h>
-[[noreturn]]
-void abort_with_error(const char err[static 1]);
+#include <stdio.h>
+#include <stdlib.h>
 
-
-// #if __has_c_attribute(__gnu__::__format__)
-// 	[[__gnu__::__format__(__printf__, 1, 2)]]
-// #endif
 [[noreturn]]
-void abort_with_error_at(const char msg[static 1], const char file[static 1], size_t line);
+static inline void abort_with_error(const char err[static 1]) {
+  fprintf(stderr, "Abort with error message: %s\n", err);
+  abort();
+}
+
+[[noreturn]]
+static inline void abort_with_error_at(const char msg[static 1], const char file[static 1], size_t line) { // todo
+  fprintf(stderr, msg, file, line);
+  abort();
+}
+
+/**
+ * @brief Macros for generate structure for convenient array operating 
+ */
+#define ARRAY_CONTAINER(TYPE) typedef struct TYPE##_array { const size_t len; TYPE*const data; } TYPE##_array;
+
+ARRAY_CONTAINER(int)
+ARRAY_CONTAINER(double)
+ARRAY_CONTAINER(char)
