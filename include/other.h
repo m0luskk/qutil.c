@@ -11,6 +11,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/**
+ * @brief Contain static string pointer
+ * for use in `option` and `result` types
+ */
+typedef struct {
+  const char* const err;
+} static_string ;
+
+/**
+ * @brief Contain constant `void*`
+ * for use in `option` and `result` types
+ */
+typedef struct void_pointer {
+  void* const p;
+} p_void;
+
 [[noreturn]]
 static inline void abort_with_error(const char err[static 1]) {
   fprintf(stderr, "Abort with error message: %s\n", err);

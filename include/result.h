@@ -92,21 +92,12 @@ RESULT_METHODS(T, ERR)
 /**
  * @brief Contain static error string
  */
-typedef struct r_string_error {
-  const char* const err;
-} serror;
+typedef static_string serror;
 
 /**
  * @brief Make `serror` instance
  */
-#define MAKE_ERROR_MSG(STATIC_STR) (struct r_string_error){ .err = STATIC_STR }
-
-/**
- * @brief Contain constant `void*`
- */
-typedef struct r_void_pointer {
-  void* const p;
-} p_void;
+#define MAKE_ERROR_MSG(STATIC_STR) (serror){ .err = STATIC_STR }
 
 
 /**
