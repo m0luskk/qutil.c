@@ -41,6 +41,7 @@ IMPL_RESULT(user_ok_type, user_err_type);
 #include <stdlib.h>
 
 #include "other.h"
+#include "option.h"
 
 #if __has_attribute(unsequenced)
   #define UNSEQUENCED_ATTR() [[unsequenced]]
@@ -83,7 +84,7 @@ struct result_##T##_##ERR { \
   union { \
     T ok; \
     ERR err; \
-  } _value; \
+  } _value [[deprecated("private")]]; \
 }; \
 typedef void(*f_result_##T##_##ERR##_inspect_err)(ERR); \
 typedef void(*f_result_##T##_##ERR##_inspect)(T); \
@@ -93,12 +94,6 @@ RESULT_METHODS(T, ERR)
  * @brief Contain static error string
  */
 typedef static_string serror;
-
-/**
- * @brief Make `serror` instance
- */
-#define MAKE_ERROR_MSG(STATIC_STR) (serror){ .err = STATIC_STR }
-
 
 /**
  * @ingroup PublicAPI

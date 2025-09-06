@@ -11,11 +11,11 @@ typedef struct {
 } user_type;
 
 void ins(serror val) {
-  printf("inspect: ok value = %s\n", val.err);
+  printf("inspect: ok value = %s\n", val);
 }
 
 START_TEST(result)
-  auto res = result_int_serror_err(MAKE_ERROR_MSG("hui"));
+  auto res = result_int_serror_err("hui");
 
   result_int_serror_inspect_err(&res, ins);
 

@@ -15,17 +15,13 @@
  * @brief Contain static string pointer
  * for use in `option` and `result` types
  */
-typedef struct {
-  const char* const err;
-} static_string ;
+typedef const char* const static_string; 
 
 /**
  * @brief Contain constant `void*`
  * for use in `option` and `result` types
  */
-typedef struct void_pointer {
-  void* const p;
-} p_void;
+typedef void* const p_void;
 
 [[noreturn]]
 static inline void abort_with_error(const char err[static 1]) {
