@@ -60,9 +60,9 @@ DECLARE_OPTION(serror)
 
 #define RESULT_ERR_BODY(T, ERR) { return (struct result_##T##_##ERR){ .is_ok = false, ._value.err = err_value }; }
 
-#define RESULT_GET_ERR_BODY(T, ERR) { return (result->is_ok ? option_##ERR##_none() : option_##ERR##_value(result->_value.err)); }
+#define RESULT_GET_ERR_BODY(T, ERR) { if(!result) return option_##ERR##_none(); else return (result->is_ok ? option_##ERR##_none() : option_##ERR##_value(result->_value.err)); }
 
-#define RESULT_GET_VALUE_BODY(T, ERR) { return (!result->is_ok ? option_##T##_none() : option_##T##_value(result->_value.ok)); }
+#define RESULT_GET_VALUE_BODY(T, ERR) { if(!result) return option_##T##_none(); else return (!result->is_ok ? option_##T##_none() : option_##T##_value(result->_value.ok)); }
 
 #define RESULT_INSPECT_BODY(T, ERR) { if (result->is_ok) f(result->_value.ok); }
 #define RESULT_INSPECT_ARGS(T, ERR) struct result_##T##_##ERR* result, f_result_##T##_##ERR##_inspect f
