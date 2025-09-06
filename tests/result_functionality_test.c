@@ -15,9 +15,11 @@ void ins(serror val) {
 }
 
 START_TEST(result)
-  auto res = result_int_serror_err("hui");
+  auto res = result_int_serror_ok(52);
 
-  result_int_serror_inspect_err(&res, ins);
+  auto val = result_int_serror_get_value(&res);
+
+  printf("%d\n", option_has_value(&val));
 
   //ASSERT(res.is_ok);
   //ASSERT(res._value.ok == 52);

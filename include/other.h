@@ -21,7 +21,7 @@ typedef const char* const static_string;
  * @brief Contain constant `void*`
  * for use in `option` and `result` types
  */
-typedef void* const p_void;
+typedef void* p_void;
 
 [[noreturn]]
 static inline void abort_with_error(const char err[static 1]) {

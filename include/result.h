@@ -43,6 +43,13 @@ IMPL_RESULT(user_ok_type, user_err_type);
 #include "other.h"
 #include "option.h"
 
+/**
+ * @brief Contain static error string
+ */
+typedef static_string serror;
+
+DECLARE_OPTION(serror)
+
 #if __has_attribute(unsequenced)
   #define UNSEQUENCED_ATTR() [[unsequenced]]
 #else
@@ -53,9 +60,9 @@ IMPL_RESULT(user_ok_type, user_err_type);
 
 #define RESULT_ERR_BODY(T, ERR) { return (struct result_##T##_##ERR){ .is_ok = false, ._value.err = err_value }; }
 
-#define RESULT_GET_ERR_BODY(T, ERR) { return (result->is_ok ? (abort(), (ERR){}) : result->_value.err); }
+#define RESULT_GET_ERR_BODY(T, ERR) { return (result->is_ok ? option_##ERR##_none() : option_##ERR##_value(result->_value.err)); }
 
-#define RESULT_GET_VALUE_BODY(T, ERR) { return (!result->is_ok ? (abort(), (T){}) : result->_value.ok); }
+#define RESULT_GET_VALUE_BODY(T, ERR) { return (!result->is_ok ? option_##T##_none() : option_##T##_value(result->_value.ok)); }
 
 #define RESULT_INSPECT_BODY(T, ERR) { if (result->is_ok) f(result->_value.ok); }
 #define RESULT_INSPECT_ARGS(T, ERR) struct result_##T##_##ERR* result, f_result_##T##_##ERR##_inspect f
@@ -67,8 +74,8 @@ IMPL_RESULT(user_ok_type, user_err_type);
 #define RESULT_METHODS(T, ERR) \
   R_M(, struct result_##T##_##ERR, result_##T##_##ERR##_ok, T value, RESULT_OK_BODY(T, ERR)) \
   R_M(, struct result_##T##_##ERR, result_##T##_##ERR##_err, ERR err_value, RESULT_ERR_BODY(T, ERR) ) \
-  R_M(UNSEQUENCED_ATTR(), ERR, result_##T##_##ERR##_get_err, struct result_##T##_##ERR* result, RESULT_GET_ERR_BODY(T, ERR) ) \
-  R_M(UNSEQUENCED_ATTR(), T, result_##T##_##ERR##_get_value, struct result_##T##_##ERR* result, RESULT_GET_VALUE_BODY(T, ERR) ) \
+  R_M(UNSEQUENCED_ATTR(), struct option_##ERR, result_##T##_##ERR##_get_err, struct result_##T##_##ERR* result, RESULT_GET_ERR_BODY(T, ERR) ) \
+  R_M(UNSEQUENCED_ATTR(), struct option_##T, result_##T##_##ERR##_get_value, struct result_##T##_##ERR* result, RESULT_GET_VALUE_BODY(T, ERR) ) \
   R_M(UNSEQUENCED_ATTR(), void, result_##T##_##ERR##_inspect, RESULT_INSPECT_ARGS(T, ERR), RESULT_INSPECT_BODY(T, ERR)) \
   R_M(UNSEQUENCED_ATTR(), void, result_##T##_##ERR##_inspect_err, RESULT_INSPECT_ERR_ARGS(T, ERR), RESULT_INSPECT_ERR_BODY(T, ERR))
 
@@ -80,20 +87,15 @@ IMPL_RESULT(user_ok_type, user_err_type);
  */
 #define DECLARE_RESULT(T, ERR) \
 struct result_##T##_##ERR { \
-  bool is_ok; \
-  union { \
+  const bool is_ok; \
+  const union { \
     T ok; \
     ERR err; \
-  } _value [[deprecated("private")]]; \
+  } _value; \
 }; \
 typedef void(*f_result_##T##_##ERR##_inspect_err)(ERR); \
 typedef void(*f_result_##T##_##ERR##_inspect)(T); \
 RESULT_METHODS(T, ERR)
-
-/**
- * @brief Contain static error string
- */
-typedef static_string serror;
 
 /**
  * @ingroup PublicAPI
