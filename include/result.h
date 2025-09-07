@@ -65,6 +65,8 @@ DECLARE_OPTION(serror)
 #define RESULT_INSPECT_ERR_BODY(T, ERR) { if(!result) return; if (!result->is_ok) f(result->_value.err); }
 #define RESULT_INSPECT_ERR_ARGS(T, ERR) struct result_##T##_##ERR* result, f_result_##T##_##ERR##_inspect_err f
 
+#define RESULT_UNWRAP_BODY(T, ERR) { if(!result) abort(); if (result->is_ok) return result->_value.ok; else abort(); }
+
 // R_M(ATTR, RET, NAME, ARGS, BODY)
 #define RESULT_METHODS(T, ERR) \
   R_M(, struct result_##T##_##ERR, result_##T##_##ERR##_ok, T value, RESULT_OK_BODY(T, ERR)) \
@@ -72,7 +74,8 @@ DECLARE_OPTION(serror)
   R_M(UNSEQUENCED_ATTR(), struct option_##ERR, result_##T##_##ERR##_get_err, struct result_##T##_##ERR* result, RESULT_GET_ERR_BODY(T, ERR) ) \
   R_M(UNSEQUENCED_ATTR(), struct option_##T, result_##T##_##ERR##_get_value, struct result_##T##_##ERR* result, RESULT_GET_VALUE_BODY(T, ERR) ) \
   R_M(UNSEQUENCED_ATTR(), void, result_##T##_##ERR##_inspect, RESULT_INSPECT_ARGS(T, ERR), RESULT_INSPECT_BODY(T, ERR)) \
-  R_M(UNSEQUENCED_ATTR(), void, result_##T##_##ERR##_inspect_err, RESULT_INSPECT_ERR_ARGS(T, ERR), RESULT_INSPECT_ERR_BODY(T, ERR))
+  R_M(UNSEQUENCED_ATTR(), void, result_##T##_##ERR##_inspect_err, RESULT_INSPECT_ERR_ARGS(T, ERR), RESULT_INSPECT_ERR_BODY(T, ERR)) \
+  R_M(, T, result_##T##_##ERR##_unwrap, struct result_##T##_##ERR* result, RESULT_UNWRAP_BODY(T, ERR) )
 
 #define R_M(ATTR, RET, NAME, ARGS, DEF) ATTR static inline RET NAME(ARGS) DEF
 /** @endcond */
@@ -98,7 +101,7 @@ RESULT_METHODS(T, ERR)
 /**
  * @brief Defines function poiner thats using in `TRY` macro.
  */
-#define ERROR_PROPAGATE(T, ERR) struct result_##T##_##ERR(*__f_ret_err)(ERR err) = result_##T##_##ERR##_err
+#define ERROR_PROPAGATE(T, ERR) struct result_##T##_##ERR(*const __f_ret_err)(ERR err) = result_##T##_##ERR##_err
 
 /**
  * @brief If `expr` is the result type and contain the `err` variant, then propagates it from current function. Otherwise return `ok` variant value

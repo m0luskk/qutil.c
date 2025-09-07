@@ -7,11 +7,10 @@ Simple utility library in C23
   
 - [ ] result type
 - - [x] error propagation (TRY macros)
-  - [ ] Generic macroses for all methods (thats below)
   - [x] result_T_ERR_ok()
   - [x] result_T_ERR_err()
   - [x] result_T_ERR_get_err()
-  - [ ] result_T_ERR_get_value()
+  - [x] result_T_ERR_get_value()
   - [ ] result_T_ERR_unwrap()
   - [x] result_T_ERR_inspect()
   - [x] result_T_ERR_inspect_err()
@@ -23,7 +22,6 @@ Simple utility library in C23
   - [x] result_match()
 - [ ] option type
 - - [ ] option propagation (TRY macros)
-  - [ ] Generic macroses for all methods (thats below)
   - [x] option_T_value()
   - [x] option_T_none()
   - [ ] option_T_get_or()

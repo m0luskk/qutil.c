@@ -38,6 +38,8 @@ struct result_double_serror foo() {
 START_TEST(result)
   auto r = foo();
 
+  auto ok_val = result_double_serror_unwrap(&r);
+
   switch (result_match(&r)) {
     case RES_OK:
       ASSERT(r.is_ok);
