@@ -1,29 +1,89 @@
 \doxysection{include/other.h File Reference}
 \hypertarget{other_8h}{}\label{other_8h}\index{include/other.h@{include/other.h}}
+
+
+Some helpful types.  
+
+
 {\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
 Include dependency graph for other.\+h\+:
 % FIG 0
 This graph shows which files directly or indirectly include this file\+:
 % FIG 1
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{other_8h_acb3acaf098ac94e72d0e6627d44c005b}{ARRAY\+\_\+\+CONTAINER}}(TYPE)~typedef struct TYPE\#\#\+\_\+array \{ const size\+\_\+t len; TYPE\texorpdfstring{$\ast$}{*}const data; \} TYPE\#\#\+\_\+array;
+\begin{DoxyCompactList}\small\item\em Macros for generate structure for convenient array operating. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef const char \texorpdfstring{$\ast$}{*}const \mbox{\hyperlink{other_8h_a869289c3acb4b0c62c1b7f68d8583ef8}{static\+\_\+string}}
+\begin{DoxyCompactList}\small\item\em Contain static string pointer for use in {\ttfamily option} and {\ttfamily result} types. \end{DoxyCompactList}\item 
+typedef void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{other_8h_a8ab1bc0eac7b13dbef044c138a320810}{p\+\_\+void}}
+\begin{DoxyCompactList}\small\item\em Contain constant {\ttfamily void\texorpdfstring{$\ast$}{*}} for use in {\ttfamily option} and {\ttfamily result} types. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \mbox{\hyperlink{other_8h_ae2c8bcb169c8faf25a8f6404d428907a}{abort\+\_\+with\+\_\+error}} (const char err\mbox{[}static 1\mbox{]})
+static void \mbox{\hyperlink{other_8h_a377d3fb19f61015e85756eabc5a9ef71}{abort\+\_\+with\+\_\+error}} (const char err\mbox{[}static 1\mbox{]})
 \item 
-void \mbox{\hyperlink{other_8h_a4902c4c3316d140bbfeb760b9ebed96f}{abort\+\_\+with\+\_\+error\+\_\+at}} (const char msg\mbox{[}static 1\mbox{]}, const char file\mbox{[}static 1\mbox{]}, size\+\_\+t line)
+static void \mbox{\hyperlink{other_8h_a7295cc0ac2a08002eaeb049a24552bf9}{abort\+\_\+with\+\_\+error\+\_\+at}} (const char msg\mbox{[}static 1\mbox{]}, const char file\mbox{[}static 1\mbox{]}, size\+\_\+t line)
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+Some helpful types. 
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{other_8h_acb3acaf098ac94e72d0e6627d44c005b}\label{other_8h_acb3acaf098ac94e72d0e6627d44c005b} 
+\index{other.h@{other.h}!ARRAY\_CONTAINER@{ARRAY\_CONTAINER}}
+\index{ARRAY\_CONTAINER@{ARRAY\_CONTAINER}!other.h@{other.h}}
+\doxysubsubsection{\texorpdfstring{ARRAY\_CONTAINER}{ARRAY\_CONTAINER}}
+{\footnotesize\ttfamily \#define ARRAY\+\_\+\+CONTAINER(\begin{DoxyParamCaption}\item[{}]{TYPE }\end{DoxyParamCaption})~typedef struct TYPE\#\#\+\_\+array \{ const size\+\_\+t len; TYPE\texorpdfstring{$\ast$}{*}const data; \} TYPE\#\#\+\_\+array;}
+
+
+
+Macros for generate structure for convenient array operating. 
+
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{other_8h_a8ab1bc0eac7b13dbef044c138a320810}\label{other_8h_a8ab1bc0eac7b13dbef044c138a320810} 
+\index{other.h@{other.h}!p\_void@{p\_void}}
+\index{p\_void@{p\_void}!other.h@{other.h}}
+\doxysubsubsection{\texorpdfstring{p\_void}{p\_void}}
+{\footnotesize\ttfamily typedef void\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{other_8h_a8ab1bc0eac7b13dbef044c138a320810}{p\+\_\+void}}}
+
+
+
+Contain constant {\ttfamily void\texorpdfstring{$\ast$}{*}} for use in {\ttfamily option} and {\ttfamily result} types. 
+
+\Hypertarget{other_8h_a869289c3acb4b0c62c1b7f68d8583ef8}\label{other_8h_a869289c3acb4b0c62c1b7f68d8583ef8} 
+\index{other.h@{other.h}!static\_string@{static\_string}}
+\index{static\_string@{static\_string}!other.h@{other.h}}
+\doxysubsubsection{\texorpdfstring{static\_string}{static\_string}}
+{\footnotesize\ttfamily typedef const char\texorpdfstring{$\ast$}{*} const \mbox{\hyperlink{other_8h_a869289c3acb4b0c62c1b7f68d8583ef8}{static\+\_\+string}}}
+
+
+
+Contain static string pointer for use in {\ttfamily option} and {\ttfamily result} types. 
+
+
+
 \doxysubsection{Function Documentation}
-\Hypertarget{other_8h_ae2c8bcb169c8faf25a8f6404d428907a}\label{other_8h_ae2c8bcb169c8faf25a8f6404d428907a} 
+\Hypertarget{other_8h_a377d3fb19f61015e85756eabc5a9ef71}\label{other_8h_a377d3fb19f61015e85756eabc5a9ef71} 
 \index{other.h@{other.h}!abort\_with\_error@{abort\_with\_error}}
 \index{abort\_with\_error@{abort\_with\_error}!other.h@{other.h}}
 \doxysubsubsection{\texorpdfstring{abort\_with\_error()}{abort\_with\_error()}}
-{\footnotesize\ttfamily void abort\+\_\+with\+\_\+error (\begin{DoxyParamCaption}\item[{const char}]{err\mbox{[}static 1\mbox{]} }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily static void abort\+\_\+with\+\_\+error (\begin{DoxyParamCaption}\item[{const char}]{err\mbox{[}static 1\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
 
-\Hypertarget{other_8h_a4902c4c3316d140bbfeb760b9ebed96f}\label{other_8h_a4902c4c3316d140bbfeb760b9ebed96f} 
+\Hypertarget{other_8h_a7295cc0ac2a08002eaeb049a24552bf9}\label{other_8h_a7295cc0ac2a08002eaeb049a24552bf9} 
 \index{other.h@{other.h}!abort\_with\_error\_at@{abort\_with\_error\_at}}
 \index{abort\_with\_error\_at@{abort\_with\_error\_at}!other.h@{other.h}}
 \doxysubsubsection{\texorpdfstring{abort\_with\_error\_at()}{abort\_with\_error\_at()}}
-{\footnotesize\ttfamily void abort\+\_\+with\+\_\+error\+\_\+at (\begin{DoxyParamCaption}\item[{const char}]{msg\mbox{[}static 1\mbox{]},  }\item[{const char}]{file\mbox{[}static 1\mbox{]},  }\item[{size\+\_\+t}]{line }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily static void abort\+\_\+with\+\_\+error\+\_\+at (\begin{DoxyParamCaption}\item[{const char}]{msg\mbox{[}static 1\mbox{]},  }\item[{const char}]{file\mbox{[}static 1\mbox{]},  }\item[{size\+\_\+t}]{line }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
 

@@ -17,6 +17,8 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -99,31 +101,38 @@ $(document).ready(function(){initNavTree('option_8h.html',''); initResizable(); 
 
 <p>Option type.Result is a type that represents either value or nothing.  
 <a href="#details">More...</a></p>
-
+<div class="textblock"><code>#include &quot;<a class="el" href="other_8h_source.html">other.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for option.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="option_8h__incl.png" border="0" usemap="#ainclude_2option_8h" alt=""/></div>
+</div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img src="option_8h__dep__incl.png" border="0" usemap="#ainclude_2option_8hdep" alt=""/></div>
+</div>
+</div>
 <p><a href="option_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:ac569340811d1ad46ade7483a8e27c426" id="r_ac569340811d1ad46ade7483a8e27c426"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="option_8h.html#ac569340811d1ad46ade7483a8e27c426">DECLARE_OPTION</a>(T)</td></tr>
 <tr class="separator:ac569340811d1ad46ade7483a8e27c426"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac45f95d388e5d03ae79b9660852d8eab" id="r_ac45f95d388e5d03ae79b9660852d8eab"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="option_8h.html#ac45f95d388e5d03ae79b9660852d8eab">IMPL_OPTION</a>(T)</td></tr>
-<tr class="separator:ac45f95d388e5d03ae79b9660852d8eab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a9462c0f1555c2833a36f0286400cdd89" id="r_a9462c0f1555c2833a36f0286400cdd89"><td class="memItemLeft" align="right" valign="top"><a id="a9462c0f1555c2833a36f0286400cdd89" name="a9462c0f1555c2833a36f0286400cdd89"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>option_enum</b> { <b>OPT_VALUE</b>
-, <b>OPT_NONE</b>
+<tr class="memitem:a9462c0f1555c2833a36f0286400cdd89" id="r_a9462c0f1555c2833a36f0286400cdd89"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="option_8h.html#a9462c0f1555c2833a36f0286400cdd89">option_enum</a> { <a class="el" href="option_8h.html#a9462c0f1555c2833a36f0286400cdd89a997a46a56264122ca65fdc4d70c5e21f">OPT_VALUE</a>
+, <a class="el" href="option_8h.html#a9462c0f1555c2833a36f0286400cdd89a2ed357c9466d276e4ed1141e49f2f530">OPT_NONE</a>
  }</td></tr>
 <tr class="separator:a9462c0f1555c2833a36f0286400cdd89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a286473700f5b3405402caeb8dbf44728" id="r_a286473700f5b3405402caeb8dbf44728"><td class="memItemLeft" align="right" valign="top"><a id="a286473700f5b3405402caeb8dbf44728" name="a286473700f5b3405402caeb8dbf44728"></a>
-enum option_enum&#160;</td><td class="memItemRight" valign="bottom"><b>option_match</b> (void *option)</td></tr>
-<tr class="separator:a286473700f5b3405402caeb8dbf44728"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe4fc76155eaf20dbd7ec5d9848cef3c" id="r_afe4fc76155eaf20dbd7ec5d9848cef3c"><td class="memItemLeft" align="right" valign="top"><a id="afe4fc76155eaf20dbd7ec5d9848cef3c" name="afe4fc76155eaf20dbd7ec5d9848cef3c"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>option_has_value</b> (void *option)</td></tr>
-<tr class="separator:afe4fc76155eaf20dbd7ec5d9848cef3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a28b686e8a22c6928efda77871e2253" id="r_a8a28b686e8a22c6928efda77871e2253"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="option_8h.html#a8a28b686e8a22c6928efda77871e2253">option_has_value</a> (void *option)</td></tr>
+<tr class="separator:a8a28b686e8a22c6928efda77871e2253"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a460496756f779dfdb30ffcf1fe4dc61b" id="r_a460496756f779dfdb30ffcf1fe4dc61b"><td class="memItemLeft" align="right" valign="top">static enum <a class="el" href="option_8h.html#a9462c0f1555c2833a36f0286400cdd89">option_enum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="option_8h.html#a460496756f779dfdb30ffcf1fe4dc61b">option_match</a> (void *option)</td></tr>
+<tr class="separator:a460496756f779dfdb30ffcf1fe4dc61b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Option type.</p>
@@ -148,33 +157,80 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>option_has_value</b> 
 <div class="line">  <span class="keywordtype">bool</span> has_value; \</div>
 <div class="line">  T _value; \</div>
 <div class="line">}; \</div>
-<div class="line"><span class="keyword">struct </span>option_##T option_##T##_value(T val); \</div>
-<div class="line"><span class="keyword">struct </span>option_##T option_##T##_none();</div>
+<div class="line">OPTION_METHODS(T)</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="ac45f95d388e5d03ae79b9660852d8eab" name="ac45f95d388e5d03ae79b9660852d8eab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac45f95d388e5d03ae79b9660852d8eab">&#9670;&#160;</a></span>IMPL_OPTION</h2>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a9462c0f1555c2833a36f0286400cdd89" name="a9462c0f1555c2833a36f0286400cdd89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9462c0f1555c2833a36f0286400cdd89">&#9670;&#160;</a></span>option_enum</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define IMPL_OPTION</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">T</td><td>)</td>
-          <td></td>
+          <td class="memname">enum <a class="el" href="option_8h.html#a9462c0f1555c2833a36f0286400cdd89">option_enum</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">struct </span>option_##T option_##T##_value(T val) { \</div>
-<div class="line">  return (<span class="keyword">struct</span> option_##T){.has_value = <span class="keyword">true</span>, ._value = val}; \</div>
-<div class="line">} \</div>
-<div class="line"><span class="keyword">struct </span>option_##T option_##T##_none() { \</div>
-<div class="line">  return (<span class="keyword">struct</span> option_##T){.has_value = <span class="keyword">false</span>}; \</div>
-<div class="line">}</div>
-</div><!-- fragment -->
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a9462c0f1555c2833a36f0286400cdd89a997a46a56264122ca65fdc4d70c5e21f" name="a9462c0f1555c2833a36f0286400cdd89a997a46a56264122ca65fdc4d70c5e21f"></a>OPT_VALUE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a9462c0f1555c2833a36f0286400cdd89a2ed357c9466d276e4ed1141e49f2f530" name="a9462c0f1555c2833a36f0286400cdd89a2ed357c9466d276e4ed1141e49f2f530"></a>OPT_NONE&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a8a28b686e8a22c6928efda77871e2253" name="a8a28b686e8a22c6928efda77871e2253"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a28b686e8a22c6928efda77871e2253">&#9670;&#160;</a></span>option_has_value()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool option_has_value </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>option</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a460496756f779dfdb30ffcf1fe4dc61b" name="a460496756f779dfdb30ffcf1fe4dc61b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a460496756f779dfdb30ffcf1fe4dc61b">&#9670;&#160;</a></span>option_match()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static enum <a class="el" href="option_8h.html#a9462c0f1555c2833a36f0286400cdd89">option_enum</a> option_match </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>option</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
 </div>
 </div>
 </div><!-- contents -->

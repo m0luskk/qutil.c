@@ -4,32 +4,57 @@
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ DECLARE\_OPTION(T)\ \(\backslash\)}}
-\DoxyCodeLine{00011\ \textcolor{preprocessor}{struct\ option\_\#\#T\ \{\ \(\backslash\)}}
-\DoxyCodeLine{00012\ \textcolor{preprocessor}{\ \ bool\ has\_value;\ \(\backslash\)}}
-\DoxyCodeLine{00013\ \textcolor{preprocessor}{\ \ T\ \_value;\ \(\backslash\)}}
-\DoxyCodeLine{00014\ \textcolor{preprocessor}{\};\ \(\backslash\)}}
-\DoxyCodeLine{00015\ \textcolor{preprocessor}{struct\ option\_\#\#T\ option\_\#\#T\#\#\_value(T\ val);\ \(\backslash\)}}
-\DoxyCodeLine{00016\ \textcolor{preprocessor}{struct\ option\_\#\#T\ option\_\#\#T\#\#\_none();}}
-\DoxyCodeLine{00017\ }
-\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ IMPL\_OPTION(T)\ \(\backslash\)}}
-\DoxyCodeLine{00019\ \textcolor{preprocessor}{struct\ option\_\#\#T\ option\_\#\#T\#\#\_value(T\ val)\ \{\ \(\backslash\)}}
-\DoxyCodeLine{00020\ \textcolor{preprocessor}{\ \ return\ (struct\ option\_\#\#T)\{.has\_value\ =\ true,\ .\_value\ =\ val\};\ \(\backslash\)}}
-\DoxyCodeLine{00021\ \textcolor{preprocessor}{\}\ \(\backslash\)}}
-\DoxyCodeLine{00022\ \textcolor{preprocessor}{struct\ option\_\#\#T\ option\_\#\#T\#\#\_none()\ \{\ \(\backslash\)}}
-\DoxyCodeLine{00023\ \textcolor{preprocessor}{\ \ return\ (struct\ option\_\#\#T)\{.has\_value\ =\ false\};\ \(\backslash\)}}
-\DoxyCodeLine{00024\ \textcolor{preprocessor}{\}}}
-\DoxyCodeLine{00025\ }
-\DoxyCodeLine{00026\ \textcolor{keyword}{enum}\ option\_enum\ \{}
-\DoxyCodeLine{00027\ \ \ OPT\_VALUE,}
-\DoxyCodeLine{00028\ \ \ OPT\_NONE}
-\DoxyCodeLine{00029\ \};}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{other_8h}{other.h}}"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ OPTION\_VALUE\_BODY(T)\ \{\ return\ (struct\ option\_\#\#T)\{.has\_value\ =\ true,\ .\_value\ =\ val\};\ \}}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#define\ OPTION\_NONE\_BODY(T)\ \{\ return\ (struct\ option\_\#\#T)\{.has\_value\ =\ false\};\ \}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ OPTION\_METHODS(T)\ \(\backslash\)}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\ \ O\_M(struct\ option\_\#\#T,\ option\_\#\#T\#\#\_value,\ T\ val,\ OPTION\_VALUE\_BODY(T)\ )\ \(\backslash\)}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\ \ O\_M(struct\ option\_\#\#T,\ option\_\#\#T\#\#\_none,\ ,\ OPTION\_NONE\_BODY(T)\ )}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ O\_M(RET,\ NAME,\ ARGS,\ BODY)\ static\ inline\ RET\ NAME(ARGS)\ BODY}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ DECLARE\_OPTION(T)\ \(\backslash\)}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{struct\ option\_\#\#T\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\ \ bool\ has\_value;\ \(\backslash\)}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\ \ T\ \_value;\ \(\backslash\)}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\};\ \(\backslash\)}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{OPTION\_METHODS(T)}}
 \DoxyCodeLine{00030\ }
-\DoxyCodeLine{00031\ \textcolor{keyword}{enum}\ option\_enum\ option\_match(\textcolor{keywordtype}{void}*\ option);}
-\DoxyCodeLine{00032\ }
-\DoxyCodeLine{00033\ \textcolor{keywordtype}{bool}\ option\_has\_value(\textcolor{keywordtype}{void}*\ option);}
-\DoxyCodeLine{00034\ }
-\DoxyCodeLine{00035\ DECLARE\_OPTION(\textcolor{keywordtype}{int})}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{option_8h_a9462c0f1555c2833a36f0286400cdd89}{option\_enum}}\ \{}
+\DoxyCodeLine{00033\ \ \ \mbox{\hyperlink{option_8h_a9462c0f1555c2833a36f0286400cdd89a997a46a56264122ca65fdc4d70c5e21f}{OPT\_VALUE}},}
+\DoxyCodeLine{00034\ \ \ \mbox{\hyperlink{option_8h_a9462c0f1555c2833a36f0286400cdd89a2ed357c9466d276e4ed1141e49f2f530}{OPT\_NONE}}}
+\DoxyCodeLine{00035\ \};}
 \DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{option_8h_a8a28b686e8a22c6928efda77871e2253}{option\_has\_value}}(\textcolor{keywordtype}{void}*\ option)\ \{}
+\DoxyCodeLine{00038\ \ \ \textcolor{keywordflow}{if}\ (option)\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordflow}{return}\ *((\textcolor{keywordtype}{bool}*)option);}
+\DoxyCodeLine{00040\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00042\ \ \ \}}
+\DoxyCodeLine{00043\ \}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{option_8h_a9462c0f1555c2833a36f0286400cdd89}{option\_enum}}\ \mbox{\hyperlink{option_8h_a460496756f779dfdb30ffcf1fe4dc61b}{option\_match}}(\textcolor{keywordtype}{void}*\ option)\ \{}
+\DoxyCodeLine{00046\ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{option_8h_a8a28b686e8a22c6928efda77871e2253}{option\_has\_value}}(option))\ \{}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{option_8h_a9462c0f1555c2833a36f0286400cdd89a997a46a56264122ca65fdc4d70c5e21f}{OPT\_VALUE}};}
+\DoxyCodeLine{00048\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{option_8h_a9462c0f1555c2833a36f0286400cdd89a2ed357c9466d276e4ed1141e49f2f530}{OPT\_NONE}};}
+\DoxyCodeLine{00050\ \ \ \}}
+\DoxyCodeLine{00051\ \}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \mbox{\hyperlink{option_8h_ac569340811d1ad46ade7483a8e27c426}{DECLARE\_OPTION}}(\textcolor{keywordtype}{int})}
+\DoxyCodeLine{00055\ \mbox{\hyperlink{option_8h_ac569340811d1ad46ade7483a8e27c426}{DECLARE\_OPTION}}(\textcolor{keywordtype}{size\_t})}
+\DoxyCodeLine{00056\ \mbox{\hyperlink{option_8h_ac569340811d1ad46ade7483a8e27c426}{DECLARE\_OPTION}}(\textcolor{keywordtype}{char})}
+\DoxyCodeLine{00057\ \mbox{\hyperlink{option_8h_ac569340811d1ad46ade7483a8e27c426}{DECLARE\_OPTION}}(\textcolor{keywordtype}{double})}
+\DoxyCodeLine{00058\ \mbox{\hyperlink{option_8h_ac569340811d1ad46ade7483a8e27c426}{DECLARE\_OPTION}}(\textcolor{keywordtype}{bool})}
+\DoxyCodeLine{00059\ \mbox{\hyperlink{option_8h_ac569340811d1ad46ade7483a8e27c426}{DECLARE\_OPTION}}(\mbox{\hyperlink{other_8h_a8ab1bc0eac7b13dbef044c138a320810}{p\_void}})}
+\DoxyCodeLine{00060\ \mbox{\hyperlink{option_8h_ac569340811d1ad46ade7483a8e27c426}{DECLARE\_OPTION}}(int\_array)}
+\DoxyCodeLine{00061\ \mbox{\hyperlink{option_8h_ac569340811d1ad46ade7483a8e27c426}{DECLARE\_OPTION}}(double\_array)}
+\DoxyCodeLine{00062\ \mbox{\hyperlink{option_8h_ac569340811d1ad46ade7483a8e27c426}{DECLARE\_OPTION}}(char\_array)}
+\DoxyCodeLine{00063\ \mbox{\hyperlink{option_8h_ac569340811d1ad46ade7483a8e27c426}{DECLARE\_OPTION}}(\mbox{\hyperlink{other_8h_a869289c3acb4b0c62c1b7f68d8583ef8}{static\_string}})}
+\DoxyCodeLine{00064\ }
 
 \end{DoxyCode}

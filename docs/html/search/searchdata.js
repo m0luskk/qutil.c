@@ -1,9 +1,13 @@
 var indexSectionsWithContent =
 {
-  0: "adioprtu",
+  0: "adioprstu",
   1: "or",
-  2: "r",
-  3: "aip"
+  2: "aor",
+  3: "ps",
+  4: "or",
+  5: "or",
+  6: "ad",
+  7: "aip"
 };
 
 var indexSectionNames =
@@ -11,7 +15,11 @@ var indexSectionNames =
   0: "all",
   1: "files",
   2: "functions",
-  3: "groups"
+  3: "typedefs",
+  4: "enums",
+  5: "enumvalues",
+  6: "defines",
+  7: "groups"
 };
 
 var indexSectionLabels =
@@ -19,6 +27,10 @@ var indexSectionLabels =
   0: "All",
   1: "Files",
   2: "Functions",
-  3: "Modules"
+  3: "Typedefs",
+  4: "Enumerations",
+  5: "Enumerator",
+  6: "Macros",
+  7: "Modules"
 };
 

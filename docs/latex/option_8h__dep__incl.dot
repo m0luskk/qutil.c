@@ -6,5 +6,5 @@ digraph "include/option.h"
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
   Node1 [id="Node000001",label="include/option.h",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Option type.Result is a type that represents either value or nothing."];
   Node1 -> Node2 [id="edge2_Node000001_Node000002",dir="back",color="steelblue1",style="solid",tooltip=" "];
-  Node2 [id="Node000002",label="lib/option.c",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$option_8c.html",tooltip=" "];
+  Node2 [id="Node000002",label="include/result.h",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$result_8h.html",tooltip="Result type.Result is a type that represents either success (ok) or failure (err)."];
 }

@@ -1,18 +1,33 @@
 \doxysection{other.\+h}
 \hypertarget{other_8h_source}{}\label{other_8h_source}\index{include/other.h@{include/other.h}}
-
+\mbox{\hyperlink{other_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
-\DoxyCodeLine{00004\ [[noreturn]]}
-\DoxyCodeLine{00005\ \textcolor{keywordtype}{void}\ abort\_with\_error(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ err[\textcolor{keyword}{static}\ 1]);}
-\DoxyCodeLine{00006\ }
-\DoxyCodeLine{00007\ }
-\DoxyCodeLine{00008\ \textcolor{comment}{//\ \#if\ \_\_has\_c\_attribute(\_\_gnu\_\_::\_\_format\_\_)}}
-\DoxyCodeLine{00009\ \textcolor{comment}{//\ \ [[\_\_gnu\_\_::\_\_format\_\_(\_\_printf\_\_,\ 1,\ 2)]]}}
-\DoxyCodeLine{00010\ \textcolor{comment}{//\ \#endif}}
-\DoxyCodeLine{00011\ [[noreturn]]}
-\DoxyCodeLine{00012\ \textcolor{keywordtype}{void}\ abort\_with\_error\_at(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ msg[\textcolor{keyword}{static}\ 1],\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ file[\textcolor{keyword}{static}\ 1],\ \textcolor{keywordtype}{size\_t}\ line);}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \textcolor{keyword}{const}\ \mbox{\hyperlink{other_8h_a869289c3acb4b0c62c1b7f68d8583ef8}{static\_string}};\ }
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{void}*\ \mbox{\hyperlink{other_8h_a8ab1bc0eac7b13dbef044c138a320810}{p\_void}};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ [[noreturn]]}
+\DoxyCodeLine{00027\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{other_8h_a377d3fb19f61015e85756eabc5a9ef71}{abort\_with\_error}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ err[\textcolor{keyword}{static}\ 1])\ \{}
+\DoxyCodeLine{00028\ \ \ fprintf(stderr,\ \textcolor{stringliteral}{"{}Abort\ with\ error\ message:\ \%s\(\backslash\)n"{}},\ err);}
+\DoxyCodeLine{00029\ \ \ abort();}
+\DoxyCodeLine{00030\ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ [[noreturn]]}
+\DoxyCodeLine{00033\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{other_8h_a7295cc0ac2a08002eaeb049a24552bf9}{abort\_with\_error\_at}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ msg[\textcolor{keyword}{static}\ 1],\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ file[\textcolor{keyword}{static}\ 1],\ \textcolor{keywordtype}{size\_t}\ line)\ \{\ \textcolor{comment}{//\ todo}}
+\DoxyCodeLine{00034\ \ \ fprintf(stderr,\ msg,\ file,\ line);}
+\DoxyCodeLine{00035\ \ \ abort();}
+\DoxyCodeLine{00036\ \}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#define\ ARRAY\_CONTAINER(TYPE)\ typedef\ struct\ TYPE\#\#\_array\ \{\ const\ size\_t\ len;\ TYPE*const\ data;\ \}\ TYPE\#\#\_array;}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \mbox{\hyperlink{other_8h_acb3acaf098ac94e72d0e6627d44c005b}{ARRAY\_CONTAINER}}(\textcolor{keywordtype}{int})}
+\DoxyCodeLine{00044\ \mbox{\hyperlink{other_8h_acb3acaf098ac94e72d0e6627d44c005b}{ARRAY\_CONTAINER}}(\textcolor{keywordtype}{double})}
+\DoxyCodeLine{00045\ \mbox{\hyperlink{other_8h_acb3acaf098ac94e72d0e6627d44c005b}{ARRAY\_CONTAINER}}(\textcolor{keywordtype}{char})}
 
 \end{DoxyCode}

@@ -17,6 +17,8 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -91,6 +93,7 @@ $(document).ready(function(){initNavTree('result_8h.html',''); initResizable(); 
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">result.h File Reference<div class="ingroups"><a class="el" href="group__PublicAPI.html">public api</a></div></div></div>
@@ -99,8 +102,7 @@ $(document).ready(function(){initNavTree('result_8h.html',''); initResizable(); 
 
 <p>Result type.Result is a type that represents either success (<code>ok</code>) or failure (<code>err</code>).  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &quot;../include/other.h&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="option_8h_source.html">option.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for result.h:</div>
 <div class="dyncontent">
@@ -111,72 +113,41 @@ Include dependency graph for result.h:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a7abce9781ac2204f3eb022347a636cf0" id="r_a7abce9781ac2204f3eb022347a636cf0"><td class="memItemLeft" align="right" valign="top"><a id="a7abce9781ac2204f3eb022347a636cf0" name="a7abce9781ac2204f3eb022347a636cf0"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>RESULT_OK_BODY</b>(T,  ERR)&#160;&#160;&#160;{ return (struct result_##T##_##ERR){ .is_ok = true, ._value.ok = value }; }</td></tr>
-<tr class="separator:a7abce9781ac2204f3eb022347a636cf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3aac89620660c8d83058e235f816ea03" id="r_a3aac89620660c8d83058e235f816ea03"><td class="memItemLeft" align="right" valign="top"><a id="a3aac89620660c8d83058e235f816ea03" name="a3aac89620660c8d83058e235f816ea03"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>RESULT_ERR_BODY</b>(T,  ERR)&#160;&#160;&#160;{ return (struct result_##T##_##ERR){ .is_ok = false, ._value.err = err_value }; }</td></tr>
-<tr class="separator:a3aac89620660c8d83058e235f816ea03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a055f622ecd52b4d55215c8752fddffa0" id="r_a055f622ecd52b4d55215c8752fddffa0"><td class="memItemLeft" align="right" valign="top"><a id="a055f622ecd52b4d55215c8752fddffa0" name="a055f622ecd52b4d55215c8752fddffa0"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>RESULT_GET_ERR_BODY</b>(T,  ERR)&#160;&#160;&#160;{ return (result-&gt;is_ok ? (abort(), (ERR){}) : result-&gt;_value.err); }</td></tr>
-<tr class="separator:a055f622ecd52b4d55215c8752fddffa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d1df375c06a423ab8d88ae33b73cf40" id="r_a0d1df375c06a423ab8d88ae33b73cf40"><td class="memItemLeft" align="right" valign="top"><a id="a0d1df375c06a423ab8d88ae33b73cf40" name="a0d1df375c06a423ab8d88ae33b73cf40"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>RESULT_GET_VALUE_BODY</b>(T,  ERR)&#160;&#160;&#160;{ return (!result-&gt;is_ok ? (abort(), (T){}) : result-&gt;_value.ok); }</td></tr>
-<tr class="separator:a0d1df375c06a423ab8d88ae33b73cf40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9f91a856d10fa403d054bac285226c5" id="r_aa9f91a856d10fa403d054bac285226c5"><td class="memItemLeft" align="right" valign="top"><a id="aa9f91a856d10fa403d054bac285226c5" name="aa9f91a856d10fa403d054bac285226c5"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>RESULT_INSPECT_BODY</b>(T,  ERR)&#160;&#160;&#160;{ if (result-&gt;is_ok) f(result-&gt;_value.ok); }</td></tr>
-<tr class="separator:aa9f91a856d10fa403d054bac285226c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d1415a7d10a404217cdf6f10ef4bfa9" id="r_a6d1415a7d10a404217cdf6f10ef4bfa9"><td class="memItemLeft" align="right" valign="top"><a id="a6d1415a7d10a404217cdf6f10ef4bfa9" name="a6d1415a7d10a404217cdf6f10ef4bfa9"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>RESULT_INSPECT_ARGS</b>(T,  ERR)&#160;&#160;&#160;struct result_##T##_##ERR* result, f_result_##T##_##ERR##_inspect f</td></tr>
-<tr class="separator:a6d1415a7d10a404217cdf6f10ef4bfa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a474236b8f3d97163292cd4640d663fd7" id="r_a474236b8f3d97163292cd4640d663fd7"><td class="memItemLeft" align="right" valign="top"><a id="a474236b8f3d97163292cd4640d663fd7" name="a474236b8f3d97163292cd4640d663fd7"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>RESULT_INSPECT_ERR_BODY</b>(T,  ERR)&#160;&#160;&#160;{ if (!result-&gt;is_ok) f(result-&gt;_value.err); }</td></tr>
-<tr class="separator:a474236b8f3d97163292cd4640d663fd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a859a211be9ca2593b1a3c8cbe9560692" id="r_a859a211be9ca2593b1a3c8cbe9560692"><td class="memItemLeft" align="right" valign="top"><a id="a859a211be9ca2593b1a3c8cbe9560692" name="a859a211be9ca2593b1a3c8cbe9560692"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>RESULT_INSPECT_ERR_ARGS</b>(T,  ERR)&#160;&#160;&#160;struct result_##T##_##ERR* result, f_result_##T##_##ERR##_inspect_err f</td></tr>
-<tr class="separator:a859a211be9ca2593b1a3c8cbe9560692"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31f29c34fead26a1363272d9f27c23e1" id="r_a31f29c34fead26a1363272d9f27c23e1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="result_8h.html#a31f29c34fead26a1363272d9f27c23e1">RESULT_METHODS</a>(T,  ERR)</td></tr>
-<tr class="separator:a31f29c34fead26a1363272d9f27c23e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a79338461f628e034c712251e21ab8541" id="r_a79338461f628e034c712251e21ab8541"><td class="memItemLeft" align="right" valign="top"><a id="a79338461f628e034c712251e21ab8541" name="a79338461f628e034c712251e21ab8541"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>X</b>(RET,  NAME,  ARGS,  DEF)&#160;&#160;&#160;RET NAME(ARGS);</td></tr>
-<tr class="separator:a79338461f628e034c712251e21ab8541"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga08049ca3b3469bc28a420283be89ed96" id="r_ga08049ca3b3469bc28a420283be89ed96"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__PublicAPI.html#ga08049ca3b3469bc28a420283be89ed96">DECLARE_RESULT</a>(T,  ERR)</td></tr>
-<tr class="memdesc:ga08049ca3b3469bc28a420283be89ed96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declare result structure of types <code>T</code> as <code>ok</code> value and <code>ERR</code> as <code>err</code> value.  <br /></td></tr>
+<tr class="memdesc:ga08049ca3b3469bc28a420283be89ed96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declare result structure of types <code>T</code> as <code>ok</code> variant and <code>ERR</code> as <code>err</code> variant.  <br /></td></tr>
 <tr class="separator:ga08049ca3b3469bc28a420283be89ed96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2f59352162bb08d95adba903a57435af" id="r_ga2f59352162bb08d95adba903a57435af"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__PublicAPI.html#ga2f59352162bb08d95adba903a57435af">RESULT_GET_ERROR</a>(T,  ERR,  RESULT)</td></tr>
-<tr class="memdesc:ga2f59352162bb08d95adba903a57435af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macros-wrapper of result_T_ERR_get_err function with context of aborting in fail case.  <br /></td></tr>
-<tr class="separator:ga2f59352162bb08d95adba903a57435af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c8f9bc2e1a37be3bf8be72567cb5b62" id="r_a5c8f9bc2e1a37be3bf8be72567cb5b62"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="result_8h.html#a5c8f9bc2e1a37be3bf8be72567cb5b62">RESULT_GET_VALUE</a>(T,  ERR,  RESULT)</td></tr>
-<tr class="separator:a5c8f9bc2e1a37be3bf8be72567cb5b62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28a4cb2cf7e8200319c350e9824bb24f" id="r_a28a4cb2cf7e8200319c350e9824bb24f"><td class="memItemLeft" align="right" valign="top"><a id="a28a4cb2cf7e8200319c350e9824bb24f" name="a28a4cb2cf7e8200319c350e9824bb24f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>IMPL_RESULT</b>(T,  ERR)&#160;&#160;&#160;RESULT_METHODS(T, ERR)</td></tr>
-<tr class="separator:a28a4cb2cf7e8200319c350e9824bb24f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a658536af587406cbc17706521b18cafd" id="r_a658536af587406cbc17706521b18cafd"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="other_8h.html#a869289c3acb4b0c62c1b7f68d8583ef8">static_string</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="result_8h.html#a658536af587406cbc17706521b18cafd">serror</a></td></tr>
+<tr class="memdesc:a658536af587406cbc17706521b18cafd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contain static error string.  <br /></td></tr>
+<tr class="separator:a658536af587406cbc17706521b18cafd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a9dfd764217c2c915cba60224369342fd" id="r_a9dfd764217c2c915cba60224369342fd"><td class="memItemLeft" align="right" valign="top"><a id="a9dfd764217c2c915cba60224369342fd" name="a9dfd764217c2c915cba60224369342fd"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>result_enum</b> { <b>RES_OK</b>
-, <b>RES_ERR</b>
+<tr class="memitem:a9dfd764217c2c915cba60224369342fd" id="r_a9dfd764217c2c915cba60224369342fd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="result_8h.html#a9dfd764217c2c915cba60224369342fd">result_enum</a> { <a class="el" href="result_8h.html#a9dfd764217c2c915cba60224369342fda2ea4b6ef3fffc17dd1d38ab5c2837737">RES_OK</a>
+, <a class="el" href="result_8h.html#a9dfd764217c2c915cba60224369342fdaecff6e8c93a5895522ba737bb5c89e2a">RES_ERR</a>
  }</td></tr>
+<tr class="memdesc:a9dfd764217c2c915cba60224369342fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return type of <code>result_match</code> function.  <a href="result_8h.html#a9dfd764217c2c915cba60224369342fd">More...</a><br /></td></tr>
 <tr class="separator:a9dfd764217c2c915cba60224369342fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a570bc76d798cc356eb18bcf295e3e91f" id="r_a570bc76d798cc356eb18bcf295e3e91f"><td class="memItemLeft" align="right" valign="top"><a id="a570bc76d798cc356eb18bcf295e3e91f" name="a570bc76d798cc356eb18bcf295e3e91f"></a>
-enum result_enum&#160;</td><td class="memItemRight" valign="bottom"><b>result_match</b> (void *result)</td></tr>
-<tr class="separator:a570bc76d798cc356eb18bcf295e3e91f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga39f74621284c44db4f02d882d8d8a34b" id="r_ga39f74621284c44db4f02d882d8d8a34b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__PublicAPI.html#ga39f74621284c44db4f02d882d8d8a34b">result_is_ok</a> (void *result)</td></tr>
-<tr class="memdesc:ga39f74621284c44db4f02d882d8d8a34b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns <code>true</code> if the passed result instance contain <code>ok</code> value.  <br /></td></tr>
-<tr class="separator:ga39f74621284c44db4f02d882d8d8a34b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae07a0258fe3dcc378a4296c6abefc564" id="r_gae07a0258fe3dcc378a4296c6abefc564"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__PublicAPI.html#gae07a0258fe3dcc378a4296c6abefc564">result_is_err</a> (void *result)</td></tr>
-<tr class="memdesc:gae07a0258fe3dcc378a4296c6abefc564"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns <code>true</code> if the passed result instance contain <code>err</code> value.  <br /></td></tr>
-<tr class="separator:gae07a0258fe3dcc378a4296c6abefc564"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga282e9abd1facc7c748f8fd2b7067f606" id="r_ga282e9abd1facc7c748f8fd2b7067f606"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__PublicAPI.html#ga282e9abd1facc7c748f8fd2b7067f606">result_is_ok</a> (void *result)</td></tr>
+<tr class="memdesc:ga282e9abd1facc7c748f8fd2b7067f606"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns <code>true</code> if the passed result instance contain <code>ok</code> variant.  <br /></td></tr>
+<tr class="separator:ga282e9abd1facc7c748f8fd2b7067f606"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaee8b2e7e36b54cebcde6c6aa52420d82" id="r_gaee8b2e7e36b54cebcde6c6aa52420d82"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__PublicAPI.html#gaee8b2e7e36b54cebcde6c6aa52420d82">result_is_err</a> (void *result)</td></tr>
+<tr class="memdesc:gaee8b2e7e36b54cebcde6c6aa52420d82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns <code>true</code> if the passed result instance contain <code>err</code> variant.  <br /></td></tr>
+<tr class="separator:gaee8b2e7e36b54cebcde6c6aa52420d82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafaee2a2b2dfc42e34f26fbd189f5a296" id="r_gafaee2a2b2dfc42e34f26fbd189f5a296"><td class="memItemLeft" align="right" valign="top">static enum <a class="el" href="result_8h.html#a9dfd764217c2c915cba60224369342fd">result_enum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__PublicAPI.html#gafaee2a2b2dfc42e34f26fbd189f5a296">result_match</a> (void *result)</td></tr>
+<tr class="memdesc:gafaee2a2b2dfc42e34f26fbd189f5a296"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns enum thats corresponds result's containing variant.  <br /></td></tr>
+<tr class="separator:gafaee2a2b2dfc42e34f26fbd189f5a296"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Result type.</p>
 <p>Result is a type that represents either success (<code>ok</code>) or failure (<code>err</code>). </p>
 <h2><a class="anchor" id="autotoc_md0"></a>
-User-defined result type</h2>
-<dl class="section attention"><dt>Attention</dt><dd><code>user_ok_type</code> and <code>user_err_type</code> must not contain whitespaces and special characters (<code>const char *</code> or <code>int[]</code> for example)</dd></dl>
+Using user-defined types</h2>
 <div class="fragment"><div class="line"><span class="comment">// my_result.h</span></div>
 <div class="line"><span class="preprocessor">#define X(RET, NAME, ARGS, DEF) RET NAME(ARGS);</span></div>
 <div class="line"><a class="code hl_define" href="group__PublicAPI.html#ga08049ca3b3469bc28a420283be89ed96">DECLARE_RESULT</a>(user_ok_type, user_err_type);</div>
@@ -186,77 +157,44 @@ User-defined result type</h2>
 <div class="line"><span class="preprocessor">#define X(RET, NAME, ARGS, DEF) RET NAME(ARGS) DEF</span></div>
 <div class="line">IMPL_RESULT(user_ok_type, user_err_type);</div>
 <div class="line"><span class="preprocessor">#undef X</span></div>
-<div class="ttc" id="agroup__PublicAPI_html_ga08049ca3b3469bc28a420283be89ed96"><div class="ttname"><a href="group__PublicAPI.html#ga08049ca3b3469bc28a420283be89ed96">DECLARE_RESULT</a></div><div class="ttdeci">#define DECLARE_RESULT(T, ERR)</div><div class="ttdoc">Declare result structure of types T as ok value and ERR as err value.</div><div class="ttdef"><b>Definition</b> result.h:73</div></div>
-</div><!-- fragment --> </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a5c8f9bc2e1a37be3bf8be72567cb5b62" name="a5c8f9bc2e1a37be3bf8be72567cb5b62"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c8f9bc2e1a37be3bf8be72567cb5b62">&#9670;&#160;</a></span>RESULT_GET_VALUE</h2>
+<div class="ttc" id="agroup__PublicAPI_html_ga08049ca3b3469bc28a420283be89ed96"><div class="ttname"><a href="group__PublicAPI.html#ga08049ca3b3469bc28a420283be89ed96">DECLARE_RESULT</a></div><div class="ttdeci">#define DECLARE_RESULT(T, ERR)</div><div class="ttdoc">Declare result structure of types T as ok variant and ERR as err variant.</div><div class="ttdef"><b>Definition</b> result.h:81</div></div>
+</div><!-- fragment --> <dl class="section attention"><dt>Attention</dt><dd><code>user_ok_type</code> and <code>user_err_type</code> must not contain whitespaces and special characters (<code>const char *</code> or <code>int[]</code> for example) </dd></dl>
+</div><h2 class="groupheader">Typedef Documentation</h2>
+<a id="a658536af587406cbc17706521b18cafd" name="a658536af587406cbc17706521b18cafd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a658536af587406cbc17706521b18cafd">&#9670;&#160;</a></span>serror</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RESULT_GET_VALUE</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">T, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">ERR, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">RESULT&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">typedef <a class="el" href="other_8h.html#a869289c3acb4b0c62c1b7f68d8583ef8">static_string</a> <a class="el" href="result_8h.html#a658536af587406cbc17706521b18cafd">serror</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">( <a class="code hl_function" href="group__PublicAPI.html#ga39f74621284c44db4f02d882d8d8a34b">result_is_ok</a>(RESULT) ? result_##T##_##ERR##_get_value(RESULT) \</div>
-<div class="line">  : (abort_with_error_at(<span class="stringliteral">&quot;An attempt to access an inactive `ok` value of the result structure at %s:%zu\n&quot;</span>, __FILE__, __LINE__), (ERR){}) );</div>
-<div class="ttc" id="agroup__PublicAPI_html_ga39f74621284c44db4f02d882d8d8a34b"><div class="ttname"><a href="group__PublicAPI.html#ga39f74621284c44db4f02d882d8d8a34b">result_is_ok</a></div><div class="ttdeci">bool result_is_ok(void *result)</div><div class="ttdoc">Returns true if the passed result instance contain ok value.</div><div class="ttdef"><b>Definition</b> result.c:7</div></div>
-</div><!-- fragment -->
+
+<p>Contain static error string. </p>
+
 </div>
 </div>
-<a id="a31f29c34fead26a1363272d9f27c23e1" name="a31f29c34fead26a1363272d9f27c23e1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31f29c34fead26a1363272d9f27c23e1">&#9670;&#160;</a></span>RESULT_METHODS</h2>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a9dfd764217c2c915cba60224369342fd" name="a9dfd764217c2c915cba60224369342fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9dfd764217c2c915cba60224369342fd">&#9670;&#160;</a></span>result_enum</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RESULT_METHODS</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">T, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">ERR&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
+          <td class="memname">enum <a class="el" href="result_8h.html#a9dfd764217c2c915cba60224369342fd">result_enum</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">  X(<span class="keyword">struct</span> result_##T##_##ERR, result_##T##_##ERR##_ok, T value, RESULT_OK_BODY(T, ERR)) \</div>
-<div class="line">  X(<span class="keyword">struct</span> result_##T##_##ERR, result_##T##_##ERR##_err, ERR err_value, RESULT_ERR_BODY(T, ERR) ) \</div>
-<div class="line">  X(ERR, result_##T##_##ERR##_get_err, <span class="keyword">struct</span> result_##T##_##ERR* result, RESULT_GET_ERR_BODY(T, ERR) ) \</div>
-<div class="line">  X(T, result_##T##_##ERR##_get_value, <span class="keyword">struct</span> result_##T##_##ERR* result, RESULT_GET_VALUE_BODY(T, ERR) ) \</div>
-<div class="line">  X(<span class="keywordtype">void</span>, result_##T##_##ERR##_inspect, RESULT_INSPECT_ARGS(T, ERR), RESULT_INSPECT_BODY(T, ERR)) \</div>
-<div class="line">  X(<span class="keywordtype">void</span>, result_##T##_##ERR##_inspect_err, RESULT_INSPECT_ERR_ARGS(T, ERR), RESULT_INSPECT_ERR_BODY(T, ERR))</div>
-</div><!-- fragment -->
+
+<p>Return type of <code>result_match</code> function. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a9dfd764217c2c915cba60224369342fda2ea4b6ef3fffc17dd1d38ab5c2837737" name="a9dfd764217c2c915cba60224369342fda2ea4b6ef3fffc17dd1d38ab5c2837737"></a>RES_OK&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a9dfd764217c2c915cba60224369342fdaecff6e8c93a5895522ba737bb5c89e2a" name="a9dfd764217c2c915cba60224369342fdaecff6e8c93a5895522ba737bb5c89e2a"></a>RES_ERR&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
 </div>
 </div>
 </div><!-- contents -->

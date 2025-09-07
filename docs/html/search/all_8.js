@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['x_0',['x',['../result_8h.html#a79338461f628e034c712251e21ab8541',1,'X:&#160;result.h'],['../result_8c.html#a79338461f628e034c712251e21ab8541',1,'X:&#160;result.c']]]
+  ['user_20defined_20types_0',['Using user-defined types',['../result_8h.html#autotoc_md0',1,'']]],
+  ['using_20user_20defined_20types_1',['Using user-defined types',['../result_8h.html#autotoc_md0',1,'']]]
 ];

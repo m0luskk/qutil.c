@@ -17,6 +17,8 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -90,11 +92,18 @@ $(document).ready(function(){initNavTree('other_8h.html',''); initResizable(); }
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">other.h File Reference</div></div>
+  <div class="headertitle"><div class="title">other.h File Reference<div class="ingroups"><a class="el" href="group__PublicAPI.html">public api</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Some helpful types.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stddef.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for other.h:</div>
 <div class="dyncontent">
@@ -108,40 +117,122 @@ This graph shows which files directly or indirectly include this file:</div>
 </div>
 <p><a href="other_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:acb3acaf098ac94e72d0e6627d44c005b" id="r_acb3acaf098ac94e72d0e6627d44c005b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="other_8h.html#acb3acaf098ac94e72d0e6627d44c005b">ARRAY_CONTAINER</a>(TYPE)&#160;&#160;&#160;typedef struct TYPE##_array { const size_t len; TYPE*const data; } TYPE##_array;</td></tr>
+<tr class="memdesc:acb3acaf098ac94e72d0e6627d44c005b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Macros for generate structure for convenient array operating.  <br /></td></tr>
+<tr class="separator:acb3acaf098ac94e72d0e6627d44c005b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a869289c3acb4b0c62c1b7f68d8583ef8" id="r_a869289c3acb4b0c62c1b7f68d8583ef8"><td class="memItemLeft" align="right" valign="top">typedef const char *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="other_8h.html#a869289c3acb4b0c62c1b7f68d8583ef8">static_string</a></td></tr>
+<tr class="memdesc:a869289c3acb4b0c62c1b7f68d8583ef8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contain static string pointer for use in <code>option</code> and <code>result</code> types.  <br /></td></tr>
+<tr class="separator:a869289c3acb4b0c62c1b7f68d8583ef8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ab1bc0eac7b13dbef044c138a320810" id="r_a8ab1bc0eac7b13dbef044c138a320810"><td class="memItemLeft" align="right" valign="top">typedef void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="other_8h.html#a8ab1bc0eac7b13dbef044c138a320810">p_void</a></td></tr>
+<tr class="memdesc:a8ab1bc0eac7b13dbef044c138a320810"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contain constant <code>void*</code> for use in <code>option</code> and <code>result</code> types.  <br /></td></tr>
+<tr class="separator:a8ab1bc0eac7b13dbef044c138a320810"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae2c8bcb169c8faf25a8f6404d428907a" id="r_ae2c8bcb169c8faf25a8f6404d428907a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="other_8h.html#ae2c8bcb169c8faf25a8f6404d428907a">abort_with_error</a> (const char err[static 1])</td></tr>
-<tr class="separator:ae2c8bcb169c8faf25a8f6404d428907a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4902c4c3316d140bbfeb760b9ebed96f" id="r_a4902c4c3316d140bbfeb760b9ebed96f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="other_8h.html#a4902c4c3316d140bbfeb760b9ebed96f">abort_with_error_at</a> (const char msg[static 1], const char file[static 1], size_t line)</td></tr>
-<tr class="separator:a4902c4c3316d140bbfeb760b9ebed96f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a377d3fb19f61015e85756eabc5a9ef71" id="r_a377d3fb19f61015e85756eabc5a9ef71"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="other_8h.html#a377d3fb19f61015e85756eabc5a9ef71">abort_with_error</a> (const char err[static 1])</td></tr>
+<tr class="separator:a377d3fb19f61015e85756eabc5a9ef71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7295cc0ac2a08002eaeb049a24552bf9" id="r_a7295cc0ac2a08002eaeb049a24552bf9"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="other_8h.html#a7295cc0ac2a08002eaeb049a24552bf9">abort_with_error_at</a> (const char msg[static 1], const char file[static 1], size_t line)</td></tr>
+<tr class="separator:a7295cc0ac2a08002eaeb049a24552bf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="ae2c8bcb169c8faf25a8f6404d428907a" name="ae2c8bcb169c8faf25a8f6404d428907a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae2c8bcb169c8faf25a8f6404d428907a">&#9670;&#160;</a></span>abort_with_error()</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Some helpful types. </p>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="acb3acaf098ac94e72d0e6627d44c005b" name="acb3acaf098ac94e72d0e6627d44c005b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb3acaf098ac94e72d0e6627d44c005b">&#9670;&#160;</a></span>ARRAY_CONTAINER</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void abort_with_error </td>
+          <td class="memname">#define ARRAY_CONTAINER</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">TYPE</td><td>)</td>
+          <td>&#160;&#160;&#160;typedef struct TYPE##_array { const size_t len; TYPE*const data; } TYPE##_array;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Macros for generate structure for convenient array operating. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="a8ab1bc0eac7b13dbef044c138a320810" name="a8ab1bc0eac7b13dbef044c138a320810"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ab1bc0eac7b13dbef044c138a320810">&#9670;&#160;</a></span>p_void</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void* <a class="el" href="other_8h.html#a8ab1bc0eac7b13dbef044c138a320810">p_void</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Contain constant <code>void*</code> for use in <code>option</code> and <code>result</code> types. </p>
+
+</div>
+</div>
+<a id="a869289c3acb4b0c62c1b7f68d8583ef8" name="a869289c3acb4b0c62c1b7f68d8583ef8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a869289c3acb4b0c62c1b7f68d8583ef8">&#9670;&#160;</a></span>static_string</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef const char* const <a class="el" href="other_8h.html#a869289c3acb4b0c62c1b7f68d8583ef8">static_string</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Contain static string pointer for use in <code>option</code> and <code>result</code> types. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a377d3fb19f61015e85756eabc5a9ef71" name="a377d3fb19f61015e85756eabc5a9ef71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a377d3fb19f61015e85756eabc5a9ef71">&#9670;&#160;</a></span>abort_with_error()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void abort_with_error </td>
           <td>(</td>
           <td class="paramtype">const char&#160;</td>
           <td class="paramname"><em>err</em>[static 1]</td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a4902c4c3316d140bbfeb760b9ebed96f" name="a4902c4c3316d140bbfeb760b9ebed96f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4902c4c3316d140bbfeb760b9ebed96f">&#9670;&#160;</a></span>abort_with_error_at()</h2>
+<a id="a7295cc0ac2a08002eaeb049a24552bf9" name="a7295cc0ac2a08002eaeb049a24552bf9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7295cc0ac2a08002eaeb049a24552bf9">&#9670;&#160;</a></span>abort_with_error_at()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void abort_with_error_at </td>
+          <td class="memname">static void abort_with_error_at </td>
           <td>(</td>
           <td class="paramtype">const char&#160;</td>
           <td class="paramname"><em>msg</em>[static 1], </td>
@@ -164,6 +255,11 @@ Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>

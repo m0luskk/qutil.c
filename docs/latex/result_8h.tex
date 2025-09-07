@@ -7,6 +7,92 @@ Result type.
 Result is a type that represents either success ({\ttfamily ok}) or failure ({\ttfamily err}).  
 
 
-{\ttfamily \#include $<$stdio.\+h$>$}\newline
-{\ttfamily \#include "{}../include/other.\+h"{}}\newline
+{\ttfamily \#include "{}option.\+h"{}}\newline
 Include dependency graph for result.\+h\+:
+% FIG 0
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{group__PublicAPI_ga08049ca3b3469bc28a420283be89ed96}{DECLARE\+\_\+\+RESULT}}(T,  ERR)
+\begin{DoxyCompactList}\small\item\em Declare result structure of types {\ttfamily T} as {\ttfamily ok} variant and {\ttfamily ERR} as {\ttfamily err} variant. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef \mbox{\hyperlink{other_8h_a869289c3acb4b0c62c1b7f68d8583ef8}{static\+\_\+string}} \mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}}
+\begin{DoxyCompactList}\small\item\em Contain static error string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{result_8h_a9dfd764217c2c915cba60224369342fd}{result\+\_\+enum}} \{ \mbox{\hyperlink{result_8h_a9dfd764217c2c915cba60224369342fda2ea4b6ef3fffc17dd1d38ab5c2837737}{RES\+\_\+\+OK}}
+, \mbox{\hyperlink{result_8h_a9dfd764217c2c915cba60224369342fdaecff6e8c93a5895522ba737bb5c89e2a}{RES\+\_\+\+ERR}}
+ \}
+\begin{DoxyCompactList}\small\item\em Return type of {\ttfamily result\+\_\+match} function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \mbox{\hyperlink{group__PublicAPI_ga282e9abd1facc7c748f8fd2b7067f606}{result\+\_\+is\+\_\+ok}} (void \texorpdfstring{$\ast$}{*}result)
+\begin{DoxyCompactList}\small\item\em Returns {\ttfamily true} if the passed result instance contain {\ttfamily ok} variant. \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{group__PublicAPI_gaee8b2e7e36b54cebcde6c6aa52420d82}{result\+\_\+is\+\_\+err}} (void \texorpdfstring{$\ast$}{*}result)
+\begin{DoxyCompactList}\small\item\em Returns {\ttfamily true} if the passed result instance contain {\ttfamily err} variant. \end{DoxyCompactList}\item 
+static enum \mbox{\hyperlink{result_8h_a9dfd764217c2c915cba60224369342fd}{result\+\_\+enum}} \mbox{\hyperlink{group__PublicAPI_gafaee2a2b2dfc42e34f26fbd189f5a296}{result\+\_\+match}} (void \texorpdfstring{$\ast$}{*}result)
+\begin{DoxyCompactList}\small\item\em Returns enum thats corresponds result\textquotesingle{}s containing variant. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Result type.
+
+Result is a type that represents either success ({\ttfamily ok}) or failure ({\ttfamily err}). 
+
+\hypertarget{result_8h_autotoc_md0}{}\doxysubsubsection{\texorpdfstring{Using user-\/defined types}{Using user-defined types}}\label{result_8h_autotoc_md0}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ my\_result.h}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define\ X(RET,\ NAME,\ ARGS,\ DEF)\ RET\ NAME(ARGS);}}
+\DoxyCodeLine{\mbox{\hyperlink{group__PublicAPI_ga08049ca3b3469bc28a420283be89ed96}{DECLARE\_RESULT}}(user\_ok\_type,\ user\_err\_type);}
+\DoxyCodeLine{\textcolor{preprocessor}{\#undef\ X}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ my\_result.c}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define\ X(RET,\ NAME,\ ARGS,\ DEF)\ RET\ NAME(ARGS)\ DEF}}
+\DoxyCodeLine{IMPL\_RESULT(user\_ok\_type,\ user\_err\_type);}
+\DoxyCodeLine{\textcolor{preprocessor}{\#undef\ X}}
+
+\end{DoxyCode}
+ \begin{DoxyAttention}{Attention}
+{\ttfamily user\+\_\+ok\+\_\+type} and {\ttfamily user\+\_\+err\+\_\+type} must not contain whitespaces and special characters ({\ttfamily const char \texorpdfstring{$\ast$}{*}} or {\ttfamily int\mbox{[}\mbox{]}} for example) 
+\end{DoxyAttention}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{result_8h_a658536af587406cbc17706521b18cafd}\label{result_8h_a658536af587406cbc17706521b18cafd} 
+\index{result.h@{result.h}!serror@{serror}}
+\index{serror@{serror}!result.h@{result.h}}
+\doxysubsubsection{\texorpdfstring{serror}{serror}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{other_8h_a869289c3acb4b0c62c1b7f68d8583ef8}{static\+\_\+string}} \mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}}}
+
+
+
+Contain static error string. 
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{result_8h_a9dfd764217c2c915cba60224369342fd}\label{result_8h_a9dfd764217c2c915cba60224369342fd} 
+\index{result.h@{result.h}!result\_enum@{result\_enum}}
+\index{result\_enum@{result\_enum}!result.h@{result.h}}
+\doxysubsubsection{\texorpdfstring{result\_enum}{result\_enum}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{result_8h_a9dfd764217c2c915cba60224369342fd}{result\+\_\+enum}}}
+
+
+
+Return type of {\ttfamily result\+\_\+match} function. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RES\_OK@{RES\_OK}!result.h@{result.h}}\index{result.h@{result.h}!RES\_OK@{RES\_OK}}}\Hypertarget{result_8h_a9dfd764217c2c915cba60224369342fda2ea4b6ef3fffc17dd1d38ab5c2837737}\label{result_8h_a9dfd764217c2c915cba60224369342fda2ea4b6ef3fffc17dd1d38ab5c2837737} 
+RES\+\_\+\+OK&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RES\_ERR@{RES\_ERR}!result.h@{result.h}}\index{result.h@{result.h}!RES\_ERR@{RES\_ERR}}}\Hypertarget{result_8h_a9dfd764217c2c915cba60224369342fdaecff6e8c93a5895522ba737bb5c89e2a}\label{result_8h_a9dfd764217c2c915cba60224369342fdaecff6e8c93a5895522ba737bb5c89e2a} 
+RES\+\_\+\+ERR&\\
+\hline
+
+\end{DoxyEnumFields}

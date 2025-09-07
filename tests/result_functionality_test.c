@@ -14,22 +14,38 @@ void ins(serror val) {
   printf("inspect: ok value = %s\n", val);
 }
 
+struct result_double_serror devide(double val, double devider) {
+  if (devider == 0) {
+    return result_double_serror_err("devider is zero");
+  }
+  result_double_serror_ok(val / devider);
+}
+
+struct result_p_void_serror another_fail_function() {
+  return result_p_void_serror_err("fail");
+}
+
+struct result_double_serror foo() {
+  ERROR_PROPAGATE(double, serror);
+
+  auto res = TRY(devide(4, 0));
+
+  auto ptr = TRY(another_fail_function());
+
+  return result_double_serror_ok(res);
+}
+
 START_TEST(result)
-  auto res = result_int_serror_ok(52);
+  auto r = foo();
 
-  auto val = result_int_serror_get_value(&res);
-
-  printf("%d\n", option_has_value(&val));
-
-  //ASSERT(res.is_ok);
-  //ASSERT(res._value.ok == 52);
-
-  switch (result_match(&res)) {
+  switch (result_match(&r)) {
     case RES_OK:
-      ASSERT(res.is_ok);
+      ASSERT(r.is_ok);
+      printf("ok: %f\n", r._value.ok);
       break;
     case RES_ERR:
-      ASSERT(!res.is_ok);
+      ASSERT(!r.is_ok);
+      printf("error: %s\n", r._value.err);
       break;
   }
 END_TEST

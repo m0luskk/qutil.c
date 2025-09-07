@@ -17,6 +17,8 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -97,24 +99,48 @@ $(document).ready(function(){initNavTree('other_8h_source.html',''); initResizab
   <div class="headertitle"><div class="title">other.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<a href="other_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span>[[noreturn]]</div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keywordtype">void</span> abort_with_error(<span class="keyword">const</span> <span class="keywordtype">char</span> err[<span class="keyword">static</span> 1]);</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment">// #if __has_c_attribute(__gnu__::__format__)</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment">//  [[__gnu__::__format__(__printf__, 1, 2)]]</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment">// #endif</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>[[noreturn]]</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keywordtype">void</span> abort_with_error_at(<span class="keyword">const</span> <span class="keywordtype">char</span> msg[<span class="keyword">static</span> 1], <span class="keyword">const</span> <span class="keywordtype">char</span> file[<span class="keyword">static</span> 1], <span class="keywordtype">size_t</span> line);</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="other_8h.html#a869289c3acb4b0c62c1b7f68d8583ef8">   18</a></span><span class="keyword">typedef</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <span class="keyword">const</span> <a class="code hl_typedef" href="other_8h.html#a869289c3acb4b0c62c1b7f68d8583ef8">static_string</a>; </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="other_8h.html#a8ab1bc0eac7b13dbef044c138a320810">   24</a></span><span class="keyword">typedef</span> <span class="keywordtype">void</span>* <a class="code hl_typedef" href="other_8h.html#a8ab1bc0eac7b13dbef044c138a320810">p_void</a>;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>[[noreturn]]</div>
+<div class="foldopen" id="foldopen00027" data-start="{" data-end="}">
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="other_8h.html#a377d3fb19f61015e85756eabc5a9ef71">   27</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="other_8h.html#a377d3fb19f61015e85756eabc5a9ef71">abort_with_error</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> err[<span class="keyword">static</span> 1]) {</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  fprintf(stderr, <span class="stringliteral">&quot;Abort with error message: %s\n&quot;</span>, err);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  abort();</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>}</div>
+</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>[[noreturn]]</div>
+<div class="foldopen" id="foldopen00033" data-start="{" data-end="}">
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="other_8h.html#a7295cc0ac2a08002eaeb049a24552bf9">   33</a></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="other_8h.html#a7295cc0ac2a08002eaeb049a24552bf9">abort_with_error_at</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> msg[<span class="keyword">static</span> 1], <span class="keyword">const</span> <span class="keywordtype">char</span> file[<span class="keyword">static</span> 1], <span class="keywordtype">size_t</span> line) { <span class="comment">// todo</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  fprintf(stderr, msg, file, line);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  abort();</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>}</div>
+</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="other_8h.html#acb3acaf098ac94e72d0e6627d44c005b">   41</a></span><span class="preprocessor">#define ARRAY_CONTAINER(TYPE) typedef struct TYPE##_array { const size_t len; TYPE*const data; } TYPE##_array;</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><a class="code hl_define" href="other_8h.html#acb3acaf098ac94e72d0e6627d44c005b">ARRAY_CONTAINER</a>(<span class="keywordtype">int</span>)</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><a class="code hl_define" href="other_8h.html#acb3acaf098ac94e72d0e6627d44c005b">ARRAY_CONTAINER</a>(<span class="keywordtype">double</span>)</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><a class="code hl_define" href="other_8h.html#acb3acaf098ac94e72d0e6627d44c005b">ARRAY_CONTAINER</a>(<span class="keywordtype">char</span>)</div>
+<div class="ttc" id="aother_8h_html_a377d3fb19f61015e85756eabc5a9ef71"><div class="ttname"><a href="other_8h.html#a377d3fb19f61015e85756eabc5a9ef71">abort_with_error</a></div><div class="ttdeci">static void abort_with_error(const char err[static 1])</div><div class="ttdef"><b>Definition</b> other.h:27</div></div>
+<div class="ttc" id="aother_8h_html_a7295cc0ac2a08002eaeb049a24552bf9"><div class="ttname"><a href="other_8h.html#a7295cc0ac2a08002eaeb049a24552bf9">abort_with_error_at</a></div><div class="ttdeci">static void abort_with_error_at(const char msg[static 1], const char file[static 1], size_t line)</div><div class="ttdef"><b>Definition</b> other.h:33</div></div>
+<div class="ttc" id="aother_8h_html_a869289c3acb4b0c62c1b7f68d8583ef8"><div class="ttname"><a href="other_8h.html#a869289c3acb4b0c62c1b7f68d8583ef8">static_string</a></div><div class="ttdeci">const char *const static_string</div><div class="ttdoc">Contain static string pointer for use in option and result types.</div><div class="ttdef"><b>Definition</b> other.h:18</div></div>
+<div class="ttc" id="aother_8h_html_a8ab1bc0eac7b13dbef044c138a320810"><div class="ttname"><a href="other_8h.html#a8ab1bc0eac7b13dbef044c138a320810">p_void</a></div><div class="ttdeci">void * p_void</div><div class="ttdoc">Contain constant void* for use in option and result types.</div><div class="ttdef"><b>Definition</b> other.h:24</div></div>
+<div class="ttc" id="aother_8h_html_acb3acaf098ac94e72d0e6627d44c005b"><div class="ttname"><a href="other_8h.html#acb3acaf098ac94e72d0e6627d44c005b">ARRAY_CONTAINER</a></div><div class="ttdeci">#define ARRAY_CONTAINER(TYPE)</div><div class="ttdoc">Macros for generate structure for convenient array operating.</div><div class="ttdef"><b>Definition</b> other.h:41</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><b>other.h</b></li>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="other_8h.html">other.h</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

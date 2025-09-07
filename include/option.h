@@ -9,6 +9,7 @@
 
 #include "other.h"
 
+/** @cond */
 #define OPTION_VALUE_BODY(T) { return (struct option_##T){.has_value = true, ._value = val}; }
 
 #define OPTION_NONE_BODY(T) { return (struct option_##T){.has_value = false}; }
@@ -18,6 +19,7 @@
   O_M(struct option_##T, option_##T##_none, , OPTION_NONE_BODY(T) )
 
 #define O_M(RET, NAME, ARGS, BODY) static inline RET NAME(ARGS) BODY
+/** @endcond */
 
 #define DECLARE_OPTION(T) \
 struct option_##T { \

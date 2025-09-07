@@ -6,7 +6,7 @@ Simple utility library in C23
 <summary>std functionality</summary>
   
 - [ ] result type
-- - [ ] error propagation (TRY macros)
+- - [x] error propagation (TRY macros)
   - [ ] Generic macroses for all methods (thats below)
   - [x] result_T_ERR_ok()
   - [x] result_T_ERR_err()

@@ -16,9 +16,7 @@
  * @brief Result type. 
  * @ingroup PublicAPI
  * Result is a type that represents either success (`ok`) or failure (`err`).
- * ## User-defined result type
- * \attention `user_ok_type` and `user_err_type` must not contain whitespaces and special characters (`const char *` or `int[]` for example)
- 
+ * ## Using user-defined types
  * ```c
 // my_result.h
 #define X(RET, NAME, ARGS, DEF) RET NAME(ARGS);
@@ -30,17 +28,10 @@ DECLARE_RESULT(user_ok_type, user_err_type);
 IMPL_RESULT(user_ok_type, user_err_type);
 #undef X
  * ```
+ * \attention `user_ok_type` and `user_err_type` must not contain whitespaces and special characters (`const char *` or `int[]` for example)
+ 
  */
 
-// /**
-//  * @ingroup PublicAPI
-//  * @brief Функция для пользователя.
-//  */
-// void hello_world();
-
-#include <stdlib.h>
-
-#include "other.h"
 #include "option.h"
 
 /**
@@ -50,6 +41,7 @@ typedef static_string serror;
 
 DECLARE_OPTION(serror)
 
+/** @cond */
 #if __has_attribute(unsequenced)
   #define UNSEQUENCED_ATTR() [[unsequenced]]
 #else
@@ -64,10 +56,10 @@ DECLARE_OPTION(serror)
 
 #define RESULT_GET_VALUE_BODY(T, ERR) { if(!result) return option_##T##_none(); else return (!result->is_ok ? option_##T##_none() : option_##T##_value(result->_value.ok)); }
 
-#define RESULT_INSPECT_BODY(T, ERR) { if (result->is_ok) f(result->_value.ok); }
+#define RESULT_INSPECT_BODY(T, ERR) { if(!result) return;  if (result->is_ok) f(result->_value.ok); }
 #define RESULT_INSPECT_ARGS(T, ERR) struct result_##T##_##ERR* result, f_result_##T##_##ERR##_inspect f
 
-#define RESULT_INSPECT_ERR_BODY(T, ERR) { if (!result->is_ok) f(result->_value.err); }
+#define RESULT_INSPECT_ERR_BODY(T, ERR) { if(!result) return; if (!result->is_ok) f(result->_value.err); }
 #define RESULT_INSPECT_ERR_ARGS(T, ERR) struct result_##T##_##ERR* result, f_result_##T##_##ERR##_inspect_err f
 
 // R_M(ATTR, RET, NAME, ARGS, BODY)
@@ -80,6 +72,7 @@ DECLARE_OPTION(serror)
   R_M(UNSEQUENCED_ATTR(), void, result_##T##_##ERR##_inspect_err, RESULT_INSPECT_ERR_ARGS(T, ERR), RESULT_INSPECT_ERR_BODY(T, ERR))
 
 #define R_M(ATTR, RET, NAME, ARGS, DEF) ATTR static inline RET NAME(ARGS) DEF
+/** @endcond */
 
 /**
  * @ingroup PublicAPI
@@ -97,19 +90,44 @@ typedef void(*f_result_##T##_##ERR##_inspect_err)(ERR); \
 typedef void(*f_result_##T##_##ERR##_inspect)(T); \
 RESULT_METHODS(T, ERR)
 
+// #define TRY(T, ERR, RESULT) if(!RESULT.is_ok) return result_##T##_##ERR##_err(RESULT._value.err);
+#if defined(__GNUC__) || defined(__clang__)
+#ifndef RESULT_PEDANTIC_SAFE
 /**
- * @ingroup PublicAPI
- * @brief Macros-wrapper of result_T_ERR_get_err function with context of aborting in fail case
- * @return 
+ * @brief Defines function poiner thats using in `TRY` macro.
  */
-#define RESULT_GET_ERROR(T, ERR, RESULT) \
-( result_is_err(RESULT) ? result_##T##_##ERR##_get_err(RESULT) \
-  : (abort_with_error_at("An attempt to access an inactive `err` value of the result structure at %s:%zu\n", __FILE__, __LINE__), (ERR){}) );
+#define ERROR_PROPAGATE(T, ERR) struct result_##T##_##ERR(*__f_ret_err)(ERR err) = result_##T##_##ERR##_err
 
-#define RESULT_GET_VALUE(T, ERR, RESULT) \
-( result_is_ok(RESULT) ? result_##T##_##ERR##_get_value(RESULT) \
-  : (abort_with_error_at("An attempt to access an inactive `ok` value of the result structure at %s:%zu\n", __FILE__, __LINE__), (ERR){}) );
+/**
+ * @brief If `expr` is the result type and contain the `err` variant, then propagates it from current function. Otherwise return `ok` variant value
+ * @attention Before using TRY macros user must use ERROR_PROPAGATE macros with `T` and `ERR` of result type of function
 
+ ```c
+struct result_double_serror foo() {
+  ERROR_PROPAGATE(double, serror);
+
+  auto res = TRY(devide(4, 0));
+
+  auto ptr = TRY(another_fail_function());
+
+  return result_double_serror_ok(res);
+}
+ ```
+ */
+#define TRY(expr) ({ \
+    auto _tmp = (expr); \
+    if (!result_is_ok(&_tmp)) { \
+        return __f_ret_err(_tmp._value.err); \
+    } \
+    _tmp._value.ok; \
+})
+#endif
+#endif
+
+/**
+ * @brief Return type of `result_match` function
+ * 
+ */
 enum result_enum {
   RES_OK,
   RES_ERR,
