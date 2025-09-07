@@ -4,106 +4,106 @@
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
 \DoxyCodeLine{00002\ }
-\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{option_8h}{option.h}}"{}}}
-\DoxyCodeLine{00036\ }
-\DoxyCodeLine{00040\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{other_8h_a869289c3acb4b0c62c1b7f68d8583ef8}{static\_string}}\ \mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}};}
-\DoxyCodeLine{00041\ }
-\DoxyCodeLine{00042\ \mbox{\hyperlink{option_8h_ac569340811d1ad46ade7483a8e27c426}{DECLARE\_OPTION}}(\mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}})}
-\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{option_8h}{option.h}}"{}}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{other_8h_a869289c3acb4b0c62c1b7f68d8583ef8}{static\_string}}\ \mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}};}
 \DoxyCodeLine{00044\ }
-\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#if\ \_\_has\_attribute(unsequenced)}}
-\DoxyCodeLine{00046\ \textcolor{preprocessor}{\ \ \#define\ UNSEQUENCED\_ATTR()\ [[unsequenced]]}}
-\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#else}}
-\DoxyCodeLine{00048\ \textcolor{preprocessor}{\ \ \#define\ UNSEQUENCED\_ATTR()}}
-\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00050\ }
-\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#define\ RESULT\_OK\_BODY(T,\ ERR)\ \{\ return\ (struct\ result\_\#\#T\#\#\_\#\#ERR)\{\ .is\_ok\ =\ true,\ .\_value.ok\ =\ value\ \};\ \}}}
-\DoxyCodeLine{00052\ }
-\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#define\ RESULT\_ERR\_BODY(T,\ ERR)\ \{\ return\ (struct\ result\_\#\#T\#\#\_\#\#ERR)\{\ .is\_ok\ =\ false,\ .\_value.err\ =\ err\_value\ \};\ \}}}
-\DoxyCodeLine{00054\ }
-\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#define\ RESULT\_GET\_ERR\_BODY(T,\ ERR)\ \{\ if(!result)\ return\ option\_\#\#ERR\#\#\_none();\ else\ return\ (result-\/>is\_ok\ ?\ option\_\#\#ERR\#\#\_none()\ :\ option\_\#\#ERR\#\#\_value(result-\/>\_value.err));\ \}}}
-\DoxyCodeLine{00056\ }
-\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#define\ RESULT\_GET\_VALUE\_BODY(T,\ ERR)\ \{\ if(!result)\ return\ option\_\#\#T\#\#\_none();\ else\ return\ (!result-\/>is\_ok\ ?\ option\_\#\#T\#\#\_none()\ :\ option\_\#\#T\#\#\_value(result-\/>\_value.ok));\ \}}}
-\DoxyCodeLine{00058\ }
-\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#define\ RESULT\_INSPECT\_BODY(T,\ ERR)\ \{\ if(!result)\ return;\ \ if\ (result-\/>is\_ok)\ f(result-\/>\_value.ok);\ \}}}
-\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#define\ RESULT\_INSPECT\_ARGS(T,\ ERR)\ struct\ result\_\#\#T\#\#\_\#\#ERR*\ result,\ f\_result\_\#\#T\#\#\_\#\#ERR\#\#\_inspect\ f}}
+\DoxyCodeLine{00045\ \mbox{\hyperlink{option_8h_ac569340811d1ad46ade7483a8e27c426}{DECLARE\_OPTION}}(\mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}})}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#if\ \_\_has\_attribute(unsequenced)}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\ \ \#define\ UNSEQUENCED\_ATTR()\ [[unsequenced]]}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\ \ \#define\ UNSEQUENCED\_ATTR()}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#define\ RESULT\_OK\_BODY(T,\ ERR)\ \{\ return\ (struct\ result\_\#\#T\#\#\_\#\#ERR)\{\ .is\_ok\ =\ true,\ .\_value.ok\ =\ value\ \};\ \}}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ RESULT\_ERR\_BODY(T,\ ERR)\ \{\ return\ (struct\ result\_\#\#T\#\#\_\#\#ERR)\{\ .is\_ok\ =\ false,\ .\_value.err\ =\ err\_value\ \};\ \}}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#define\ RESULT\_GET\_ERR\_BODY(T,\ ERR)\ \{\ if(!result)\ return\ option\_\#\#ERR\#\#\_none();\ else\ return\ (result-\/>is\_ok\ ?\ option\_\#\#ERR\#\#\_none()\ :\ option\_\#\#ERR\#\#\_value(result-\/>\_value.err));\ \}}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#define\ RESULT\_GET\_VALUE\_BODY(T,\ ERR)\ \{\ if(!result)\ return\ option\_\#\#T\#\#\_none();\ else\ return\ (!result-\/>is\_ok\ ?\ option\_\#\#T\#\#\_none()\ :\ option\_\#\#T\#\#\_value(result-\/>\_value.ok));\ \}}}
 \DoxyCodeLine{00061\ }
-\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#define\ RESULT\_INSPECT\_ERR\_BODY(T,\ ERR)\ \{\ if(!result)\ return;\ if\ (!result-\/>is\_ok)\ f(result-\/>\_value.err);\ \}}}
-\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#define\ RESULT\_INSPECT\_ERR\_ARGS(T,\ ERR)\ struct\ result\_\#\#T\#\#\_\#\#ERR*\ result,\ f\_result\_\#\#T\#\#\_\#\#ERR\#\#\_inspect\_err\ f}}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#define\ RESULT\_INSPECT\_BODY(T,\ ERR)\ \{\ if(!result)\ return;\ \ if\ (result-\/>is\_ok)\ f(result-\/>\_value.ok);\ \}}}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#define\ RESULT\_INSPECT\_ARGS(T,\ ERR)\ struct\ result\_\#\#T\#\#\_\#\#ERR*\ result,\ f\_result\_\#\#T\#\#\_\#\#ERR\#\#\_inspect\ f}}
 \DoxyCodeLine{00064\ }
-\DoxyCodeLine{00065\ \textcolor{comment}{//\ R\_M(ATTR,\ RET,\ NAME,\ ARGS,\ BODY)}}
-\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#define\ RESULT\_METHODS(T,\ ERR)\ \(\backslash\)}}
-\DoxyCodeLine{00067\ \textcolor{preprocessor}{\ \ R\_M(,\ struct\ result\_\#\#T\#\#\_\#\#ERR,\ result\_\#\#T\#\#\_\#\#ERR\#\#\_ok,\ T\ value,\ RESULT\_OK\_BODY(T,\ ERR))\ \(\backslash\)}}
-\DoxyCodeLine{00068\ \textcolor{preprocessor}{\ \ R\_M(,\ struct\ result\_\#\#T\#\#\_\#\#ERR,\ result\_\#\#T\#\#\_\#\#ERR\#\#\_err,\ ERR\ err\_value,\ RESULT\_ERR\_BODY(T,\ ERR)\ )\ \(\backslash\)}}
-\DoxyCodeLine{00069\ \textcolor{preprocessor}{\ \ R\_M(UNSEQUENCED\_ATTR(),\ struct\ option\_\#\#ERR,\ result\_\#\#T\#\#\_\#\#ERR\#\#\_get\_err,\ struct\ result\_\#\#T\#\#\_\#\#ERR*\ result,\ RESULT\_GET\_ERR\_BODY(T,\ ERR)\ )\ \(\backslash\)}}
-\DoxyCodeLine{00070\ \textcolor{preprocessor}{\ \ R\_M(UNSEQUENCED\_ATTR(),\ struct\ option\_\#\#T,\ result\_\#\#T\#\#\_\#\#ERR\#\#\_get\_value,\ struct\ result\_\#\#T\#\#\_\#\#ERR*\ result,\ RESULT\_GET\_VALUE\_BODY(T,\ ERR)\ )\ \(\backslash\)}}
-\DoxyCodeLine{00071\ \textcolor{preprocessor}{\ \ R\_M(UNSEQUENCED\_ATTR(),\ void,\ result\_\#\#T\#\#\_\#\#ERR\#\#\_inspect,\ RESULT\_INSPECT\_ARGS(T,\ ERR),\ RESULT\_INSPECT\_BODY(T,\ ERR))\ \(\backslash\)}}
-\DoxyCodeLine{00072\ \textcolor{preprocessor}{\ \ R\_M(UNSEQUENCED\_ATTR(),\ void,\ result\_\#\#T\#\#\_\#\#ERR\#\#\_inspect\_err,\ RESULT\_INSPECT\_ERR\_ARGS(T,\ ERR),\ RESULT\_INSPECT\_ERR\_BODY(T,\ ERR))}}
-\DoxyCodeLine{00073\ }
-\DoxyCodeLine{00074\ \textcolor{preprocessor}{\#define\ R\_M(ATTR,\ RET,\ NAME,\ ARGS,\ DEF)\ ATTR\ static\ inline\ RET\ NAME(ARGS)\ DEF}}
-\DoxyCodeLine{00081\ \textcolor{preprocessor}{\#define\ DECLARE\_RESULT(T,\ ERR)\ \(\backslash\)}}
-\DoxyCodeLine{00082\ \textcolor{preprocessor}{struct\ result\_\#\#T\#\#\_\#\#ERR\ \{\ \(\backslash\)}}
-\DoxyCodeLine{00083\ \textcolor{preprocessor}{\ \ const\ bool\ is\_ok;\ \(\backslash\)}}
-\DoxyCodeLine{00084\ \textcolor{preprocessor}{\ \ const\ union\ \{\ \(\backslash\)}}
-\DoxyCodeLine{00085\ \textcolor{preprocessor}{\ \ \ \ T\ ok;\ \(\backslash\)}}
-\DoxyCodeLine{00086\ \textcolor{preprocessor}{\ \ \ \ ERR\ err;\ \(\backslash\)}}
-\DoxyCodeLine{00087\ \textcolor{preprocessor}{\ \ \}\ \_value;\ \(\backslash\)}}
-\DoxyCodeLine{00088\ \textcolor{preprocessor}{\};\ \(\backslash\)}}
-\DoxyCodeLine{00089\ \textcolor{preprocessor}{typedef\ void(*f\_result\_\#\#T\#\#\_\#\#ERR\#\#\_inspect\_err)(ERR);\ \(\backslash\)}}
-\DoxyCodeLine{00090\ \textcolor{preprocessor}{typedef\ void(*f\_result\_\#\#T\#\#\_\#\#ERR\#\#\_inspect)(T);\ \(\backslash\)}}
-\DoxyCodeLine{00091\ \textcolor{preprocessor}{RESULT\_METHODS(T,\ ERR)}}
-\DoxyCodeLine{00092\ }
-\DoxyCodeLine{00093\ \textcolor{comment}{//\ \#define\ TRY(T,\ ERR,\ RESULT)\ if(!RESULT.is\_ok)\ return\ result\_\#\#T\#\#\_\#\#ERR\#\#\_err(RESULT.\_value.err);}}
-\DoxyCodeLine{00094\ \textcolor{preprocessor}{\#if\ defined(\_\_GNUC\_\_)\ ||\ defined(\_\_clang\_\_)}}
-\DoxyCodeLine{00095\ \textcolor{preprocessor}{\#ifndef\ RESULT\_PEDANTIC\_SAFE}}
-\DoxyCodeLine{00099\ \textcolor{preprocessor}{\#define\ ERROR\_PROPAGATE(T,\ ERR)\ struct\ result\_\#\#T\#\#\_\#\#ERR(*\_\_f\_ret\_err)(ERR\ err)\ =\ result\_\#\#T\#\#\_\#\#ERR\#\#\_err}}
-\DoxyCodeLine{00100\ }
-\DoxyCodeLine{00117\ \textcolor{preprocessor}{\#define\ TRY(expr)\ (\{\ \(\backslash\)}}
-\DoxyCodeLine{00118\ \textcolor{preprocessor}{\ \ \ \ auto\ \_tmp\ =\ (expr);\ \(\backslash\)}}
-\DoxyCodeLine{00119\ \textcolor{preprocessor}{\ \ \ \ if\ (!result\_is\_ok(\&\_tmp))\ \{\ \(\backslash\)}}
-\DoxyCodeLine{00120\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ return\ \_\_f\_ret\_err(\_tmp.\_value.err);\ \(\backslash\)}}
-\DoxyCodeLine{00121\ \textcolor{preprocessor}{\ \ \ \ \}\ \(\backslash\)}}
-\DoxyCodeLine{00122\ \textcolor{preprocessor}{\ \ \ \ \_tmp.\_value.ok;\ \(\backslash\)}}
-\DoxyCodeLine{00123\ \textcolor{preprocessor}{\})}}
-\DoxyCodeLine{00124\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00125\ \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{00126\ }
-\DoxyCodeLine{00131\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{result_8h_a9dfd764217c2c915cba60224369342fd}{result\_enum}}\ \{}
-\DoxyCodeLine{00132\ \ \ \mbox{\hyperlink{result_8h_a9dfd764217c2c915cba60224369342fda2ea4b6ef3fffc17dd1d38ab5c2837737}{RES\_OK}},}
-\DoxyCodeLine{00133\ \ \ \mbox{\hyperlink{result_8h_a9dfd764217c2c915cba60224369342fdaecff6e8c93a5895522ba737bb5c89e2a}{RES\_ERR}},}
-\DoxyCodeLine{00134\ \};}
-\DoxyCodeLine{00135\ }
-\DoxyCodeLine{00136\ }
-\DoxyCodeLine{00145\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{group__PublicAPI_ga282e9abd1facc7c748f8fd2b7067f606}{result\_is\_ok}}(\textcolor{keywordtype}{void}*\ result)\ \{}
-\DoxyCodeLine{00146\ \ \ \textcolor{keywordflow}{if}\ (result)\ \{}
-\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordflow}{return}\ *((\textcolor{keywordtype}{bool}*)result);}
-\DoxyCodeLine{00148\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00150\ \ \ \}}
-\DoxyCodeLine{00151\ \}}
-\DoxyCodeLine{00152\ }
-\DoxyCodeLine{00161\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{group__PublicAPI_gaee8b2e7e36b54cebcde6c6aa52420d82}{result\_is\_err}}(\textcolor{keywordtype}{void}*\ result)\ \{}
-\DoxyCodeLine{00162\ \ \ \textcolor{keywordflow}{return}\ !\mbox{\hyperlink{group__PublicAPI_ga282e9abd1facc7c748f8fd2b7067f606}{result\_is\_ok}}(result);}
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#define\ RESULT\_INSPECT\_ERR\_BODY(T,\ ERR)\ \{\ if(!result)\ return;\ if\ (!result-\/>is\_ok)\ f(result-\/>\_value.err);\ \}}}
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#define\ RESULT\_INSPECT\_ERR\_ARGS(T,\ ERR)\ struct\ result\_\#\#T\#\#\_\#\#ERR*\ result,\ f\_result\_\#\#T\#\#\_\#\#ERR\#\#\_inspect\_err\ f}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{comment}{//\ R\_M(ATTR,\ RET,\ NAME,\ ARGS,\ BODY)}}
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\#define\ RESULT\_METHODS(T,\ ERR)\ \(\backslash\)}}
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\ \ R\_M(,\ struct\ result\_\#\#T\#\#\_\#\#ERR,\ result\_\#\#T\#\#\_\#\#ERR\#\#\_ok,\ T\ value,\ RESULT\_OK\_BODY(T,\ ERR))\ \(\backslash\)}}
+\DoxyCodeLine{00071\ \textcolor{preprocessor}{\ \ R\_M(,\ struct\ result\_\#\#T\#\#\_\#\#ERR,\ result\_\#\#T\#\#\_\#\#ERR\#\#\_err,\ ERR\ err\_value,\ RESULT\_ERR\_BODY(T,\ ERR)\ )\ \(\backslash\)}}
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\ \ R\_M(UNSEQUENCED\_ATTR(),\ struct\ option\_\#\#ERR,\ result\_\#\#T\#\#\_\#\#ERR\#\#\_get\_err,\ struct\ result\_\#\#T\#\#\_\#\#ERR*\ result,\ RESULT\_GET\_ERR\_BODY(T,\ ERR)\ )\ \(\backslash\)}}
+\DoxyCodeLine{00073\ \textcolor{preprocessor}{\ \ R\_M(UNSEQUENCED\_ATTR(),\ struct\ option\_\#\#T,\ result\_\#\#T\#\#\_\#\#ERR\#\#\_get\_value,\ struct\ result\_\#\#T\#\#\_\#\#ERR*\ result,\ RESULT\_GET\_VALUE\_BODY(T,\ ERR)\ )\ \(\backslash\)}}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\ \ R\_M(UNSEQUENCED\_ATTR(),\ void,\ result\_\#\#T\#\#\_\#\#ERR\#\#\_inspect,\ RESULT\_INSPECT\_ARGS(T,\ ERR),\ RESULT\_INSPECT\_BODY(T,\ ERR))\ \(\backslash\)}}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\ \ R\_M(UNSEQUENCED\_ATTR(),\ void,\ result\_\#\#T\#\#\_\#\#ERR\#\#\_inspect\_err,\ RESULT\_INSPECT\_ERR\_ARGS(T,\ ERR),\ RESULT\_INSPECT\_ERR\_BODY(T,\ ERR))}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \textcolor{preprocessor}{\#define\ R\_M(ATTR,\ RET,\ NAME,\ ARGS,\ DEF)\ ATTR\ static\ inline\ RET\ NAME(ARGS)\ DEF}}
+\DoxyCodeLine{00083\ \textcolor{preprocessor}{\#define\ DECLARE\_RESULT(T,\ ERR)\ \(\backslash\)}}
+\DoxyCodeLine{00084\ \textcolor{preprocessor}{struct\ result\_\#\#T\#\#\_\#\#ERR\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00085\ \textcolor{preprocessor}{\ \ const\ bool\ is\_ok;\ \(\backslash\)}}
+\DoxyCodeLine{00086\ \textcolor{preprocessor}{\ \ const\ union\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00087\ \textcolor{preprocessor}{\ \ \ \ T\ ok;\ \(\backslash\)}}
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\ \ \ \ ERR\ err;\ \(\backslash\)}}
+\DoxyCodeLine{00089\ \textcolor{preprocessor}{\ \ \}\ \_value;\ \(\backslash\)}}
+\DoxyCodeLine{00090\ \textcolor{preprocessor}{\};\ \(\backslash\)}}
+\DoxyCodeLine{00091\ \textcolor{preprocessor}{typedef\ void(*f\_result\_\#\#T\#\#\_\#\#ERR\#\#\_inspect\_err)(ERR);\ \(\backslash\)}}
+\DoxyCodeLine{00092\ \textcolor{preprocessor}{typedef\ void(*f\_result\_\#\#T\#\#\_\#\#ERR\#\#\_inspect)(T);\ \(\backslash\)}}
+\DoxyCodeLine{00093\ \textcolor{preprocessor}{RESULT\_METHODS(T,\ ERR)}}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \textcolor{comment}{//\ \#define\ TRY(T,\ ERR,\ RESULT)\ if(!RESULT.is\_ok)\ return\ result\_\#\#T\#\#\_\#\#ERR\#\#\_err(RESULT.\_value.err);}}
+\DoxyCodeLine{00096\ \textcolor{preprocessor}{\#if\ defined(\_\_GNUC\_\_)\ ||\ defined(\_\_clang\_\_)}}
+\DoxyCodeLine{00097\ \textcolor{preprocessor}{\#ifndef\ RESULT\_PEDANTIC\_SAFE}}
+\DoxyCodeLine{00101\ \textcolor{preprocessor}{\#define\ ERROR\_PROPAGATE(T,\ ERR)\ struct\ result\_\#\#T\#\#\_\#\#ERR(*\_\_f\_ret\_err)(ERR\ err)\ =\ result\_\#\#T\#\#\_\#\#ERR\#\#\_err}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00119\ \textcolor{preprocessor}{\#define\ TRY(expr)\ (\{\ \(\backslash\)}}
+\DoxyCodeLine{00120\ \textcolor{preprocessor}{\ \ \ \ auto\ \_tmp\ =\ (expr);\ \(\backslash\)}}
+\DoxyCodeLine{00121\ \textcolor{preprocessor}{\ \ \ \ if\ (!result\_is\_ok(\&\_tmp))\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00122\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ return\ \_\_f\_ret\_err(\_tmp.\_value.err);\ \(\backslash\)}}
+\DoxyCodeLine{00123\ \textcolor{preprocessor}{\ \ \ \ \}\ \(\backslash\)}}
+\DoxyCodeLine{00124\ \textcolor{preprocessor}{\ \ \ \ \_tmp.\_value.ok;\ \(\backslash\)}}
+\DoxyCodeLine{00125\ \textcolor{preprocessor}{\})}}
+\DoxyCodeLine{00126\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00127\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00133\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{result_8h_a9dfd764217c2c915cba60224369342fd}{result\_enum}}\ \{}
+\DoxyCodeLine{00134\ \ \ \mbox{\hyperlink{result_8h_a9dfd764217c2c915cba60224369342fda2ea4b6ef3fffc17dd1d38ab5c2837737}{RES\_OK}},}
+\DoxyCodeLine{00135\ \ \ \mbox{\hyperlink{result_8h_a9dfd764217c2c915cba60224369342fdaecff6e8c93a5895522ba737bb5c89e2a}{RES\_ERR}},}
+\DoxyCodeLine{00136\ \};}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00146\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{result_8h_a282e9abd1facc7c748f8fd2b7067f606}{result\_is\_ok}}(\textcolor{keywordtype}{void}*\ result)\ \{}
+\DoxyCodeLine{00147\ \ \ \textcolor{keywordflow}{if}\ (result)\ \{}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordflow}{return}\ *((\textcolor{keywordtype}{bool}*)result);}
+\DoxyCodeLine{00149\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00151\ \ \ \}}
+\DoxyCodeLine{00152\ \}}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00161\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{result_8h_aee8b2e7e36b54cebcde6c6aa52420d82}{result\_is\_err}}(\textcolor{keywordtype}{void}*\ result)\ \{}
+\DoxyCodeLine{00162\ \ \ \textcolor{keywordflow}{return}\ !\mbox{\hyperlink{result_8h_a282e9abd1facc7c748f8fd2b7067f606}{result\_is\_ok}}(result);}
 \DoxyCodeLine{00163\ \}}
 \DoxyCodeLine{00164\ }
-\DoxyCodeLine{00172\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{result_8h_a9dfd764217c2c915cba60224369342fd}{result\_enum}}\ \mbox{\hyperlink{group__PublicAPI_gafaee2a2b2dfc42e34f26fbd189f5a296}{result\_match}}(\textcolor{keywordtype}{void}*\ result)\ \{}
-\DoxyCodeLine{00173\ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{group__PublicAPI_ga282e9abd1facc7c748f8fd2b7067f606}{result\_is\_ok}}(result))\ \{}
-\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{result_8h_a9dfd764217c2c915cba60224369342fda2ea4b6ef3fffc17dd1d38ab5c2837737}{RES\_OK}};}
-\DoxyCodeLine{00175\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{result_8h_a9dfd764217c2c915cba60224369342fdaecff6e8c93a5895522ba737bb5c89e2a}{RES\_ERR}};}
-\DoxyCodeLine{00177\ \ \ \}}
-\DoxyCodeLine{00178\ \}}
+\DoxyCodeLine{00171\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{result_8h_a9dfd764217c2c915cba60224369342fd}{result\_enum}}\ \mbox{\hyperlink{result_8h_afaee2a2b2dfc42e34f26fbd189f5a296}{result\_match}}(\textcolor{keywordtype}{void}*\ result)\ \{}
+\DoxyCodeLine{00172\ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{result_8h_a282e9abd1facc7c748f8fd2b7067f606}{result\_is\_ok}}(result))\ \{}
+\DoxyCodeLine{00173\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{result_8h_a9dfd764217c2c915cba60224369342fda2ea4b6ef3fffc17dd1d38ab5c2837737}{RES\_OK}};}
+\DoxyCodeLine{00174\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00175\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{result_8h_a9dfd764217c2c915cba60224369342fdaecff6e8c93a5895522ba737bb5c89e2a}{RES\_ERR}};}
+\DoxyCodeLine{00176\ \ \ \}}
+\DoxyCodeLine{00177\ \}}
+\DoxyCodeLine{00178\ }
 \DoxyCodeLine{00179\ }
-\DoxyCodeLine{00180\ }
-\DoxyCodeLine{00181\ \mbox{\hyperlink{group__PublicAPI_ga08049ca3b3469bc28a420283be89ed96}{DECLARE\_RESULT}}(\textcolor{keywordtype}{int},\ \mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}})}
-\DoxyCodeLine{00182\ \mbox{\hyperlink{group__PublicAPI_ga08049ca3b3469bc28a420283be89ed96}{DECLARE\_RESULT}}(\textcolor{keywordtype}{size\_t},\ \mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}})}
-\DoxyCodeLine{00183\ \mbox{\hyperlink{group__PublicAPI_ga08049ca3b3469bc28a420283be89ed96}{DECLARE\_RESULT}}(\textcolor{keywordtype}{char},\ \mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}})}
-\DoxyCodeLine{00184\ \mbox{\hyperlink{group__PublicAPI_ga08049ca3b3469bc28a420283be89ed96}{DECLARE\_RESULT}}(\textcolor{keywordtype}{double},\ \mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}})}
-\DoxyCodeLine{00185\ \mbox{\hyperlink{group__PublicAPI_ga08049ca3b3469bc28a420283be89ed96}{DECLARE\_RESULT}}(\textcolor{keywordtype}{bool},\ \mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}})}
-\DoxyCodeLine{00186\ \mbox{\hyperlink{group__PublicAPI_ga08049ca3b3469bc28a420283be89ed96}{DECLARE\_RESULT}}(\mbox{\hyperlink{other_8h_a8ab1bc0eac7b13dbef044c138a320810}{p\_void}},\ \mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}})}
-\DoxyCodeLine{00187\ \mbox{\hyperlink{group__PublicAPI_ga08049ca3b3469bc28a420283be89ed96}{DECLARE\_RESULT}}(int\_array,\ \mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}})}
-\DoxyCodeLine{00188\ \mbox{\hyperlink{group__PublicAPI_ga08049ca3b3469bc28a420283be89ed96}{DECLARE\_RESULT}}(double\_array,\ \mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}})}
-\DoxyCodeLine{00189\ \mbox{\hyperlink{group__PublicAPI_ga08049ca3b3469bc28a420283be89ed96}{DECLARE\_RESULT}}(char\_array,\ \mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}})}
-\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00180\ \mbox{\hyperlink{result_8h_a08049ca3b3469bc28a420283be89ed96}{DECLARE\_RESULT}}(\textcolor{keywordtype}{int},\ \mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}})}
+\DoxyCodeLine{00181\ \mbox{\hyperlink{result_8h_a08049ca3b3469bc28a420283be89ed96}{DECLARE\_RESULT}}(\textcolor{keywordtype}{size\_t},\ \mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}})}
+\DoxyCodeLine{00182\ \mbox{\hyperlink{result_8h_a08049ca3b3469bc28a420283be89ed96}{DECLARE\_RESULT}}(\textcolor{keywordtype}{char},\ \mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}})}
+\DoxyCodeLine{00183\ \mbox{\hyperlink{result_8h_a08049ca3b3469bc28a420283be89ed96}{DECLARE\_RESULT}}(\textcolor{keywordtype}{double},\ \mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}})}
+\DoxyCodeLine{00184\ \mbox{\hyperlink{result_8h_a08049ca3b3469bc28a420283be89ed96}{DECLARE\_RESULT}}(\textcolor{keywordtype}{bool},\ \mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}})}
+\DoxyCodeLine{00185\ \mbox{\hyperlink{result_8h_a08049ca3b3469bc28a420283be89ed96}{DECLARE\_RESULT}}(\mbox{\hyperlink{other_8h_a8ab1bc0eac7b13dbef044c138a320810}{p\_void}},\ \mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}})}
+\DoxyCodeLine{00186\ \mbox{\hyperlink{result_8h_a08049ca3b3469bc28a420283be89ed96}{DECLARE\_RESULT}}(int\_array,\ \mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}})}
+\DoxyCodeLine{00187\ \mbox{\hyperlink{result_8h_a08049ca3b3469bc28a420283be89ed96}{DECLARE\_RESULT}}(double\_array,\ \mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}})}
+\DoxyCodeLine{00188\ \mbox{\hyperlink{result_8h_a08049ca3b3469bc28a420283be89ed96}{DECLARE\_RESULT}}(char\_array,\ \mbox{\hyperlink{result_8h_a658536af587406cbc17706521b18cafd}{serror}})}
+\DoxyCodeLine{00189\ }
 
 \end{DoxyCode}

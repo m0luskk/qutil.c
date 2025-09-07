@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['types_0',['Using user-defined types',['../result_8h.html#autotoc_md0',1,'']]]
+  ['p_5fvoid_0',['p_void',['../other_8h.html#a8ab1bc0eac7b13dbef044c138a320810',1,'other.h']]],
+  ['public_20api_1',['public api',['../group__PublicAPI.html',1,'']]]
 ];

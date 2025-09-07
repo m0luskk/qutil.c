@@ -30,6 +30,9 @@ IMPL_RESULT(user_ok_type, user_err_type);
  * ```
  * \attention `user_ok_type` and `user_err_type` must not contain whitespaces and special characters (`const char *` or `int[]` for example)
  
+ ## Macros thats uses compilers extensions
+ Error propagarion feature (`TRY` macro) use [statement in expression extension](https://gcc.gnu.org/onlinedocs/gcc-12.2.0/gcc/Statement-Exprs.html#Statement-Exprs). 
+  Thats cause some warnings of -padantic compilation flag. Define `RESULT_PEDANTIC_SAFE` and `OPTION_PEDANTIC_SAFE` before `result.h` and `option.h` including for toggle of error propagation feature of option and result types;
  */
 
 #include "option.h"
@@ -75,7 +78,6 @@ DECLARE_OPTION(serror)
 /** @endcond */
 
 /**
- * @ingroup PublicAPI
  * @brief Declare result structure of types `T` as `ok` variant and `ERR` as `err` variant.
  */
 #define DECLARE_RESULT(T, ERR) \
@@ -125,7 +127,7 @@ struct result_double_serror foo() {
 #endif
 
 /**
- * @brief Return type of `result_match` function
+ * @brief Return type of `result_match()` function
  * 
  */
 enum result_enum {
@@ -135,7 +137,6 @@ enum result_enum {
 
 
 /**
- * @ingroup PublicAPI
  * @brief Returns `true` if the passed result instance contain `ok` variant.
  * 
  * @param result Instance of any result structure
@@ -151,7 +152,6 @@ static inline bool result_is_ok(void* result) {
 }
 
 /**
- * @ingroup PublicAPI
  * @brief Returns `true` if the passed result instance contain `err` variant.
  * 
  * @param result Instance of any result structure
@@ -163,7 +163,6 @@ static inline bool result_is_err(void* result) {
 }
 
 /**
- * @ingroup PublicAPI
  * @brief Returns enum thats corresponds result's containing variant
  * @param result Instance of any result structure
  * @return `RES_OK` if passed result instance contain `err` variant

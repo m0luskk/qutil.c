@@ -113,9 +113,9 @@ Include dependency graph for result.h:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga08049ca3b3469bc28a420283be89ed96" id="r_ga08049ca3b3469bc28a420283be89ed96"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__PublicAPI.html#ga08049ca3b3469bc28a420283be89ed96">DECLARE_RESULT</a>(T,  ERR)</td></tr>
-<tr class="memdesc:ga08049ca3b3469bc28a420283be89ed96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declare result structure of types <code>T</code> as <code>ok</code> variant and <code>ERR</code> as <code>err</code> variant.  <br /></td></tr>
-<tr class="separator:ga08049ca3b3469bc28a420283be89ed96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08049ca3b3469bc28a420283be89ed96" id="r_a08049ca3b3469bc28a420283be89ed96"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="result_8h.html#a08049ca3b3469bc28a420283be89ed96">DECLARE_RESULT</a>(T,  ERR)</td></tr>
+<tr class="memdesc:a08049ca3b3469bc28a420283be89ed96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declare result structure of types <code>T</code> as <code>ok</code> variant and <code>ERR</code> as <code>err</code> variant.  <br /></td></tr>
+<tr class="separator:a08049ca3b3469bc28a420283be89ed96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -128,20 +128,20 @@ Enumerations</h2></td></tr>
 <tr class="memitem:a9dfd764217c2c915cba60224369342fd" id="r_a9dfd764217c2c915cba60224369342fd"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="result_8h.html#a9dfd764217c2c915cba60224369342fd">result_enum</a> { <a class="el" href="result_8h.html#a9dfd764217c2c915cba60224369342fda2ea4b6ef3fffc17dd1d38ab5c2837737">RES_OK</a>
 , <a class="el" href="result_8h.html#a9dfd764217c2c915cba60224369342fdaecff6e8c93a5895522ba737bb5c89e2a">RES_ERR</a>
  }</td></tr>
-<tr class="memdesc:a9dfd764217c2c915cba60224369342fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return type of <code>result_match</code> function.  <a href="result_8h.html#a9dfd764217c2c915cba60224369342fd">More...</a><br /></td></tr>
+<tr class="memdesc:a9dfd764217c2c915cba60224369342fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return type of <code><a class="el" href="result_8h.html#afaee2a2b2dfc42e34f26fbd189f5a296" title="Returns enum thats corresponds result&#39;s containing variant.">result_match()</a></code> function.  <a href="result_8h.html#a9dfd764217c2c915cba60224369342fd">More...</a><br /></td></tr>
 <tr class="separator:a9dfd764217c2c915cba60224369342fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga282e9abd1facc7c748f8fd2b7067f606" id="r_ga282e9abd1facc7c748f8fd2b7067f606"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__PublicAPI.html#ga282e9abd1facc7c748f8fd2b7067f606">result_is_ok</a> (void *result)</td></tr>
-<tr class="memdesc:ga282e9abd1facc7c748f8fd2b7067f606"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns <code>true</code> if the passed result instance contain <code>ok</code> variant.  <br /></td></tr>
-<tr class="separator:ga282e9abd1facc7c748f8fd2b7067f606"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaee8b2e7e36b54cebcde6c6aa52420d82" id="r_gaee8b2e7e36b54cebcde6c6aa52420d82"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__PublicAPI.html#gaee8b2e7e36b54cebcde6c6aa52420d82">result_is_err</a> (void *result)</td></tr>
-<tr class="memdesc:gaee8b2e7e36b54cebcde6c6aa52420d82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns <code>true</code> if the passed result instance contain <code>err</code> variant.  <br /></td></tr>
-<tr class="separator:gaee8b2e7e36b54cebcde6c6aa52420d82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gafaee2a2b2dfc42e34f26fbd189f5a296" id="r_gafaee2a2b2dfc42e34f26fbd189f5a296"><td class="memItemLeft" align="right" valign="top">static enum <a class="el" href="result_8h.html#a9dfd764217c2c915cba60224369342fd">result_enum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__PublicAPI.html#gafaee2a2b2dfc42e34f26fbd189f5a296">result_match</a> (void *result)</td></tr>
-<tr class="memdesc:gafaee2a2b2dfc42e34f26fbd189f5a296"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns enum thats corresponds result's containing variant.  <br /></td></tr>
-<tr class="separator:gafaee2a2b2dfc42e34f26fbd189f5a296"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a282e9abd1facc7c748f8fd2b7067f606" id="r_a282e9abd1facc7c748f8fd2b7067f606"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="result_8h.html#a282e9abd1facc7c748f8fd2b7067f606">result_is_ok</a> (void *result)</td></tr>
+<tr class="memdesc:a282e9abd1facc7c748f8fd2b7067f606"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns <code>true</code> if the passed result instance contain <code>ok</code> variant.  <br /></td></tr>
+<tr class="separator:a282e9abd1facc7c748f8fd2b7067f606"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee8b2e7e36b54cebcde6c6aa52420d82" id="r_aee8b2e7e36b54cebcde6c6aa52420d82"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="result_8h.html#aee8b2e7e36b54cebcde6c6aa52420d82">result_is_err</a> (void *result)</td></tr>
+<tr class="memdesc:aee8b2e7e36b54cebcde6c6aa52420d82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns <code>true</code> if the passed result instance contain <code>err</code> variant.  <br /></td></tr>
+<tr class="separator:aee8b2e7e36b54cebcde6c6aa52420d82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afaee2a2b2dfc42e34f26fbd189f5a296" id="r_afaee2a2b2dfc42e34f26fbd189f5a296"><td class="memItemLeft" align="right" valign="top">static enum <a class="el" href="result_8h.html#a9dfd764217c2c915cba60224369342fd">result_enum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="result_8h.html#afaee2a2b2dfc42e34f26fbd189f5a296">result_match</a> (void *result)</td></tr>
+<tr class="memdesc:afaee2a2b2dfc42e34f26fbd189f5a296"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns enum thats corresponds result's containing variant.  <br /></td></tr>
+<tr class="separator:afaee2a2b2dfc42e34f26fbd189f5a296"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Result type.</p>
@@ -150,16 +150,60 @@ Functions</h2></td></tr>
 Using user-defined types</h2>
 <div class="fragment"><div class="line"><span class="comment">// my_result.h</span></div>
 <div class="line"><span class="preprocessor">#define X(RET, NAME, ARGS, DEF) RET NAME(ARGS);</span></div>
-<div class="line"><a class="code hl_define" href="group__PublicAPI.html#ga08049ca3b3469bc28a420283be89ed96">DECLARE_RESULT</a>(user_ok_type, user_err_type);</div>
+<div class="line"><a class="code hl_define" href="result_8h.html#a08049ca3b3469bc28a420283be89ed96">DECLARE_RESULT</a>(user_ok_type, user_err_type);</div>
 <div class="line"><span class="preprocessor">#undef X</span></div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// my_result.c</span></div>
 <div class="line"><span class="preprocessor">#define X(RET, NAME, ARGS, DEF) RET NAME(ARGS) DEF</span></div>
 <div class="line">IMPL_RESULT(user_ok_type, user_err_type);</div>
 <div class="line"><span class="preprocessor">#undef X</span></div>
-<div class="ttc" id="agroup__PublicAPI_html_ga08049ca3b3469bc28a420283be89ed96"><div class="ttname"><a href="group__PublicAPI.html#ga08049ca3b3469bc28a420283be89ed96">DECLARE_RESULT</a></div><div class="ttdeci">#define DECLARE_RESULT(T, ERR)</div><div class="ttdoc">Declare result structure of types T as ok variant and ERR as err variant.</div><div class="ttdef"><b>Definition</b> result.h:81</div></div>
-</div><!-- fragment --> <dl class="section attention"><dt>Attention</dt><dd><code>user_ok_type</code> and <code>user_err_type</code> must not contain whitespaces and special characters (<code>const char *</code> or <code>int[]</code> for example) </dd></dl>
-</div><h2 class="groupheader">Typedef Documentation</h2>
+<div class="ttc" id="aresult_8h_html_a08049ca3b3469bc28a420283be89ed96"><div class="ttname"><a href="result_8h.html#a08049ca3b3469bc28a420283be89ed96">DECLARE_RESULT</a></div><div class="ttdeci">#define DECLARE_RESULT(T, ERR)</div><div class="ttdoc">Declare result structure of types T as ok variant and ERR as err variant.</div><div class="ttdef"><b>Definition</b> result.h:83</div></div>
+</div><!-- fragment --> <dl class="section attention"><dt>Attention</dt><dd><code>user_ok_type</code> and <code>user_err_type</code> must not contain whitespaces and special characters (<code>const char *</code> or <code>int[]</code> for example)</dd></dl>
+<h2><a class="anchor" id="autotoc_md1"></a>
+Macros thats uses compilers extensions</h2>
+<p>Error propagarion feature (<code>TRY</code> macro) use <a href="https://gcc.gnu.org/onlinedocs/gcc-12.2.0/gcc/Statement-Exprs.html#Statement-Exprs">statement in expression extension</a>. Thats cause some warnings of -padantic compilation flag. Define <code>RESULT_PEDANTIC_SAFE</code> and <code>OPTION_PEDANTIC_SAFE</code> before <code><a class="el" href="result_8h.html" title="Result type.Result is a type that represents either success (ok) or failure (err).">result.h</a></code> and <code><a class="el" href="option_8h.html" title="Option type.Result is a type that represents either value or nothing.">option.h</a></code> including for toggle of error propagation feature of option and result types; </p>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a08049ca3b3469bc28a420283be89ed96" name="a08049ca3b3469bc28a420283be89ed96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08049ca3b3469bc28a420283be89ed96">&#9670;&#160;</a></span>DECLARE_RESULT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define DECLARE_RESULT</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">T, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">ERR&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">struct </span>result_##T##_##ERR { \</div>
+<div class="line">  <span class="keyword">const</span> <span class="keywordtype">bool</span> is_ok; \</div>
+<div class="line">  <span class="keyword">const</span> <span class="keyword">union </span>{ \</div>
+<div class="line">    T ok; \</div>
+<div class="line">    ERR err; \</div>
+<div class="line">  } _value; \</div>
+<div class="line">}; \</div>
+<div class="line"><span class="keyword">typedef</span> void(*f_result_##T##_##ERR##_inspect_err)(ERR); \</div>
+<div class="line"><span class="keyword">typedef</span> void(*f_result_##T##_##ERR##_inspect)(T); \</div>
+<div class="line">RESULT_METHODS(T, ERR)</div>
+</div><!-- fragment -->
+<p>Declare result structure of types <code>T</code> as <code>ok</code> variant and <code>ERR</code> as <code>err</code> variant. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Typedef Documentation</h2>
 <a id="a658536af587406cbc17706521b18cafd" name="a658536af587406cbc17706521b18cafd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a658536af587406cbc17706521b18cafd">&#9670;&#160;</a></span>serror</h2>
 
@@ -189,11 +233,123 @@ Using user-defined types</h2>
       </table>
 </div><div class="memdoc">
 
-<p>Return type of <code>result_match</code> function. </p>
+<p>Return type of <code><a class="el" href="result_8h.html#afaee2a2b2dfc42e34f26fbd189f5a296" title="Returns enum thats corresponds result&#39;s containing variant.">result_match()</a></code> function. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a9dfd764217c2c915cba60224369342fda2ea4b6ef3fffc17dd1d38ab5c2837737" name="a9dfd764217c2c915cba60224369342fda2ea4b6ef3fffc17dd1d38ab5c2837737"></a>RES_OK&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a9dfd764217c2c915cba60224369342fdaecff6e8c93a5895522ba737bb5c89e2a" name="a9dfd764217c2c915cba60224369342fdaecff6e8c93a5895522ba737bb5c89e2a"></a>RES_ERR&#160;</td><td class="fielddoc"></td></tr>
 </table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="aee8b2e7e36b54cebcde6c6aa52420d82" name="aee8b2e7e36b54cebcde6c6aa52420d82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee8b2e7e36b54cebcde6c6aa52420d82">&#9670;&#160;</a></span>result_is_err()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool result_is_err </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>result</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns <code>true</code> if the passed result instance contain <code>err</code> variant. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">result</td><td>Instance of any result structure </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if passed result instance contain <code>err</code> variant </dd>
+<dd>
+false if passed result instance contain <code>ok</code> variant </dd></dl>
+
+</div>
+</div>
+<a id="a282e9abd1facc7c748f8fd2b7067f606" name="a282e9abd1facc7c748f8fd2b7067f606"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a282e9abd1facc7c748f8fd2b7067f606">&#9670;&#160;</a></span>result_is_ok()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool result_is_ok </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>result</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns <code>true</code> if the passed result instance contain <code>ok</code> variant. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">result</td><td>Instance of any result structure </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if passed result instance contain <code>ok</code> variant </dd>
+<dd>
+false if passed result instance contain <code>err</code> variant </dd></dl>
+
+</div>
+</div>
+<a id="afaee2a2b2dfc42e34f26fbd189f5a296" name="afaee2a2b2dfc42e34f26fbd189f5a296"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afaee2a2b2dfc42e34f26fbd189f5a296">&#9670;&#160;</a></span>result_match()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static enum <a class="el" href="result_8h.html#a9dfd764217c2c915cba60224369342fd">result_enum</a> result_match </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>result</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns enum thats corresponds result's containing variant. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">result</td><td>Instance of any result structure </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>RES_OK</code> if passed result instance contain <code>err</code> variant </dd>
+<dd>
+<code>RES_ERR</code> if passed result instance contain <code>ok</code> variant </dd></dl>
 
 </div>
 </div>
