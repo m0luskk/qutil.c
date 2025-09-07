@@ -33,5 +33,11 @@ Simple utility library in C23
   - [x] option_has_value()
   - [x] option_match()
 - [ ] logger
+- - [ ] Logging levels
+  - [ ] Thread-safety
+  - [ ] Formatters
+  - [ ] User-defined log destination
+  - [ ] Unix compatibility
+- [ ] arena allocator
 
 </details>
