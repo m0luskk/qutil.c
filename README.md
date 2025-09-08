@@ -39,6 +39,8 @@ Simple utility library in C23
   - [ ] Formatters
   - [ ] User-defined log destination
   - [ ] Unix compatibility
-- [ ] arena allocator
+- [ ] memory
+- - [ ] arena allocator
+  - [ ] memory_explicit()
 
 </details>
