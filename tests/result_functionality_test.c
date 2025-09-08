@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define R_PEDANTIC_SAFE
+
 #include "tests.h"
 #include "../include/result.h"
 #include "../include/option.h"
@@ -10,15 +12,15 @@ typedef struct {
   size_t s;
 } user_type;
 
-void inspect(double val) {
-  printf("inspect: ok value = %s\n", val);
+void inspect([[maybe_unused]] double val) {
+  printf("inspect: ok value = %f\n", val);
 }
 
 struct result_double_serror and_then(double val) {
   return result_double_serror_ok(val * val);
 }
 
-struct result_double_serror or_else(serror err) {
+struct result_double_serror or_else([[maybe_unused]] serror err) {
   return result_double_serror_ok(4.2);
 }
 
@@ -26,11 +28,15 @@ int map(double v) {
   return (int)v;
 }
 
+struct option_int opt_or_else() {
+  return option_int_value(1);
+}
+
 struct result_double_serror devide(double val, double devider) {
   if (devider == 0) {
     return result_double_serror_err("devider is zero");
   }
-  result_double_serror_ok(val / devider);
+  return result_double_serror_ok(val / devider);
 }
 
 struct result_p_void_serror another_fail_function() {
@@ -52,9 +58,9 @@ struct option_double opt_tries() {
 struct result_double_serror foo() {
   ERROR_PROPAGATE(double, serror);
 
-  auto res = RES_TRY(devide(4, 0));
+  [[maybe_unused]] auto res = RES_TRY(devide(4, 0));
 
-  auto ptr = RES_TRY(another_fail_function());
+  [[maybe_unused]] auto ptr = RES_TRY(another_fail_function());
 
   return result_double_serror_ok(res);
 }
@@ -86,13 +92,13 @@ START_TEST(result_unwrap)
   ASSERT(result_double_serror_unwrap(&r) > 5.0);
 END_TEST
 
-START_TEST(result_and_then)
-  auto r = result_double_serror_ok(5.2);
+// START_TEST(result_and_then)
+//   auto r = result_double_serror_ok(5.2);
 
-  auto t = result_double_serror_and_then(&r, and_then);
+//   auto t = result_double_serror_and_then(&r, and_then);
 
-  ASSERT(result_double_serror_unwrap(&t) > 20.0);
-END_TEST
+//   ASSERT(result_double_serror_unwrap(&t) > 20.0);
+// END_TEST
 
 START_TEST(result_or_else)
   auto r = result_double_serror_err("hui");
@@ -124,5 +130,42 @@ END_TEST
 START_TEST(option_try)
   auto opt = opt_tries();
   ASSERT(!opt.has_value);
+END_TEST
+
+START_TEST(option_unwrap)
+  auto opt = option_int_value(5);
+  ASSERT(opt.has_value);
+
+  int i = option_int_unwrap(&opt);
+  ASSERT(i == 5);
+END_TEST
+
+START_TEST(option_unwrap_or)
+  auto opt = option_int_none();
+  ASSERT(!opt.has_value);
+
+  int i = option_int_unwrap_or(&opt, 5);
+  ASSERT(i == 5);
+END_TEST
+
+START_TEST(option_take)
+  auto opt = option_int_value(5);
+  ASSERT(opt.has_value);
+
+  auto taken = option_int_take(&opt);
+  ASSERT(option_int_unwrap(&taken) == 5);
+  ASSERT(!opt.has_value)
+END_TEST
+
+START_TEST(option_or_else)
+  auto value = option_int_value(5);
+  ASSERT(value.has_value);
+  auto none = option_int_none();
+  ASSERT(!none.has_value);
+
+  auto v = option_int_or_else(&value, opt_or_else);
+  ASSERT(v._value == 5)
+  auto n = option_int_or_else(&none, opt_or_else);
+  ASSERT(n._value == 1)
 END_TEST
 

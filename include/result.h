@@ -67,11 +67,11 @@ DECLARE_OPTION(serror)
 
 #define RESULT_UNWRAP_BODY(T, ERR) { if(!result) abort(); if (result->is_ok) return result->_value.ok; else abort(); }
 
-#define RESULT_AND_THEN_BODY(T, ERR) { if(!result) abort(); if (result->is_ok) return f(result->_value.ok); else return *result; }
-#define RESULT_AND_THEN_ARGS(T, ERR) struct result_##T##_##ERR* result, f_result_##T##_##ERR##_and_then f
+//#define RESULT_AND_THEN_BODY(T, ERR) { if(!result) abort(); if (result->is_ok) return f(result->_value.ok); else return *result; }
+//#define RESULT_AND_THEN_ARGS(T, ERR) struct result_##T##_##ERR* result, f_result_##T##_##ERR##_and_then f
 
-#define RESULT_OR_ELSE_BODY(T, ERR) { if(!result) abort(); if (result->is_ok) return *result; else return f(result->_value.err); }
 #define RESULT_OR_ELSE_ARGS(T, ERR) struct result_##T##_##ERR* result, f_result_##T##_##ERR##_or_else f
+#define RESULT_OR_ELSE_BODY(T, ERR) { if(!result) abort(); if (result->is_ok) return *result; else return f(result->_value.err); }
 
 // R_M(ATTR, RET, NAME, ARGS, BODY)
 #define RESULT_METHODS(T, ERR) \
@@ -82,7 +82,6 @@ DECLARE_OPTION(serror)
   R_M(UNSQCD_ATTR(), void                     , result_##T##_##ERR##_inspect    , RESULT_INSPECT_ARGS(T, ERR)      , RESULT_INSPECT_BODY(T, ERR)) \
   R_M(UNSQCD_ATTR(), void                     , result_##T##_##ERR##_inspect_err, RESULT_INSPECT_ERR_ARGS(T, ERR)  , RESULT_INSPECT_ERR_BODY(T, ERR)) \
   R_M(             , T                        , result_##T##_##ERR##_unwrap     , struct result_##T##_##ERR* result, RESULT_UNWRAP_BODY(T, ERR) ) \
-  R_M(             , struct result_##T##_##ERR, result_##T##_##ERR##_and_then   , RESULT_AND_THEN_ARGS(T, ERR)     , RESULT_AND_THEN_BODY(T, ERR) ) \
   R_M(             , struct result_##T##_##ERR, result_##T##_##ERR##_or_else    , RESULT_OR_ELSE_ARGS(T, ERR)      , RESULT_OR_ELSE_BODY(T, ERR) )
 
 #define R_M(ATTR, RET, NAME, ARGS, DEF) ATTR static inline RET NAME(ARGS) DEF
@@ -101,13 +100,16 @@ struct result_##T##_##ERR { \
 }; \
 typedef void(*f_result_##T##_##ERR##_inspect_err)(ERR); \
 typedef void(*f_result_##T##_##ERR##_inspect)(T); \
-typedef struct result_##T##_##ERR(*f_result_##T##_##ERR##_and_then)(T); \
 typedef struct result_##T##_##ERR(*f_result_##T##_##ERR##_or_else)(ERR); \
 RESULT_METHODS(T, ERR)
 
 
 #if defined(__GNUC__) || defined(__clang__)
-#ifndef R_PEDANTIC_SAFE
+#ifdef R_PEDANTIC_SAFE
+  #define EXTENSION_ATTR __extension__
+#else
+  #define EXTENSION_ATTR
+#endif
 /**
  * @brief Defines function poiner thats using in `TRY` macro.
  */
@@ -129,14 +131,13 @@ struct result_double_serror foo() {
 }
  ```
  */
-#define RES_TRY(expr) ({ \
+#define RES_TRY(expr) EXTENSION_ATTR ({ \
     auto _tmp = (expr); \
     if (!result_is_ok(&_tmp)) { \
         return __f_res_ret_err(_tmp._value.err); \
     } \
     _tmp._value.ok; \
 })
-#endif
 #endif
 
 /**

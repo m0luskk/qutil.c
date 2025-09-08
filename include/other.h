@@ -15,7 +15,7 @@
  * @brief Contain static string pointer
  * for use in `option` and `result` types
  */
-typedef const char* const static_string; 
+typedef const char* static_string; 
 
 /**
  * @brief Contain constant `void*`
