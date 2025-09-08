@@ -10,8 +10,20 @@ typedef struct {
   size_t s;
 } user_type;
 
-void ins(serror val) {
+void inspect(double val) {
   printf("inspect: ok value = %s\n", val);
+}
+
+struct result_double_serror and_then(double val) {
+  return result_double_serror_ok(val * val);
+}
+
+struct result_double_serror or_else(serror err) {
+  return result_double_serror_ok(4.2);
+}
+
+int map(double v) {
+  return (int)v;
 }
 
 struct result_double_serror devide(double val, double devider) {
@@ -35,10 +47,8 @@ struct result_double_serror foo() {
   return result_double_serror_ok(res);
 }
 
-START_TEST(result)
+START_TEST(result_match)
   auto r = foo();
-
-  auto ok_val = result_double_serror_unwrap(&r);
 
   switch (result_match(&r)) {
     case RES_OK:
@@ -51,6 +61,37 @@ START_TEST(result)
       break;
   }
 END_TEST
+
+START_TEST(result_inspect)
+  auto r = foo();
+
+  result_double_serror_inspect(&r, inspect);
+END_TEST
+
+START_TEST(result_unwrap)
+  auto r = result_double_serror_ok(5.2);
+
+  ASSERT(result_double_serror_unwrap(&r) > 5.0);
+END_TEST
+
+START_TEST(result_and_then)
+  auto r = result_double_serror_ok(5.2);
+
+  auto t = result_double_serror_and_then(&r, and_then);
+
+  ASSERT(result_double_serror_unwrap(&t) > 20.0);
+END_TEST
+
+START_TEST(result_or_else)
+  auto r = result_double_serror_err("hui");
+
+  auto t = result_double_serror_or_else(&r, or_else);
+
+  ASSERT(result_double_serror_unwrap(&t) < 5.2);
+END_TEST
+
+
+
 
 START_TEST(option)
   auto opt = option_int_value(52);
