@@ -32,7 +32,7 @@ IMPL_RESULT(user_ok_type, user_err_type);
  
  ## Macros thats uses compilers extensions
  Error propagarion feature (`TRY` macro) use [statement in expression extension](https://gcc.gnu.org/onlinedocs/gcc-12.2.0/gcc/Statement-Exprs.html#Statement-Exprs). 
-  Thats cause some warnings of -padantic compilation flag. Define `RESULT_PEDANTIC_SAFE` and `OPTION_PEDANTIC_SAFE` before `result.h` and `option.h` including for toggle of error propagation feature of option and result types;
+  Thats cause some warnings of -padantic compilation flag. Define `R_PEDANTIC_SAFE` and `OPTION_PEDANTIC_SAFE` before `result.h` and `option.h` including for toggle of error propagation feature of option and result types;
  */
 
 #include "option.h"
@@ -106,14 +106,13 @@ typedef struct result_##T##_##ERR(*f_result_##T##_##ERR##_or_else)(ERR); \
 RESULT_METHODS(T, ERR)
 
 
-// #define TRY(T, ERR, RESULT) if(!RESULT.is_ok) return result_##T##_##ERR##_err(RESULT._value.err);
 #if defined(__GNUC__) || defined(__clang__)
-#ifndef RESULT_PEDANTIC_SAFE
+#ifndef R_PEDANTIC_SAFE
 /**
  * @brief Defines function poiner thats using in `TRY` macro.
  */
-#define ERROR_PROPAGATE(T, ERR) struct result_##T##_##ERR(*const __f_ret_err)(ERR err) = result_##T##_##ERR##_err
 
+  #define ERROR_PROPAGATE(T, ERR) [[maybe_unused]] struct result_##T##_##ERR(*const __f_res_ret_err)(ERR err) = result_##T##_##ERR##_err;
 /**
  * @brief If `expr` is the result type and contain the `err` variant, then propagates it from current function. Otherwise return `ok` variant value
  * @attention Before using TRY macros user must use ERROR_PROPAGATE macros with `T` and `ERR` of result type of function
@@ -130,10 +129,10 @@ struct result_double_serror foo() {
 }
  ```
  */
-#define TRY(expr) ({ \
+#define RES_TRY(expr) ({ \
     auto _tmp = (expr); \
     if (!result_is_ok(&_tmp)) { \
-        return __f_ret_err(_tmp._value.err); \
+        return __f_res_ret_err(_tmp._value.err); \
     } \
     _tmp._value.ok; \
 })

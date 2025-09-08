@@ -37,12 +37,24 @@ struct result_p_void_serror another_fail_function() {
   return result_p_void_serror_err("fail");
 }
 
+struct option_int none_int_opt() {
+  return option_int_none();
+}
+
+struct option_double opt_tries() {
+  NONE_PROPAGATE(double);
+  
+  auto i = OPT_TRY(none_int_opt());
+  
+  return option_double_value(i);
+}
+
 struct result_double_serror foo() {
   ERROR_PROPAGATE(double, serror);
 
-  auto res = TRY(devide(4, 0));
+  auto res = RES_TRY(devide(4, 0));
 
-  auto ptr = TRY(another_fail_function());
+  auto ptr = RES_TRY(another_fail_function());
 
   return result_double_serror_ok(res);
 }
@@ -93,7 +105,7 @@ END_TEST
 
 
 
-START_TEST(option)
+START_TEST(option_match)
   auto opt = option_int_value(52);
   ASSERT(option_has_value(&opt));
   ASSERT(opt.has_value);
@@ -107,5 +119,10 @@ START_TEST(option)
       ASSERT(!opt.has_value);
       break;
   }
+END_TEST
+
+START_TEST(option_try)
+  auto opt = opt_tries();
+  ASSERT(!opt.has_value);
 END_TEST
 
