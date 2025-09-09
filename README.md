@@ -1,7 +1,7 @@
 # qutil.c
 Simple utilities library in C23 with no unnecessary overhead and implicit memory allocations.
 
-Some features use GNU compiler extensions!
+Some features use compiler extensions! You may supress warnings by defining `R_PEDANTIC_SAFE` before include `qoption.h` or `qresult.h`. If your compiler dont support these exntensions, that feature just not defining in header.
 
 ## Result type
 ```c
@@ -35,11 +35,11 @@ int main() {
   auto r = some_arithmetic();
   switch (result_match(&r)) {
     case RES_OK:
-      ASSERT(r.is_ok);
+      assert(r.is_ok); // for demonstration purposes only! Dont use fields thats starts with underscore!
       printf("ok: %f\n", option_double_unwrap(result_double_arithm_e_get_value(&r))); // result_T_ERR_get_value() returns option_T
       break;
     case RES_ERR: // This branch will be executed
-      ASSERT(!r.is_ok);
+      assert(!r.is_ok);
       printf("error: %d\n", option_arithm_e_unwrap(result_double_arithm_e_get_err(r))); // Or some arithm_e to string function
       break;
   }
