@@ -86,7 +86,7 @@ START_TEST(result_match)
       break;
     case RES_ERR:
       ASSERT(!r.is_ok);
-      printf("error: %d\n", r._value.err); // or some arithm_e to string function
+      printf("error: %d\n", option_arithm_e_unwrap(result_double_arithm_e_get_err(r))); // or some arithm_e to string function
       break;
   }
 END_TEST
@@ -116,9 +116,6 @@ START_TEST(result_or_else)
 
   ASSERT(result_double_serror_unwrap(t) < 5.2);
 END_TEST
-
-
-
 
 START_TEST(option_match)
   auto opt = option_int_value(52);
