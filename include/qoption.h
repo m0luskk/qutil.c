@@ -11,16 +11,16 @@
 #include <string.h>
 
 /** @cond */
-#define OPTION_VALUE_BODY(T) { return (struct option_##T){.has_value = true, ._value = val}; }
+#define _OPTION_VALUE_BODY(T) { return (struct option_##T){.has_value = true, ._value = val}; }
 
-#define OPTION_NONE_BODY(T) { return (struct option_##T){.has_value = false}; }
+#define _OPTION_NONE_BODY(T) { return (struct option_##T){.has_value = false}; }
 
-#define OPTION_UNWRAP_BODY(T) { if (!opt) abort(); if (opt->has_value) return opt->_value; else abort(); }
+#define _OPTION_UNWRAP_BODY(T) { if (!opt) abort(); if (opt->has_value) return opt->_value; else abort(); }
 
-#define OPTION_UNWRAP_OR_ARGS(T) const struct option_##T* opt, T def
-#define OPTION_UNWRAP_OR_BODY(T) { if (!opt) abort(); if (opt->has_value) return opt->_value; else return def; }
+#define _OPTION_UNWRAP_OR_ARGS(T) const struct option_##T* opt, T def
+#define _OPTION_UNWRAP_OR_BODY(T) { if (!opt) abort(); if (opt->has_value) return opt->_value; else return def; }
 
-#define OPTION_TAKE_BODY(T) { \
+#define _OPTION_TAKE_BODY(T) { \
   if (!opt) abort(); \
   if (opt->has_value) { \
     auto tmp = option_##T##_value(opt->_value); \
@@ -32,18 +32,18 @@
   } \
 }
 
-#define OPTION_OR_ELSE_ARGS(T) const struct option_##T* opt, f_option_##T##_or_else f
-#define OPTION_OR_ELSE_BODY(T) { if(!opt) abort(); if(opt->has_value) return *opt; else return f(); } 
+#define _OPTION_OR_ELSE_ARGS(T) const struct option_##T* opt, f_option_##T##_or_else f
+#define _OPTION_OR_ELSE_BODY(T) { if(!opt) abort(); if(opt->has_value) return *opt; else return f(); } 
 
 #define OPTION_METHODS(T) \
-  O_M(struct option_##T, option_##T##_value    , T val                         , OPTION_VALUE_BODY(T) ) \
-  O_M(struct option_##T, option_##T##_none     ,                               , OPTION_NONE_BODY(T)  ) \
-  O_M(T                , option_##T##_unwrap   , const struct option_##T* opt  , OPTION_UNWRAP_BODY(T)) \
-  O_M(T                , option_##T##_unwrap_or, OPTION_UNWRAP_OR_ARGS(T)      , OPTION_UNWRAP_OR_BODY(T)) \
-  O_M(struct option_##T, option_##T##_take     , struct option_##T* opt        , OPTION_TAKE_BODY(T)) \
-  O_M(struct option_##T, option_##T##_or_else  , OPTION_OR_ELSE_ARGS(T)        , OPTION_OR_ELSE_BODY(T))
+  O_M(struct option_##T, option_##T##_value    , T val                         , _OPTION_VALUE_BODY(T) ) \
+  O_M(struct option_##T, option_##T##_none     ,                               , _OPTION_NONE_BODY(T)  ) \
+  O_M(T                , option_##T##_unwrap   , const struct option_##T* opt  , _OPTION_UNWRAP_BODY(T)) \
+  O_M(T                , option_##T##_unwrap_or, _OPTION_UNWRAP_OR_ARGS(T)      , _OPTION_UNWRAP_OR_BODY(T)) \
+  O_M(struct option_##T, option_##T##_take     , struct option_##T* opt        , _OPTION_TAKE_BODY(T)) \
+  O_M(struct option_##T, option_##T##_or_else  , _OPTION_OR_ELSE_ARGS(T)        , _OPTION_OR_ELSE_BODY(T))
 
-#define O_M(RET, NAME, ARGS, BODY) static inline RET NAME(ARGS) BODY
+#define O_M(RET, NAME, ARGS, BODY) [[maybe_unused]] static inline RET NAME(ARGS) BODY
 /** @endcond */
 
 #define DECLARE_OPTION(T) \
@@ -63,7 +63,7 @@ OPTION_METHODS(T)
 /**
  * @brief Defines function poiner thats using in `TRY` macro.
  */
-#define NONE_PROPAGATE(T) [[maybe_unused]] struct option_##T(*const __f_opt_ret_none)() = option_##T##_none;
+#define OPTION_PROPAGATE(T) [[maybe_unused]] struct option_##T(*const __f_opt_ret_none)() = option_##T##_none;
 
 /**
  * @brief If `expr` is the option type and contain the `none` variant, then propagates it from current function. Otherwise returns `value`

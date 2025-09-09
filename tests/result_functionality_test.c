@@ -32,11 +32,20 @@ struct option_int opt_or_else() {
   return option_int_value(1);
 }
 
-struct result_double_serror devide(double val, double devider) {
+typedef enum {
+  DIVISION_BY_ZERO,
+  INTEGER_OVERFLOW,
+  // ...
+} arithm_e;
+
+DECLARE_OPTION(arithm_e)
+DECLARE_RESULT(double, arithm_e)
+
+struct result_double_arithm_e divide(double val, double devider) {
   if (devider == 0) {
-    return result_double_serror_err("devider is zero");
+    return result_double_arithm_e_err(DIVISION_BY_ZERO);
   }
-  return result_double_serror_ok(val / devider);
+  return result_double_arithm_e_ok(val / devider);
 }
 
 struct result_p_void_serror another_fail_function() {
@@ -48,42 +57,44 @@ struct option_int none_int_opt() {
 }
 
 struct option_double opt_tries() {
-  NONE_PROPAGATE(double);
+  OPTION_PROPAGATE(double);
   
   auto i = OPT_TRY(none_int_opt());
   
   return option_double_value(i);
 }
 
-struct result_double_serror foo() {
-  ERROR_PROPAGATE(double, serror);
+struct result_double_arithm_e some_arithmetic() {
+  ERROR_PROPAGATE(double, arithm_e);
 
-  [[maybe_unused]] auto res = RES_TRY(devide(4, 0));
+  auto div = RES_TRY(divide(4, 0));
 
-  [[maybe_unused]] auto ptr = RES_TRY(another_fail_function());
+  //auto mul = RES_TRY(multiply(4, 6));
 
-  return result_double_serror_ok(res);
+  // ...
+
+  return result_double_arithm_e_ok(div);
 }
 
 START_TEST(result_match)
-  auto r = foo();
+  auto r = some_arithmetic();
 
   switch (result_match(&r)) {
     case RES_OK:
       ASSERT(r.is_ok);
-      printf("ok: %f\n", r._value.ok);
+      printf("ok: %f\n", result_double_arithm_e_get_value(&r)._value);
       break;
     case RES_ERR:
       ASSERT(!r.is_ok);
-      printf("error: %s\n", r._value.err);
+      printf("error: %d\n", r._value.err); // or some arithm_e to string function
       break;
   }
 END_TEST
 
 START_TEST(result_inspect)
-  auto r = foo();
+  auto r = some_arithmetic();
 
-  result_double_serror_inspect(&r, inspect);
+  result_double_arithm_e_inspect(&r, inspect);
 END_TEST
 
 START_TEST(result_unwrap)
