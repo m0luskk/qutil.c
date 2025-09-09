@@ -38,7 +38,8 @@ Simple utility library in C23
   - [ ] Unix compatibility
 - [ ] memory
 - - [x] arena allocator
-      [ ] thread safety
-    [ ] span type
+  - - [ ] thread safety
+    - [ ] version with the ability to allocate new region in case of size exceeds
+  - [ ] span type
   - [ ] memory_explicit()
 
