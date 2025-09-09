@@ -1,5 +1,77 @@
 # qutil.c
-Simple utility library in C23
+Simple utilities library in C23 with no unnecessary overhead and implicit memory allocations.
+
+Some features use GNU compiler extensions!
+
+## Result type
+```c
+typedef enum {
+  DIVISION_BY_ZERO,
+  INTEGER_OVERFLOW,
+  // ...
+} arithm_e;
+
+DECLARE_OPTION(arithm_e)
+DECLARE_RESULT(double, arithm_e)
+
+struct result_double_arithm_e divide(double val, double devider) {
+  if (devider == 0) {
+    return result_double_arithm_e_err(DIVISION_BY_ZERO);
+  }
+  return result_double_arithm_e_ok(val / devider);
+}
+// ...
+struct result_double_arithm_e some_arithmetic() {
+  ERROR_PROPAGATE(double, arithm_e);
+
+  auto div = RES_TRY(divide(4, 0));
+
+  auto mul = RES_TRY(multiply(4, 6));
+  // ...
+  return result_double_arithm_e_ok(div + mul);
+}
+// ...
+int main() {
+  auto r = some_arithmetic();
+  switch (result_match(&r)) {
+    case RES_OK:
+      ASSERT(r.is_ok);
+      printf("ok: %f\n", result_double_arithm_e_get_value(&r)._value); // result_T_ERR_get_value() returns option_T
+      break;
+    case RES_ERR: // This branch will be executed
+      ASSERT(!r.is_ok);
+      printf("error: %d\n", r._value.err); // Or some arithm_e to string function
+      break;
+  }
+}
+```
+## Option type
+```c
+// DECLARE_OPTION(int) and DECLARE_OPTION(double) is not required here, they is declared by in qoption.h
+
+struct option_int none_int_opt() {
+  return option_int_none();
+}
+
+struct option_double opt_tries() {
+  OPTION_PROPAGATE(double);
+  
+  auto i = OPT_TRY(none_int_opt());
+  
+  return option_double_value(i);
+}
+
+struct option_double opt_or_else() {
+  return option_double_value(1.0);
+}
+
+int main() {
+  auto none = opt_tries();
+  
+  auto v = option_double_or_else(&value, opt_or_else);
+  assert(v._value == 1.0)
+}
+```
 
 # To do:
 - [ ] result type
