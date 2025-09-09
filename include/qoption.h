@@ -15,10 +15,10 @@
 
 #define _OPTION_NONE_BODY(T) { return (struct option_##T){.has_value = false}; }
 
-#define _OPTION_UNWRAP_BODY(T) { if (!opt) abort(); if (opt->has_value) return opt->_value; else abort(); }
+#define _OPTION_UNWRAP_BODY(T) { if (opt.has_value) return opt._value; else abort(); }
 
-#define _OPTION_UNWRAP_OR_ARGS(T) const struct option_##T* opt, T def
-#define _OPTION_UNWRAP_OR_BODY(T) { if (!opt) abort(); if (opt->has_value) return opt->_value; else return def; }
+#define _OPTION_UNWRAP_OR_ARGS(T) const struct option_##T opt, T def
+#define _OPTION_UNWRAP_OR_BODY(T) { if (opt.has_value) return opt._value; else return def; }
 
 #define _OPTION_TAKE_BODY(T) { \
   if (!opt) abort(); \
@@ -38,7 +38,7 @@
 #define OPTION_METHODS(T) \
   O_M(struct option_##T, option_##T##_value    , T val                         , _OPTION_VALUE_BODY(T) ) \
   O_M(struct option_##T, option_##T##_none     ,                               , _OPTION_NONE_BODY(T)  ) \
-  O_M(T                , option_##T##_unwrap   , const struct option_##T* opt  , _OPTION_UNWRAP_BODY(T)) \
+  O_M(T                , option_##T##_unwrap   , const struct option_##T opt  , _OPTION_UNWRAP_BODY(T)) \
   O_M(T                , option_##T##_unwrap_or, _OPTION_UNWRAP_OR_ARGS(T)      , _OPTION_UNWRAP_OR_BODY(T)) \
   O_M(struct option_##T, option_##T##_take     , struct option_##T* opt        , _OPTION_TAKE_BODY(T)) \
   O_M(struct option_##T, option_##T##_or_else  , _OPTION_OR_ELSE_ARGS(T)        , _OPTION_OR_ELSE_BODY(T))

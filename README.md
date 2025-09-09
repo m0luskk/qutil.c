@@ -27,7 +27,7 @@ struct result_double_arithm_e some_arithmetic() {
   auto div = RES_TRY(divide(4, 0));
 
   auto mul = RES_TRY(multiply(4, 6));
-  // ...
+  
   return result_double_arithm_e_ok(div + mul);
 }
 // ...
@@ -36,7 +36,7 @@ int main() {
   switch (result_match(&r)) {
     case RES_OK:
       ASSERT(r.is_ok);
-      printf("ok: %f\n", result_double_arithm_e_get_value(&r)._value); // result_T_ERR_get_value() returns option_T
+      printf("ok: %f\n", option_double_unwrap(result_double_arithm_e_get_value(&r))); // result_T_ERR_get_value() returns option_T
       break;
     case RES_ERR: // This branch will be executed
       ASSERT(!r.is_ok);

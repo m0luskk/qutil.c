@@ -82,7 +82,7 @@ START_TEST(result_match)
   switch (result_match(&r)) {
     case RES_OK:
       ASSERT(r.is_ok);
-      printf("ok: %f\n", result_double_arithm_e_get_value(&r)._value);
+      printf("ok: %f\n", option_double_unwrap(result_double_arithm_e_get_value(r)));
       break;
     case RES_ERR:
       ASSERT(!r.is_ok);
@@ -92,15 +92,13 @@ START_TEST(result_match)
 END_TEST
 
 START_TEST(result_inspect)
-  auto r = some_arithmetic();
-
-  result_double_arithm_e_inspect(&r, inspect);
+  result_double_arithm_e_inspect(some_arithmetic(), inspect);
 END_TEST
 
 START_TEST(result_unwrap)
   auto r = result_double_serror_ok(5.2);
 
-  ASSERT(result_double_serror_unwrap(&r) > 5.0);
+  ASSERT(result_double_serror_unwrap(r) > 5.0);
 END_TEST
 
 // START_TEST(result_and_then)
@@ -114,9 +112,9 @@ END_TEST
 START_TEST(result_or_else)
   auto r = result_double_serror_err("hui");
 
-  auto t = result_double_serror_or_else(&r, or_else);
+  auto t = result_double_serror_or_else(r, or_else);
 
-  ASSERT(result_double_serror_unwrap(&t) < 5.2);
+  ASSERT(result_double_serror_unwrap(t) < 5.2);
 END_TEST
 
 
@@ -147,7 +145,7 @@ START_TEST(option_unwrap)
   auto opt = option_int_value(5);
   ASSERT(opt.has_value);
 
-  int i = option_int_unwrap(&opt);
+  int i = option_int_unwrap(opt);
   ASSERT(i == 5);
 END_TEST
 
@@ -155,7 +153,7 @@ START_TEST(option_unwrap_or)
   auto opt = option_int_none();
   ASSERT(!opt.has_value);
 
-  int i = option_int_unwrap_or(&opt, 5);
+  int i = option_int_unwrap_or(opt, 5);
   ASSERT(i == 5);
 END_TEST
 
@@ -164,7 +162,7 @@ START_TEST(option_take)
   ASSERT(opt.has_value);
 
   auto taken = option_int_take(&opt);
-  ASSERT(option_int_unwrap(&taken) == 5);
+  ASSERT(option_int_unwrap(taken) == 5);
   ASSERT(!opt.has_value)
 END_TEST
 

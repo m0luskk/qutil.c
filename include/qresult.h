@@ -55,33 +55,33 @@ DECLARE_OPTION(serror)
 
 #define _RESULT_ERR_BODY(T, ERR) { return (struct result_##T##_##ERR){ .is_ok = false, ._value.err = err_value }; }
 
-#define _RESULT_GET_ERR_BODY(T, ERR) { if(!result) return option_##ERR##_none(); else return (result->is_ok ? option_##ERR##_none() : option_##ERR##_value(result->_value.err)); }
+#define _RESULT_GET_ERR_BODY(T, ERR) { if (result.is_ok) return option_##ERR##_none(); else return option_##ERR##_value(result._value.err); }
 
-#define _RESULT_GET_VALUE_BODY(T, ERR) { if(!result) return option_##T##_none(); else return (!result->is_ok ? option_##T##_none() : option_##T##_value(result->_value.ok)); }
+#define _RESULT_GET_VALUE_BODY(T, ERR) { if(!result.is_ok) return option_##T##_none(); else return option_##T##_value(result._value.ok); }
 
-#define _RESULT_INSPECT_BODY(T, ERR) { if(!result) return;  if (result->is_ok) f(result->_value.ok); }
-#define _RESULT_INSPECT_ARGS(T, ERR) struct result_##T##_##ERR* result, f_result_##T##_##ERR##_inspect f
+#define _RESULT_INSPECT_ARGS(T, ERR) struct result_##T##_##ERR result, f_result_##T##_##ERR##_inspect f
+#define _RESULT_INSPECT_BODY(T, ERR) { if (result.is_ok) f(result._value.ok); }
 
-#define _RESULT_INSPECT_ERR_BODY(T, ERR) { if(!result) return; if (!result->is_ok) f(result->_value.err); }
-#define _RESULT_INSPECT_ERR_ARGS(T, ERR) struct result_##T##_##ERR* result, f_result_##T##_##ERR##_inspect_err f
+#define _RESULT_INSPECT_ERR_ARGS(T, ERR) struct result_##T##_##ERR result, f_result_##T##_##ERR##_inspect_err f
+#define _RESULT_INSPECT_ERR_BODY(T, ERR) { if (!result.is_ok) f(result._value.err); }
 
-#define _RESULT_UNWRAP_BODY(T, ERR) { if(!result) abort(); if (result->is_ok) return result->_value.ok; else abort(); }
+#define _RESULT_UNWRAP_BODY(T, ERR) { if (result.is_ok) return result._value.ok; else abort(); }
 
 //#define RESULT_AND_THEN_BODY(T, ERR) { if(!result) abort(); if (result->is_ok) return f(result->_value.ok); else return *result; }
 //#define RESULT_AND_THEN_ARGS(T, ERR) struct result_##T##_##ERR* result, f_result_##T##_##ERR##_and_then f
 
-#define _RESULT_OR_ELSE_ARGS(T, ERR) struct result_##T##_##ERR* result, f_result_##T##_##ERR##_or_else f
-#define _RESULT_OR_ELSE_BODY(T, ERR) { if(!result) abort(); if (result->is_ok) return *result; else return f(result->_value.err); }
+#define _RESULT_OR_ELSE_ARGS(T, ERR) struct result_##T##_##ERR result, f_result_##T##_##ERR##_or_else f
+#define _RESULT_OR_ELSE_BODY(T, ERR) { if (result.is_ok) return result; else return f(result._value.err); }
 
 // R_M(ATTR, RET, NAME, ARGS, BODY)
 #define RESULT_METHODS(T, ERR) \
   R_M(             , struct result_##T##_##ERR, result_##T##_##ERR##_ok         , T value                          , _RESULT_OK_BODY(T, ERR)) \
   R_M(             , struct result_##T##_##ERR, result_##T##_##ERR##_err        , ERR err_value                    , _RESULT_ERR_BODY(T, ERR) ) \
-  R_M(UNSQCD_ATTR(), struct option_##ERR      , result_##T##_##ERR##_get_err    , struct result_##T##_##ERR* result, _RESULT_GET_ERR_BODY(T, ERR) ) \
-  R_M(UNSQCD_ATTR(), struct option_##T        , result_##T##_##ERR##_get_value  , struct result_##T##_##ERR* result, _RESULT_GET_VALUE_BODY(T, ERR) ) \
+  R_M(UNSQCD_ATTR(), struct option_##ERR      , result_##T##_##ERR##_get_err    , struct result_##T##_##ERR result, _RESULT_GET_ERR_BODY(T, ERR) ) \
+  R_M(UNSQCD_ATTR(), struct option_##T        , result_##T##_##ERR##_get_value  , struct result_##T##_##ERR result, _RESULT_GET_VALUE_BODY(T, ERR) ) \
   R_M(UNSQCD_ATTR(), void                     , result_##T##_##ERR##_inspect    , _RESULT_INSPECT_ARGS(T, ERR)      , _RESULT_INSPECT_BODY(T, ERR)) \
   R_M(UNSQCD_ATTR(), void                     , result_##T##_##ERR##_inspect_err, _RESULT_INSPECT_ERR_ARGS(T, ERR)  , _RESULT_INSPECT_ERR_BODY(T, ERR)) \
-  R_M(             , T                        , result_##T##_##ERR##_unwrap     , struct result_##T##_##ERR* result, _RESULT_UNWRAP_BODY(T, ERR) ) \
+  R_M(             , T                        , result_##T##_##ERR##_unwrap     , struct result_##T##_##ERR result, _RESULT_UNWRAP_BODY(T, ERR) ) \
   R_M(             , struct result_##T##_##ERR, result_##T##_##ERR##_or_else    , _RESULT_OR_ELSE_ARGS(T, ERR)      , _RESULT_OR_ELSE_BODY(T, ERR) )
 
 #define R_M(ATTR, RET, NAME, ARGS, DEF) [[maybe_unused]] ATTR static inline RET NAME(ARGS) DEF
