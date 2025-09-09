@@ -5,8 +5,8 @@
 #define R_PEDANTIC_SAFE
 
 #include "tests.h"
-#include "../include/result.h"
-#include "../include/option.h"
+#include "../include/qresult.h"
+#include "../include/qoption.h"
 
 typedef struct {
   size_t s;

@@ -35,7 +35,7 @@ IMPL_RESULT(user_ok_type, user_err_type);
   Thats cause some warnings of -padantic compilation flag. Define `R_PEDANTIC_SAFE` and `OPTION_PEDANTIC_SAFE` before `result.h` and `option.h` including for toggle of error propagation feature of option and result types;
  */
 
-#include "option.h"
+#include "qoption.h"
 
 /**
  * @brief Contain static error string

@@ -7,7 +7,7 @@
  * Result is a type that represents either value or nothing.
  */
 
-#include "other.h"
+#include "qother.h"
 #include <string.h>
 
 /** @cond */
