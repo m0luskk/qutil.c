@@ -17,6 +17,11 @@ DECLARE_TEST(option_unwrap_or);
 DECLARE_TEST(option_take);
 DECLARE_TEST(option_or_else);
 
+DECLARE_TEST(arena_init);
+DECLARE_TEST(arena_destroy);
+DECLARE_TEST(arena);
+DECLARE_TEST(arena_with_structs);
+
 int main() {
   printf("tests\n");
 
@@ -32,6 +37,11 @@ int main() {
   ADD_TEST(result_unwrap);
   // ADD_TEST(result_and_then);
   ADD_TEST(result_or_else);
+
+  ADD_TEST(arena_init);
+  ADD_TEST(arena_destroy);
+  ADD_TEST(arena);
+  ADD_TEST(arena_with_structs);
 
   START_ALL_TETS();
 }

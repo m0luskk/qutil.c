@@ -2,9 +2,6 @@
 Simple utility library in C23
 
 # To do:
-<details>
-<summary>std functionality</summary>
-  
 - [ ] result type
 - - [x] error propagation (TRY macros)
   - [x] result_T_ERR_ok()
@@ -40,7 +37,7 @@ Simple utility library in C23
   - [ ] User-defined log destination
   - [ ] Unix compatibility
 - [ ] memory
-- - [ ] arena allocator
+- - [x] arena allocator
+- - - [ ] thread safe
   - [ ] memory_explicit()
 
-</details>
