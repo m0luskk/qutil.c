@@ -68,8 +68,8 @@ struct option_double opt_or_else() {
 int main() {
   auto none = opt_tries();
   
-  auto v = option_double_or_else(&value, opt_or_else);
-  assert(v._value == 1.0)
+  auto v = option_double_or_else(value, opt_or_else);
+  assert(v._value == 1.0) // for demonstration purposes only! Dont use fields thats starts with underscore!
 }
 ```
 

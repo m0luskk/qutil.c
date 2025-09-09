@@ -169,9 +169,9 @@ START_TEST(option_or_else)
   auto none = option_int_none();
   ASSERT(!none.has_value);
 
-  auto v = option_int_or_else(&value, opt_or_else);
+  auto v = option_int_or_else(value, opt_or_else);
   ASSERT(v._value == 5)
-  auto n = option_int_or_else(&none, opt_or_else);
+  auto n = option_int_or_else(none, opt_or_else);
   ASSERT(n._value == 1)
 END_TEST
 

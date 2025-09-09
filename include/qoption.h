@@ -32,8 +32,8 @@
   } \
 }
 
-#define _OPTION_OR_ELSE_ARGS(T) const struct option_##T* opt, f_option_##T##_or_else f
-#define _OPTION_OR_ELSE_BODY(T) { if(!opt) abort(); if(opt->has_value) return *opt; else return f(); } 
+#define _OPTION_OR_ELSE_ARGS(T) const struct option_##T opt, f_option_##T##_or_else f
+#define _OPTION_OR_ELSE_BODY(T) { if(opt.has_value) return opt; else return f(); } 
 
 #define OPTION_METHODS(T) \
   O_M(struct option_##T, option_##T##_value    , T val                         , _OPTION_VALUE_BODY(T) ) \
