@@ -40,7 +40,7 @@ int main() {
       break;
     case RES_ERR: // This branch will be executed
       ASSERT(!r.is_ok);
-      printf("error: %d\n", r._value.err); // Or some arithm_e to string function
+      printf("error: %d\n", option_arithm_e_unwrap(result_double_arithm_e_get_err(r))); // Or some arithm_e to string function
       break;
   }
 }
