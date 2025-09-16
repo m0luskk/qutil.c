@@ -11,6 +11,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#if __has_attribute(unsequenced)
+  #define _UNSQCD_ATTR() [[__unsequenced__]]
+#else
+  #define _UNSQCD_ATTR()
+#endif
+
 /**
  * @brief Contain static string pointer
  * for use in `option` and `result` types

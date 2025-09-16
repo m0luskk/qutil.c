@@ -22,6 +22,8 @@ DECLARE_TEST(arena_destroy);
 DECLARE_TEST(arena);
 DECLARE_TEST(arena_with_structs);
 
+DECLARE_TEST(logger_init);
+
 int main() {
   printf("tests\n");
 
@@ -31,17 +33,19 @@ int main() {
   ADD_TEST(option_unwrap_or);
   ADD_TEST(option_take);
   ADD_TEST(option_or_else);
-
+  
   ADD_TEST(result_match);
   ADD_TEST(result_inspect);
   ADD_TEST(result_unwrap);
   // ADD_TEST(result_and_then);
   ADD_TEST(result_or_else);
-
+  
   ADD_TEST(arena_init);
   ADD_TEST(arena_destroy);
   ADD_TEST(arena);
   ADD_TEST(arena_with_structs);
+
+  ADD_TEST(logger_init);
 
   START_ALL_TETS();
 }

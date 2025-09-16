@@ -104,7 +104,7 @@ int main() {
   - [x] option_match()
 - [ ] logger
 - - [ ] Logging levels
-  - [ ] Thread-safety
+  - [ ] Thread safety
   - [ ] Formatters
   - [ ] User-defined log destination
   - [ ] Unix compatibility
