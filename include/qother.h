@@ -12,9 +12,15 @@
 #include <stdlib.h>
 
 #if __has_attribute(unsequenced)
-  #define _UNSQCD_ATTR() [[__unsequenced__]]
+  #define _UNSQ_ATTR() [[__unsequenced__]]
 #else
-  #define _UNSQCD_ATTR()
+  #define _UNSQ_ATTR()
+#endif
+
+#if __has_attribute(reproducible)
+  #define _REPR_ATTR() [[__reproducible__]]
+#else
+  #define _REPR_ATTR()
 #endif
 
 /**
