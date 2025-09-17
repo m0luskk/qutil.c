@@ -70,32 +70,37 @@ struct sink {
 typedef char*(*fmt_f)(struct tm*, enum log_level);
 
 // todo [[unsequenced]]? (must check strftime() and snprintf() functions)
+static constexpr size_t _time_str_size = 20;
+static constexpr size_t _level_str_size = 8;
+static constexpr size_t _fmt_size = 6 + color_code_len * 3; // for brackets, tabs and colors
+static constexpr size_t _default_fmt_req_size = _time_str_size + _level_str_size + _fmt_size;
 static inline char* default_fmt(size_t count, char str_buf[static restrict count], struct tm* restrict tm, enum log_level level) {
-  static constexpr size_t time_str_size = 20;
-  static constexpr size_t level_str_size = 8;
-  static constexpr size_t fmt_size = 6 + color_code_len * 3; // for brackets, tabs and colors
+  
   if (str_buf == nullptr || tm == nullptr) return nullptr;
-  if (count < time_str_size + level_str_size + fmt_size + 1) return nullptr;
+  if (count < _default_fmt_req_size) return nullptr;
   // Additional character is a whitespace for further strcat's
   
-  char time_str_buf[time_str_size] = {};
-  strftime(time_str_buf, time_str_size, "%Y-%m-%d %H:%M:%S", tm);
+  char time_str_buf[_time_str_size] = {};
+  strftime(time_str_buf, _time_str_size, "%Y-%m-%d %H:%M:%S", tm);
 
   int n = {};
-  if ((n = snprintf(str_buf, time_str_size + level_str_size + fmt_size + 1, "[%s] [%s%s%s] ", time_str_buf, _LOG_LEVELS_COLORS[level], _LOG_LEVELS_STRINGS[level], ANSI_RESET)) < 0) {
+  if ((n = snprintf(str_buf, _default_fmt_req_size, "[%s] [%s%s%s] ", time_str_buf, _LOG_LEVELS_COLORS[level], _LOG_LEVELS_STRINGS[level], ANSI_RESET)) < 0) {
     return nullptr;
   }
 
   return str_buf;
 }
 
+constexpr size_t _message_buffer_size = _default_fmt_req_size + 150; // 150 symbols for user message
 struct logger {
+  char _message_buf[_message_buffer_size];
   void* _memory;
-  size_t _capacity;
   fmt_f _fmt;
+  size_t _capacity;
   size_t _sinks_count;
   struct sink _sinks[];
 };
+constexpr size_t logger_min_req_memory = sizeof(struct logger) + sizeof(struct sink);
 
 static inline struct sink sink_get(FILE* stream, enum log_level level) {
   return (struct sink) {
@@ -124,7 +129,8 @@ static inline struct logger* logger_basic_st_create(void* mem, size_t cap, FILE*
   l->_memory = mem;
   l->_sinks_count = 1;
   l->_sinks[0] = sink_get(stream_fd, level);
-  l->_fmt = nullptr; // if _fmt is nullptr then using default_fmt function for formatting
+  l->_fmt = nullptr; // if _fmt is nullptr then using default_fmt function for formatting (for not lose inlining)
+  memset(l->_message_buf, 0, _message_buffer_size);
 
   return l;
 }

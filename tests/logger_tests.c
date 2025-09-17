@@ -3,13 +3,21 @@
 #include "../include/qlogger.h"
 #include <string.h>
 
-START_TEST(logger_init)
+START_TEST(logger_init_fail)
   void* mem = malloc(72);
   ASSERT(mem != nullptr);
   auto logger = logger_basic_st_create(mem, 72, stderr, LOG_LEVEL_DEBUG);
 
-  printf("%zu\n", logger->_capacity);
+  ASSERT(logger == nullptr);
+  free(mem);
+END_TEST
 
+START_TEST(logger_init_success)
+  void* mem = malloc(logger_min_req_memory);
+  ASSERT(mem != nullptr);
+  auto logger = logger_basic_st_create(mem, logger_min_req_memory, stderr, LOG_LEVEL_DEBUG);
+
+  ASSERT(logger != nullptr);
   free(mem);
 END_TEST
 

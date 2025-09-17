@@ -22,7 +22,8 @@ DECLARE_TEST(arena_destroy);
 DECLARE_TEST(arena);
 DECLARE_TEST(arena_with_structs);
 
-DECLARE_TEST(logger_init);
+DECLARE_TEST(logger_init_fail);
+DECLARE_TEST(logger_init_success);
 DECLARE_TEST(default_fmt);
 
 int main() {
@@ -46,7 +47,8 @@ int main() {
   ADD_TEST(arena);
   ADD_TEST(arena_with_structs);
 
-  ADD_TEST(logger_init);
+  ADD_TEST(logger_init_fail);
+  ADD_TEST(logger_init_success);
   ADD_TEST(default_fmt);
 
   START_ALL_TETS();
