@@ -36,12 +36,12 @@
 #define _OPTION_OR_ELSE_BODY(T) { if(opt.has_value) return opt; else return f(); } 
 
 #define OPTION_METHODS(T) \
-  O_M(_UNSQ_ATTR(), struct option_##T, option_##T##_value    , T val                          , _OPTION_VALUE_BODY(T) )    \
-  O_M(_UNSQ_ATTR(), struct option_##T, option_##T##_none     ,                                , _OPTION_NONE_BODY(T)  )    \
-  O_M(            , T                , option_##T##_unwrap   , const struct option_##T opt    , _OPTION_UNWRAP_BODY(T))    \
-  O_M(_UNSQ_ATTR(), T                , option_##T##_unwrap_or, _OPTION_UNWRAP_OR_ARGS(T)      , _OPTION_UNWRAP_OR_BODY(T)) \
-  O_M(_UNSQ_ATTR(), struct option_##T, option_##T##_take     , struct option_##T* opt         , _OPTION_TAKE_BODY(T))      \
-  O_M(            , struct option_##T, option_##T##_or_else  , _OPTION_OR_ELSE_ARGS(T)        , _OPTION_OR_ELSE_BODY(T))
+  O_M(_UNSQ_ATTR(), struct option_##T, option_##T##_value    , T val                           , _OPTION_VALUE_BODY(T) )    \
+  O_M(_UNSQ_ATTR(), struct option_##T, option_##T##_none     ,                                 , _OPTION_NONE_BODY(T)  )    \
+  O_M(            , T                , option_##T##_unwrap   , const struct option_##T opt     , _OPTION_UNWRAP_BODY(T))    \
+  O_M(_UNSQ_ATTR(), T                , option_##T##_unwrap_or, _OPTION_UNWRAP_OR_ARGS(T)       , _OPTION_UNWRAP_OR_BODY(T)) \
+  O_M(            , struct option_##T, option_##T##_take     , struct option_##T* restrict opt , _OPTION_TAKE_BODY(T))      \
+  O_M(            , struct option_##T, option_##T##_or_else  , _OPTION_OR_ELSE_ARGS(T)         , _OPTION_OR_ELSE_BODY(T))
 
 #define O_M(ATTR, RET, NAME, ARGS, BODY) [[maybe_unused]] ATTR static inline RET NAME(ARGS) BODY
 /** @endcond */

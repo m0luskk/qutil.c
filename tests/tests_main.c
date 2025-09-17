@@ -23,6 +23,7 @@ DECLARE_TEST(arena);
 DECLARE_TEST(arena_with_structs);
 
 DECLARE_TEST(logger_init);
+DECLARE_TEST(default_fmt);
 
 int main() {
   printf("tests\n");
@@ -46,6 +47,7 @@ int main() {
   ADD_TEST(arena_with_structs);
 
   ADD_TEST(logger_init);
+  ADD_TEST(default_fmt);
 
   START_ALL_TETS();
 }
