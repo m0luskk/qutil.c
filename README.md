@@ -1,9 +1,17 @@
 # qutil.c
 Simple utilities library in C23 with no unnecessary overhead and implicit memory allocations.
 
-Some features use compiler extensions! You may supress warnings by defining `R_PEDANTIC_SAFE` before include `qoption.h` or `qresult.h`. If your compiler dont support these exntensions, that feature just not defining in header.
+Unfortunately, for reason of zero overhead goal, some functionality is difficult or even impossible for implement,  and already implemented functionality seems quite clumsy.
 
-## Result type
+- [Result and option types](#result-and-option-types)
+- - [Result type](#result-type)
+  - [Option type](#option-type)
+- [Logger](#logger)
+
+## Result and option types
+Some features use compiler extensions. You may supress warnings by defining `R_PEDANTIC_SAFE` before include `qoption.h` or `qresult.h`. If your compiler dont support these exntensions, that feature just not defining in header.
+
+### Result type
 ```c
 typedef enum {
   DIVISION_BY_ZERO,
@@ -45,7 +53,7 @@ int main() {
   }
 }
 ```
-## Option type
+### Option type
 ```c
 // DECLARE_OPTION(int) and DECLARE_OPTION(double) is not required here, they is declared by in qoption.h
 
@@ -70,6 +78,28 @@ int main() {
   
   auto v = option_double_or_else(value, opt_or_else);
   assert(v._value == 1.0) // for demonstration purposes only! Dont use fields thats starts with underscore!
+}
+```
+
+## Logger
+The logger header is independent from other headers in the library.
+
+```c
+#include "qlogger.h"
+// ...
+int main()
+  void* mem = malloc(logger_min_req_memory + 50);
+  assert(mem != nullptr);
+  auto logger = logger_basic_st_create(mem, logger_min_req_memory + 50, stderr, LOG_LEVEL_WARN);
+  assert(logger != nullptr);
+  
+  int err = logger_add_sink(logger, sink_get(stdout, LOG_LEVEL_INFO));
+  assert(err == 0);
+
+  LOG_INFO(logger, "one n = %d", n); // This log will be printed one time (in sink with INFO log level)
+  LOG_WARN(logger, "two n = %d", n); // This log will be printed two times (in both sinks)
+
+  free(mem);
 }
 ```
 
@@ -106,8 +136,12 @@ int main() {
 - - [x] Logging levels
   - [ ] Thread safety
   - [x] Formatters
-  - [ ] User-defined log destination
-  - [ ] Unix compatibility
+  - [ ] Log targets:
+  - - [ ] Rotating log files
+    - [ ] Daily log files
+    - [x] Console logging
+    - [ ] syslog
+    - [ ] extendable
 - [ ] memory
 - - [x] arena allocator
   - - [ ] thread safety
