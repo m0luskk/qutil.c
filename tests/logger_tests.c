@@ -1,7 +1,8 @@
 #include "tests.h"
 
-#include "../include/qlogger.h"
 #include <string.h>
+
+#include "../include/qlogger.h"
 
 START_TEST(logger_init_fail)
   void* mem = malloc(72);
@@ -21,15 +22,28 @@ START_TEST(logger_init_success)
   free(mem);
 END_TEST
 
-START_TEST(default_fmt)
-  time_t now = time(NULL);
-  struct tm *local_tm = localtime(&now);
-  char buf[128];
+START_TEST(f_log_test)
+  void* mem = malloc(logger_min_req_memory);
+  ASSERT(mem != nullptr);
+  auto logger = logger_basic_st_create(mem, logger_min_req_memory, stderr, LOG_LEVEL_INFO);
+  ASSERT(logger->_fmt_buf[0] != 0);
 
-  for(size_t i = 0; i < LOG_LEVEL_OFF; ++i) {
-    default_fmt(sizeof(buf), buf, local_tm, i);
-    strcat(buf, "hui");
-    printf("%s\n", buf);
-  }
+  LOG_INFO(logger, "long formatted log %d, %zu}", 42, sizeof(int));
+  LOG_CRITICAL(logger, "short log %d-", 12);
+  LOG_TRACE(logger, "hiden log %d}", 12);
 
+  ASSERT(logger != nullptr);
+  free(mem);
+END_TEST
+
+START_TEST(log_test)
+  void* mem = malloc(logger_min_req_memory);
+  ASSERT(mem != nullptr);
+  auto logger = logger_basic_st_create(mem, logger_min_req_memory, stderr, LOG_LEVEL_WARN);
+
+  LOG_ERROR(logger, "without formatting");
+  LOG_INFO(logger, "hiden");
+  
+  ASSERT(logger != nullptr);
+  free(mem);
 END_TEST

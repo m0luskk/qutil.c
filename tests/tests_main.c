@@ -24,7 +24,10 @@ DECLARE_TEST(arena_with_structs);
 
 DECLARE_TEST(logger_init_fail);
 DECLARE_TEST(logger_init_success);
-DECLARE_TEST(default_fmt);
+// DECLARE_TEST(default_fmt);
+DECLARE_TEST(log_test);
+DECLARE_TEST(f_log_test);
+DECLARE_TEST(mf_log_test);
 
 int main() {
   printf("tests\n");
@@ -49,7 +52,10 @@ int main() {
 
   ADD_TEST(logger_init_fail);
   ADD_TEST(logger_init_success);
-  ADD_TEST(default_fmt);
+  // ADD_TEST(default_fmt);
+  ADD_TEST(log_test);
+  ADD_TEST(f_log_test);
+  ADD_TEST(mf_log_test);
 
   START_ALL_TETS();
 }

@@ -103,9 +103,9 @@ int main() {
   - [x] option_has_value()
   - [x] option_match()
 - [ ] logger
-- - [ ] Logging levels
+- - [x] Logging levels
   - [ ] Thread safety
-  - [ ] Formatters
+  - [x] Formatters
   - [ ] User-defined log destination
   - [ ] Unix compatibility
 - [ ] memory
