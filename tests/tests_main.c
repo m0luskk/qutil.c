@@ -28,6 +28,9 @@ DECLARE_TEST(logger_init_success);
 DECLARE_TEST(log_test);
 DECLARE_TEST(f_log_test);
 DECLARE_TEST(mf_log_test);
+DECLARE_TEST(sink_add_fail);
+DECLARE_TEST(multy_sink_log);
+DECLARE_TEST(logger_custom_fmt);
 
 int main() {
   printf("tests\n");
@@ -56,6 +59,9 @@ int main() {
   ADD_TEST(log_test);
   ADD_TEST(f_log_test);
   ADD_TEST(mf_log_test);
+  ADD_TEST(sink_add_fail);
+  ADD_TEST(multy_sink_log);
+  ADD_TEST(logger_custom_fmt);
 
   START_ALL_TETS();
 }

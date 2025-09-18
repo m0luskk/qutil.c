@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -g -fstrict-aliasing -Wstrict-aliasing -Wall -Wextra -pedantic -std=c2x -Iinclude -fsanitize=undefined -fsanitize=address -fsanitize=leak # -fsanitize=thread # -O2
+CFLAGS = -g -fstrict-aliasing -Wstrict-aliasing -Wall -Wextra -pedantic -std=c2x -Iinclude -fsanitize=undefined -fsanitize=address -fsanitize=leak # -O2 # -fsanitize=thread
 AR = ar
 ARFLAGS = rcs
 

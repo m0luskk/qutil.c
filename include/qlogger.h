@@ -42,60 +42,6 @@ enum log_level : uint8_t {
 static constexpr size_t max_len_of_level_str = 10;
 
 #define _LEVEL_CLZ(LEVEL) UINT8_MAX >> (__builtin_clz(LEVEL) - 24)
-#if defined(LOG_CRITICAL)
-  constexpr uint8_t _log_level = _LEVEL_CLZ(LOG_LEVEL_CRITICAL);
-#elif defined(LOG_ERROR)  
-  constexpr uint8_t _log_level = _LEVEL_CLZ(LOG_LEVEL_ERROR);
-#elif defined(LOG_WARN)
-  constexpr uint8_t _log_level = _LEVEL_CLZ(LOG_LEVEL_WARN);
-#elif defined(LOG_INFO)
-  constexpr uint8_t _log_level = _LEVEL_CLZ(LOG_LEVEL_INFO);
-#elif defined(LOG_DEBUG)
-  constexpr uint8_t _log_level = _LEVEL_CLZ(LOG_LEVEL_DEBUG);
-#elif defined(LOG_TRACE)
-  constexpr uint8_t _log_level = _LEVEL_CLZ(LOG_LEVEL_TRACE);
-#elif defined(LOG_OFF)
-  constexpr uint8_t _log_level = _LEVEL_CLZ(LOG_LEVEL_OFF);
-#else
-  #if NDEBUG
-    constexpr uint8_t _log_level = LOG_lEVEL_TRACE;
-  #else
-    constexpr uint8_t _log_level = LOG_LEVEL_INFO;
-  #endif
-#endif
-
-/*#define _LOG_LEVELS_STRINGS   \
-(constexpr char[_log_levels_count][max_len_of_level_str]) { \
-  [LOG_LEVEL_OFF] = "OFF", \
-  [LOG_LEVEL_TRACE] = "TRACE", \
-  [LOG_LEVEL_DEBUG] = "DEBUG", \
-  [LOG_LEVEL_INFO] = "INFO", \
-  [LOG_LEVEL_WARN] = "WARN", \
-  [LOG_LEVEL_ERROR] = "ERROR", \
-  [LOG_LEVEL_CRITICAL] = "CRITICAL", \
-}*/
-
-/*#define _LOG_LEVELS_COLORS   \
-(constexpr char[_log_levels_count][color_code_len * 2]) { \
-  [LOG_LEVEL_OFF] = "OFF", \
-  [LOG_LEVEL_TRACE] = ANSI_WHITE, \
-  [LOG_LEVEL_DEBUG] = ANSI_BLUE, \
-  [LOG_LEVEL_INFO] = ANSI_GREEN, \
-  [LOG_LEVEL_WARN] = ANSI_YELLOW, \
-  [LOG_LEVEL_ERROR] = ANSI_RED, \
-  [LOG_LEVEL_CRITICAL] = ANSI_BLACK ANSI_BG_RED, \
-}*/
-
-/*#define _LOG_COLORED_LEVELS_STRINGS   \
-(constexpr char[_log_levels_count][max_len_of_level_str + color_code_len * 3]) { \
-  [LOG_LEVEL_OFF] = "OFF", \
-  [LOG_LEVEL_TRACE] = ANSI_WHITE "TRACE" ANSI_RESET, \
-  [LOG_LEVEL_DEBUG] = ANSI_BLUE "DEBUG" ANSI_RESET, \
-  [LOG_LEVEL_INFO] = ANSI_GREEN "INFO" ANSI_RESET, \
-  [LOG_LEVEL_WARN] = ANSI_YELLOW "WARN" ANSI_RESET, \
-  [LOG_LEVEL_ERROR] = ANSI_RED "ERROR" ANSI_RESET, \
-  [LOG_LEVEL_CRITICAL] = ANSI_WHITE ANSI_BG_RED "CRITICAL" ANSI_RESET, \
-}*/
 
 constexpr char _log_colored_levels_strings[_log_levels_count][max_len_of_level_str + color_code_len * 3] = {
   [LOG_LEVEL_OFF] = "OFF",
@@ -112,21 +58,20 @@ struct sink {
   enum log_level _level;
 };
 
-typedef char*(*fmt_f)(size_t str_buf_size, char str_buf[static restrict str_buf_size]);
+typedef size_t(*fmt_f)(size_t str_buf_size, char str_buf[static restrict str_buf_size]);
 
-// todo [[unsequenced]]? (must check strftime() and snprintf() functions)
 static constexpr size_t _default_fmt_req_size = 16;
-static inline char* _default_fmt(size_t count, char str_buf[static restrict count]) {
-  if (str_buf == nullptr) return nullptr;
-  if (count < _default_fmt_req_size) return nullptr;
+static inline size_t _default_fmt(size_t count, char str_buf[static restrict count]) {
+  if (str_buf == nullptr) return 0;
+  if (count < _default_fmt_req_size) return 0;
 
   str_buf[0] = 0;
   strcat(str_buf, "[%s] [%s] %s");
 
-  return str_buf;
+  return strlen(str_buf);
 }
 
-constexpr size_t _message_buffer_size = 150; // 150 symbols for user message
+constexpr size_t _message_buffer_size = 150;
 constexpr size_t _max_fmt_size = _default_fmt_req_size * 2;
 struct logger {
   char _message_buf[_message_buffer_size];
@@ -146,6 +91,26 @@ static inline struct sink sink_get(FILE* stream, enum log_level level) {
   };
 }
 
+static inline int logger_add_sink(struct logger* logger, struct sink sink) {
+  if (logger == nullptr) return -1;
+  size_t req_mem = offsetof(struct logger, _sinks) + (logger->_sinks_count + 1) * sizeof(struct sink);
+  if (logger->_capacity < req_mem) return -1;
+
+  memset(&logger->_sinks[logger->_sinks_count], 0, sizeof(struct sink));
+  logger->_sinks[logger->_sinks_count] = sink;
+  ++logger->_sinks_count;
+
+  return 0;
+}
+
+static inline void logger_set_fmt(struct logger* logger, fmt_f f) {
+  if (logger == nullptr) return;
+  logger->_fmt = f;
+  if(logger->_fmt(sizeof(logger->_fmt_buf), logger->_fmt_buf) > _max_fmt_size) {
+    abort(); // Your format string size exceeds buffer size (_max_fmt_size)!
+  }
+}
+
 /**
 * @brief Creates single threaded logger
 * @param fd output stream descriptor
@@ -153,7 +118,7 @@ static inline struct sink sink_get(FILE* stream, enum log_level level) {
 * @param cap `mem` pointer memory capacity
 */
 [[nodiscard]]
-static inline struct logger* logger_basic_st_create(void* restrict mem, size_t cap, FILE* stream_fd, enum log_level level) {
+static inline struct logger* logger_basic_st_create(void* restrict mem, size_t cap, FILE* restrict stream_fd, enum log_level level) {
   if (mem == nullptr) return nullptr;
 
   static constexpr size_t logger_size = offsetof(struct logger, _sinks) + sizeof(struct sink); 
@@ -165,10 +130,9 @@ static inline struct logger* logger_basic_st_create(void* restrict mem, size_t c
   l->_memory = mem;
   l->_sinks_count = 1;
   l->_sinks[0] = sink_get(stream_fd, level);
-  l->_fmt = nullptr; // if _fmt is nullptr then using default_fmt function for formatting (for not lose inlining)
   memset(l->_message_buf, 0, _message_buffer_size);
 
-  _default_fmt(sizeof(l->_fmt_buf), l->_fmt_buf);
+  logger_set_fmt(l, _default_fmt);
 
   return l;
 }
