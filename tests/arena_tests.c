@@ -13,7 +13,7 @@ START_TEST(arena_init)
   constexpr size_t a_size = sizeof(struct test) * 3;
   struct arena arena = arena_init(malloc(a_size), a_size);
   ASSERT(arena.destroyed == false);
-  ASSERT(arena.size == a_size);
+  ASSERT(arena.capacity == a_size);
   ASSERT(arena._offset == 0);
   ASSERT(arena.data != nullptr);
 

@@ -99,6 +99,7 @@ START_TEST(result_unwrap)
   auto r = result_double_serror_ok(5.2);
 
   ASSERT(result_double_serror_unwrap(r) > 5.0);
+  ASSERT(RES_UNWRAP(r) > 5.0);
 END_TEST
 
 // START_TEST(result_and_then)

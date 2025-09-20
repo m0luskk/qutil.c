@@ -132,7 +132,13 @@ struct result_double_serror foo() {
     } \
     _tmp._value.ok; \
 })
+#define RES_UNWRAP(EXPR) EXTENSION_ATTR ({ \
+  auto _tmp = (EXPR); \
+  if (!result_is_ok(&_tmp)) abort(); \
+  _tmp._value.ok; \
+})
 #endif
+
 
 /**
  * @brief Return type of `result_match()` function

@@ -144,7 +144,7 @@ int main()
     - [ ] extendable
 - [ ] memory
 - - [x] arena allocator
-  - - [ ] thread safety
+  - - [x] thread safety
     - [ ] version with the ability to allocate new region in case of size exceeds
   - [ ] span type
   - [ ] memory_explicit()
