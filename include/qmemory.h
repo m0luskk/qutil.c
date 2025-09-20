@@ -1,9 +1,10 @@
 #pragma once
 
-#include "stdlib.h"
+#include <stdlib.h>
 #include <stdatomic.h>
 #include <stdint.h>
 #include <threads.h>
+#include <stdio.h>
 
 #define ALIGN_UP(x, align) (((x) + (align) - 1) & ~((align) - 1))
 
@@ -36,11 +37,13 @@ static inline void arena_destroy(struct arena* arena, f_arena_data_free free_fun
   if (arena) {
     while(atomic_flag_test_and_set_explicit(&arena->_lock, memory_order_acquire));
 
-    if(free_func && atomic_load_explicit(&arena->destroyed, memory_order_relaxed)) {
+    printf("destroy");
+
+    if(free_func && !atomic_load_explicit(&arena->destroyed, memory_order_relaxed)) {
       free_func(arena->data);
       atomic_store_explicit(&arena->destroyed, true, memory_order_relaxed);
     }
-    
+
     atomic_flag_clear_explicit(&arena->_lock, memory_order_release);
   }
 }
