@@ -76,9 +76,9 @@ constexpr size_t _max_fmt_size = _default_fmt_req_size * 2;
 struct logger {
   char _message_buf[_message_buffer_size];
   char _fmt_buf[_max_fmt_size];
-  void* _memory;
+  void* const _memory;
   fmt_f _fmt;
-  size_t _capacity;
+  const size_t _capacity;
   size_t _sinks_count;
   struct sink _sinks[];
 };
@@ -126,11 +126,9 @@ static inline struct logger* logger_basic_st_create(void* restrict mem, size_t c
 
   memset(mem, 0, logger_size);
   struct logger* l = mem;
-  l->_capacity = cap;
-  l->_memory = mem;
-  l->_sinks_count = 1;
-  l->_sinks[0] = sink_get(stream_fd, level);
+  memcpy(l, &(struct logger){ ._capacity = cap, ._memory = mem, ._sinks_count = 1 }, sizeof(*l));
   memset(l->_message_buf, 0, _message_buffer_size);
+  l->_sinks[0] = sink_get(stream_fd, level);
 
   logger_set_fmt(l, _default_fmt);
 
@@ -148,11 +146,12 @@ constexpr size_t _time_str_buf_size = 20;
 #define _LOG(LOGGER, LEVEL, FORMAT, ...) \
 do { \
   time_t now = time(NULL); \
-  struct tm *local_tm = localtime(&now); \
+  struct tm *local_tm = localtime(&now); /* localtime is not thread-safe */ \
   char time_str_buf[_time_str_buf_size] = {}; \
   strftime(time_str_buf, sizeof(time_str_buf), "%Y-%m-%d %H:%M:%S", local_tm); \
   for(size_t i = 0; i < LOGGER->_sinks_count; ++i) { \
     if ((LOGGER->_sinks[i]._level & LEVEL) == LEVEL) { \
+      /* snprintf is using shared buffer - it is not thread safe */ \
       snprintf(LOGGER->_message_buf, sizeof(LOGGER->_message_buf), LOGGER->_fmt_buf, time_str_buf, _log_colored_levels_strings[LEVEL], "" FORMAT "\n"); \
       _FPRINTF(LOGGER->_sinks[i]._stream, LOGGER->_message_buf, __VA_ARGS__); \
     } \

@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <threads.h>
 
 #include "../include/qlogger.h"
 
@@ -97,3 +98,71 @@ START_TEST(logger_custom_fmt)
   ASSERT(logger != nullptr);
   free(mem);
 END_TEST
+
+int thread_func1(void* lg) {
+  struct logger* logger = lg;
+  for(size_t i = 0; i < 10; ++i) {
+    // thrd_sleep(&(struct timespec){.tv_sec= 1}, NULL);
+    LOG_DEBUG(logger, "123456789");
+  }
+
+  return 0;
+}
+int thread_func2(void* lg) {
+  struct logger* logger = lg;
+  for(size_t i = 0; i < 10; ++i) {
+    // thrd_sleep(&(struct timespec){.tv_sec= 1}, NULL);
+    LOG_INFO(logger, "thread");
+  }
+
+  return 0;
+}
+int thread_func3(void* lg) {
+  struct logger* logger = lg;
+  for(size_t i = 0; i < 10; ++i) {
+    // thrd_sleep(&(struct timespec){.tv_sec= 1}, NULL);
+    LOG_WARN(logger, "BLABLA");
+  }
+
+  return 0;
+}
+int thread_func4(void* lg) {
+  struct logger* logger = lg;
+  for(size_t i = 0; i < 10; ++i) {
+    // thrd_sleep(&(struct timespec){.tv_sec= 1}, NULL);
+    LOG_WARN(logger, "!message!");
+  }
+
+  return 0;
+}
+
+START_TEST(logger_mt)
+  void* mem = malloc(logger_min_req_memory);
+  ASSERT(mem != nullptr);
+  auto logger = logger_basic_st_create(mem, logger_min_req_memory, stderr, LOG_LEVEL_DEBUG);
+  
+  LOG_DEBUG(logger, "FORMAT, ...");
+
+  thrd_t threads[4];
+  // for (size_t i = 0; i < sizeof(threads) / sizeof(thrd_t); ++i) {
+  // thrd_sleep(&(struct timespec){.tv_sec= 1}, NULL);
+  thrd_create(&threads[0], thread_func1, logger);
+  thrd_create(&threads[1], thread_func2, logger);
+  thrd_create(&threads[2], thread_func3, logger);
+  thrd_create(&threads[3], thread_func4, logger);
+  
+
+  // for(size_t i = 0; i < 10; ++i) {
+  //   LOG_DEBUG(logger, "thread");
+  // }
+
+  for (size_t i = 0; i < sizeof(threads)  / sizeof(thrd_t); ++i) {
+    thrd_join(threads[i], nullptr);
+  }
+
+  LOG_INFO(logger, "faskdm %d", 2);
+
+  ASSERT(logger != nullptr);
+  free(mem);
+END_TEST
+
