@@ -48,7 +48,7 @@ int main() {
       break;
     case RES_ERR: // This branch will be executed
       assert(!r.is_ok);
-      printf("error: %d\n", option_arithm_e_unwrap(result_double_arithm_e_get_err(r))); // Or some arithm_e to string function
+      printf("error: %d\n", option_arithm_e_unwrap(result_double_arithm_e_get_err(r))); // Or RES_UNWRAP() macro
       break;
   }
 }
@@ -90,7 +90,7 @@ The logger header is independent from other headers in the library.
 int main()
   void* mem = malloc(logger_min_req_memory + 50);
   assert(mem != nullptr);
-  auto logger = logger_basic_st_create(mem, logger_min_req_memory + 50, stderr, LOG_LEVEL_WARN);
+  auto logger = logger_create(mem, logger_min_req_memory + 50, stderr, LOG_LEVEL_WARN);
   assert(logger != nullptr);
   
   int err = logger_add_sink(logger, sink_get(stdout, LOG_LEVEL_INFO));
@@ -99,12 +99,13 @@ int main()
   LOG_INFO(logger, "one n = %d", n); // This log will be printed one time (in sink with INFO log level)
   LOG_WARN(logger, "two n = %d", n); // This log will be printed two times (in both sinks)
 
+  logger_destroy(&logger);
   free(mem);
 }
 ```
 
 # To do:
-- [ ] result type
+- [x] result type
 - - [x] error propagation (TRY macros)
   - [x] result_T_ERR_ok()
   - [x] result_T_ERR_err()
@@ -120,7 +121,7 @@ int main()
   - [x] result_is_ok()
   - [x] result_ok_err()
   - [x] result_match()
-- [ ] option type
+- [x] option type
 - - [x] option propagation (TRY macros)
   - [x] option_T_value()
   - [x] option_T_none()
@@ -132,7 +133,7 @@ int main()
   - [x] option_T_take()
   - [x] option_has_value()
   - [x] option_match()
-- [ ] logger
+- [x] logger
 - - [x] Logging levels
   - [x] Thread safety
   - [x] Formatters
