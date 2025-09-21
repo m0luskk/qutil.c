@@ -43,12 +43,12 @@ int main() {
   auto r = some_arithmetic();
   switch (result_match(&r)) {
     case RES_OK:
-      assert(r.is_ok); // for demonstration purposes only! Dont use fields thats starts with underscore!
-      printf("ok: %f\n", option_double_unwrap(result_double_arithm_e_get_value(&r))); // result_T_ERR_get_value() returns option_T
+      assert(r.is_ok); // for demonstration purposes only. Dont use fields thats starts with underscore
+      printf("ok: %f\n", OPT_UNWRAP(result_double_arithm_e_get_value(&r))); // result_T_ERR_get_value() returns option_T
       break;
     case RES_ERR: // This branch will be executed
       assert(!r.is_ok);
-      printf("error: %d\n", option_arithm_e_unwrap(result_double_arithm_e_get_err(r))); // Or RES_UNWRAP() macro
+      printf("error: %d\n", OPT_UNWRAP(result_double_arithm_e_get_err(r)));
       break;
   }
 }

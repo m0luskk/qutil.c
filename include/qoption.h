@@ -84,6 +84,14 @@ return option_double_value(i);
     } \
     _tmp._value; \
 })
+
+#define OPT_UNWRAP(EXPR) EXTENSION_ATTR ({ \
+  auto _tmp = (EXPR); \
+  if (!option_has_value(&_tmp)) { \
+    abort(); \
+  } \
+  _tmp._value; \
+})
 #endif
 
 enum option_enum {

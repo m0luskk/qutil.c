@@ -86,7 +86,7 @@ START_TEST(result_match)
       break;
     case RES_ERR:
       ASSERT(!r.is_ok);
-      printf("error: %d\n", option_arithm_e_unwrap(result_double_arithm_e_get_err(r))); // or some arithm_e to string function
+      printf("error: %d\n", OPT_UNWRAP(result_double_arithm_e_get_err(r))); 
       break;
   }
 END_TEST
@@ -101,14 +101,6 @@ START_TEST(result_unwrap)
   ASSERT(result_double_serror_unwrap(r) > 5.0);
   ASSERT(RES_UNWRAP(r) > 5.0);
 END_TEST
-
-// START_TEST(result_and_then)
-//   auto r = result_double_serror_ok(5.2);
-
-//   auto t = result_double_serror_and_then(&r, and_then);
-
-//   ASSERT(result_double_serror_unwrap(&t) > 20.0);
-// END_TEST
 
 START_TEST(result_or_else)
   auto r = result_double_serror_err("hui");
