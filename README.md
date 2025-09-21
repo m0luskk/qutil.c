@@ -9,7 +9,7 @@ Unfortunately, for reason of no overhead goal, some functionality is difficult o
 - [Logger](#logger)
 
 ## Result and option types
-Some features use compiler extensions. You may supress warnings by defining `R_PEDANTIC_SAFE` before include `qoption.h` or `qresult.h`. If your compiler dont support these exntensions, that feature just not defining in header.
+Some features use compiler extensions. You may supress warnings by defining `Q_PEDANTIC_SAFE` before include `qoption.h` or `qresult.h`. If your compiler dont support these exntensions, that feature just not defining in header.
 
 ### Result type
 ```c
