@@ -129,7 +129,7 @@ static inline void logger_set_fmt(struct logger* restrict logger, fmt_f f) {
 * @param cap `mem` pointer memory capacity
 */
 [[nodiscard]]
-static inline struct logger* logger_basic_create(void* restrict mem, size_t cap, FILE* restrict stream_fd, enum log_level level) {
+static inline struct logger* logger_create(void* restrict mem, size_t cap, FILE* restrict stream_fd, enum log_level level) {
   if (mem == nullptr) return nullptr;
 
   static constexpr size_t logger_size = offsetof(struct logger, _sinks) + sizeof(struct sink); 
@@ -145,6 +145,11 @@ static inline struct logger* logger_basic_create(void* restrict mem, size_t cap,
   logger_set_fmt(l, _default_fmt);
 
   return l;
+}
+
+static inline void logger_destroy(struct logger* logger) {
+  if (!logger) return;
+  mtx_destroy(&logger->_mtx);
 }
 
 #define LOG_TRACE(LOGGER, FORMAT, ...) _LOG(LOGGER, LOG_LEVEL_TRACE, FORMAT __VA_OPT__(,) __VA_ARGS__)
