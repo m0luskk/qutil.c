@@ -1,10 +1,12 @@
 #pragma once
 
+#include <stdatomic.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <threads.h>
 #include <time.h>
 
 #define ANSI_BLACK     "\033[30m"
@@ -80,6 +82,7 @@ struct logger {
   fmt_f _fmt;
   const size_t _capacity;
   size_t _sinks_count;
+  mtx_t _mtx;
   struct sink _sinks[];
 };
 constexpr size_t logger_min_req_memory = sizeof(struct logger) + sizeof(struct sink);
@@ -93,6 +96,9 @@ static inline struct sink sink_get(FILE* stream, enum log_level level) {
 
 static inline int logger_add_sink(struct logger* logger, struct sink sink) {
   if (logger == nullptr) return -1;
+
+  mtx_lock(&logger->_mtx);
+
   size_t req_mem = offsetof(struct logger, _sinks) + (logger->_sinks_count + 1) * sizeof(struct sink);
   if (logger->_capacity < req_mem) return -1;
 
@@ -100,15 +106,20 @@ static inline int logger_add_sink(struct logger* logger, struct sink sink) {
   logger->_sinks[logger->_sinks_count] = sink;
   ++logger->_sinks_count;
 
+  mtx_unlock(&logger->_mtx);
+
   return 0;
 }
 
-static inline void logger_set_fmt(struct logger* logger, fmt_f f) {
+static inline void logger_set_fmt(struct logger* restrict logger, fmt_f f) {
   if (logger == nullptr) return;
+  mtx_lock(&logger->_mtx);
   logger->_fmt = f;
   if(logger->_fmt(sizeof(logger->_fmt_buf), logger->_fmt_buf) > _max_fmt_size) {
-    abort(); // Your format string size exceeds buffer size (_max_fmt_size)!
+    mtx_unlock(&logger->_mtx);
+    abort(); // format string size exceeds buffer size (_max_fmt_size)
   }
+  mtx_unlock(&logger->_mtx);
 }
 
 /**
@@ -118,7 +129,7 @@ static inline void logger_set_fmt(struct logger* logger, fmt_f f) {
 * @param cap `mem` pointer memory capacity
 */
 [[nodiscard]]
-static inline struct logger* logger_basic_st_create(void* restrict mem, size_t cap, FILE* restrict stream_fd, enum log_level level) {
+static inline struct logger* logger_basic_create(void* restrict mem, size_t cap, FILE* restrict stream_fd, enum log_level level) {
   if (mem == nullptr) return nullptr;
 
   static constexpr size_t logger_size = offsetof(struct logger, _sinks) + sizeof(struct sink); 
@@ -129,6 +140,7 @@ static inline struct logger* logger_basic_st_create(void* restrict mem, size_t c
   memcpy(l, &(struct logger){ ._capacity = cap, ._memory = mem, ._sinks_count = 1 }, sizeof(*l));
   memset(l->_message_buf, 0, _message_buffer_size);
   l->_sinks[0] = sink_get(stream_fd, level);
+  mtx_init(&l->_mtx, mtx_plain);
 
   logger_set_fmt(l, _default_fmt);
 
@@ -146,14 +158,16 @@ constexpr size_t _time_str_buf_size = 20;
 #define _LOG(LOGGER, LEVEL, FORMAT, ...) \
 do { \
   time_t now = time(NULL); \
-  struct tm *local_tm = localtime(&now); /* localtime is not thread-safe */ \
+  struct tm local_tm; \
+  localtime_r(&now, &local_tm); \
   char time_str_buf[_time_str_buf_size] = {}; \
-  strftime(time_str_buf, sizeof(time_str_buf), "%Y-%m-%d %H:%M:%S", local_tm); \
+  strftime(time_str_buf, sizeof(time_str_buf), "%Y-%m-%d %H:%M:%S", &local_tm); \
   for(size_t i = 0; i < LOGGER->_sinks_count; ++i) { \
     if ((LOGGER->_sinks[i]._level & LEVEL) == LEVEL) { \
-      /* snprintf is using shared buffer - it is not thread safe */ \
+      mtx_lock(&LOGGER->_mtx); \
       snprintf(LOGGER->_message_buf, sizeof(LOGGER->_message_buf), LOGGER->_fmt_buf, time_str_buf, _log_colored_levels_strings[LEVEL], "" FORMAT "\n"); \
       _FPRINTF(LOGGER->_sinks[i]._stream, LOGGER->_message_buf, __VA_ARGS__); \
+      mtx_unlock(&LOGGER->_mtx); \
     } \
   } \
 } while (false)

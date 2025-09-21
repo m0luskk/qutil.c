@@ -134,7 +134,7 @@ int main()
   - [x] option_match()
 - [ ] logger
 - - [x] Logging levels
-  - [ ] Thread safety
+  - [x] Thread safety
   - [x] Formatters
   - [ ] Log targets:
   - - [ ] Rotating log files
