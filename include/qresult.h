@@ -40,43 +40,43 @@ IMPL_RESULT(user_ok_type, user_err_type);
 /**
  * @brief Contain static error string
  */
-typedef static_string serror;
+typedef q_static_string serror;
 
-DECLARE_OPTION(serror)
+Q_DECLARE_OPTION(serror)
 
 /** @cond */
-#define _RESULT_OK_BODY(T, ERR) { return (struct result_##T##_##ERR){ .is_ok = true, ._value.ok = value }; }
+#define _Q_RESULT_OK_BODY(T, ERR) { return (struct q_result_##T##_##ERR){ .is_ok = true, ._value.ok = value }; }
 
-#define _RESULT_ERR_BODY(T, ERR) { return (struct result_##T##_##ERR){ .is_ok = false, ._value.err = err_value }; }
+#define _Q_RESULT_ERR_BODY(T, ERR) { return (struct q_result_##T##_##ERR){ .is_ok = false, ._value.err = err_value }; }
 
-#define _RESULT_GET_ERR_BODY(T, ERR) { if (result.is_ok) return option_##ERR##_none(); else return option_##ERR##_value(result._value.err); }
+#define _Q_RESULT_GET_ERR_BODY(T, ERR) { if (result.is_ok) return q_option_##ERR##_none(); else return q_option_##ERR##_value(result._value.err); }
 
-#define _RESULT_GET_VALUE_BODY(T, ERR) { if(!result.is_ok) return option_##T##_none(); else return option_##T##_value(result._value.ok); }
+#define _Q_RESULT_GET_VALUE_BODY(T, ERR) { if(!result.is_ok) return q_option_##T##_none(); else return q_option_##T##_value(result._value.ok); }
 
-#define _RESULT_INSPECT_ARGS(T, ERR) struct result_##T##_##ERR result, f_result_##T##_##ERR##_inspect f
-#define _RESULT_INSPECT_BODY(T, ERR) { if (result.is_ok) f(result._value.ok); }
+#define _Q_RESULT_INSPECT_ARGS(T, ERR) struct q_result_##T##_##ERR result, q_result_##T##_##ERR##_inspect_f f
+#define _Q_RESULT_INSPECT_BODY(T, ERR) { if (result.is_ok) f(result._value.ok); }
 
-#define _RESULT_INSPECT_ERR_ARGS(T, ERR) struct result_##T##_##ERR result, f_result_##T##_##ERR##_inspect_err f
-#define _RESULT_INSPECT_ERR_BODY(T, ERR) { if (!result.is_ok) f(result._value.err); }
+#define _Q_RESULT_INSPECT_ERR_ARGS(T, ERR) struct q_result_##T##_##ERR result, q_result_##T##_##ERR##_inspect_err_f f
+#define _Q_RESULT_INSPECT_ERR_BODY(T, ERR) { if (!result.is_ok) f(result._value.err); }
 
-#define _RESULT_UNWRAP_BODY(T, ERR) { if (result.is_ok) return result._value.ok; else abort(); }
+#define _Q_RESULT_UNWRAP_BODY(T, ERR) { if (result.is_ok) return result._value.ok; else abort(); }
 
 //#define RESULT_AND_THEN_BODY(T, ERR) { if(!result) abort(); if (result->is_ok) return f(result->_value.ok); else return *result; }
 //#define RESULT_AND_THEN_ARGS(T, ERR) struct result_##T##_##ERR* result, f_result_##T##_##ERR##_and_then f
 
-#define _RESULT_OR_ELSE_ARGS(T, ERR) struct result_##T##_##ERR result, f_result_##T##_##ERR##_or_else f
-#define _RESULT_OR_ELSE_BODY(T, ERR) { if (result.is_ok) return result; else return f(result._value.err); }
+#define _Q_RESULT_OR_ELSE_ARGS(T, ERR) struct q_result_##T##_##ERR result, q_result_##T##_##ERR##_or_else_f f
+#define _Q_RESULT_OR_ELSE_BODY(T, ERR) { if (result.is_ok) return result; else return f(result._value.err); }
 
 // R_M(ATTR, RET, NAME, ARGS, BODY)
-#define RESULT_METHODS(T, ERR) \
-  R_M(_UNSQ_ATTR(), struct result_##T##_##ERR , result_##T##_##ERR##_ok         , T value                           , _RESULT_OK_BODY(T, ERR)) \
-  R_M(_UNSQ_ATTR(), struct result_##T##_##ERR , result_##T##_##ERR##_err        , ERR err_value                     , _RESULT_ERR_BODY(T, ERR) ) \
-  R_M(_UNSQ_ATTR(), struct option_##ERR       , result_##T##_##ERR##_get_err    , struct result_##T##_##ERR result  , _RESULT_GET_ERR_BODY(T, ERR) ) \
-  R_M(_UNSQ_ATTR(), struct option_##T         , result_##T##_##ERR##_get_value  , struct result_##T##_##ERR result  , _RESULT_GET_VALUE_BODY(T, ERR) ) \
-  R_M(_UNSQ_ATTR(), void                      , result_##T##_##ERR##_inspect    , _RESULT_INSPECT_ARGS(T, ERR)      , _RESULT_INSPECT_BODY(T, ERR)) \
-  R_M(_UNSQ_ATTR(), void                      , result_##T##_##ERR##_inspect_err, _RESULT_INSPECT_ERR_ARGS(T, ERR)  , _RESULT_INSPECT_ERR_BODY(T, ERR)) \
-  R_M(             , T                        , result_##T##_##ERR##_unwrap     , struct result_##T##_##ERR result  , _RESULT_UNWRAP_BODY(T, ERR) ) \
-  R_M(             , struct result_##T##_##ERR, result_##T##_##ERR##_or_else    , _RESULT_OR_ELSE_ARGS(T, ERR)      , _RESULT_OR_ELSE_BODY(T, ERR) )
+#define _Q_RESULT_METHODS(T, ERR) \
+  R_M(_Q_UNSQ_ATTR(), struct q_result_##T##_##ERR , q_result_##T##_##ERR##_ok         , T value                             , _Q_RESULT_OK_BODY(T, ERR)) \
+  R_M(_Q_UNSQ_ATTR(), struct q_result_##T##_##ERR , q_result_##T##_##ERR##_err        , ERR err_value                       , _Q_RESULT_ERR_BODY(T, ERR) ) \
+  R_M(_Q_UNSQ_ATTR(), struct q_option_##ERR       , q_result_##T##_##ERR##_get_err    , struct q_result_##T##_##ERR result  , _Q_RESULT_GET_ERR_BODY(T, ERR) ) \
+  R_M(_Q_UNSQ_ATTR(), struct q_option_##T         , q_result_##T##_##ERR##_get_value  , struct q_result_##T##_##ERR result  , _Q_RESULT_GET_VALUE_BODY(T, ERR) ) \
+  R_M(_Q_UNSQ_ATTR(), void                        , q_result_##T##_##ERR##_inspect    , _Q_RESULT_INSPECT_ARGS(T, ERR)      , _Q_RESULT_INSPECT_BODY(T, ERR)) \
+  R_M(_Q_UNSQ_ATTR(), void                        , q_result_##T##_##ERR##_inspect_err, _Q_RESULT_INSPECT_ERR_ARGS(T, ERR)  , _Q_RESULT_INSPECT_ERR_BODY(T, ERR)) \
+  R_M(              , T                           , q_result_##T##_##ERR##_unwrap     , struct q_result_##T##_##ERR result  , _Q_RESULT_UNWRAP_BODY(T, ERR) ) \
+  R_M(              , struct q_result_##T##_##ERR , q_result_##T##_##ERR##_or_else    , _Q_RESULT_OR_ELSE_ARGS(T, ERR)      , _Q_RESULT_OR_ELSE_BODY(T, ERR) )
 
 #define R_M(ATTR, RET, NAME, ARGS, DEF) [[maybe_unused]] ATTR static inline RET NAME(ARGS) DEF
 /** @endcond */
@@ -84,31 +84,31 @@ DECLARE_OPTION(serror)
 /**
  * @brief Declare result structure of types `T` as `ok` variant and `ERR` as `err` variant.
  */
-#define DECLARE_RESULT(T, ERR) \
-struct result_##T##_##ERR { \
+#define Q_DECLARE_RESULT(T, ERR) \
+typedef struct q_result_##T##_##ERR { \
   const bool is_ok; \
   const union { \
     T ok; \
     ERR err; \
   } _value; \
-}; \
-typedef void(*f_result_##T##_##ERR##_inspect_err)(ERR); \
-typedef void(*f_result_##T##_##ERR##_inspect)(T); \
-typedef struct result_##T##_##ERR(*f_result_##T##_##ERR##_or_else)(ERR); \
-RESULT_METHODS(T, ERR)
+} q_result_##T##_##ERR##_t; \
+typedef void(*q_result_##T##_##ERR##_inspect_err_f)(ERR); \
+typedef void(*q_result_##T##_##ERR##_inspect_f)(T); \
+typedef struct q_result_##T##_##ERR(*q_result_##T##_##ERR##_or_else_f)(ERR); \
+_Q_RESULT_METHODS(T, ERR)
 
 
 #if defined(__GNUC__) || defined(__clang__)
-#ifdef R_PEDANTIC_SAFE
-  #define EXTENSION_ATTR __extension__
+#ifdef Q_PEDANTIC_SAFE
+  #define _Q_EXTENSION_ATTR __extension__
 #else
-  #define EXTENSION_ATTR
+  #define _Q_EXTENSION_ATTR
 #endif
 /**
  * @brief Defines function poiner thats using in `TRY` macro.
  */
 
-  #define ERROR_PROPAGATE(T, ERR) [[maybe_unused]] struct result_##T##_##ERR(*const __f_res_ret_err)(ERR err) = result_##T##_##ERR##_err;
+  #define Q_ERROR_PROPAGATE(T, ERR) [[maybe_unused]] struct q_result_##T##_##ERR(*const __f_res_ret_err)(ERR err) = q_result_##T##_##ERR##_err;
 /**
  * @brief If `expr` is the result type and contain the `err` variant, then propagates it from current function. Otherwise return `ok` variant value
  * @attention Before using TRY macros user must use ERROR_PROPAGATE macros with `T` and `ERR` of result type of function
@@ -125,16 +125,16 @@ struct result_double_serror foo() {
 }
  ```
  */
-#define RES_TRY(expr) EXTENSION_ATTR ({ \
-    auto _tmp = (expr); \
-    if (!result_is_ok(&_tmp)) { \
+#define Q_RES_TRY(EXPR) _Q_EXTENSION_ATTR ({ \
+    auto _tmp = (EXPR); \
+    if (!q_result_is_ok(&_tmp)) { \
         return __f_res_ret_err(_tmp._value.err); \
     } \
     _tmp._value.ok; \
 })
-#define RES_UNWRAP(EXPR) EXTENSION_ATTR ({ \
+#define Q_RES_UNWRAP(EXPR) _Q_EXTENSION_ATTR ({ \
   auto _tmp = (EXPR); \
-  if (!result_is_ok(&_tmp)) abort(); \
+  if (!q_result_is_ok(&_tmp)) abort(); \
   _tmp._value.ok; \
 })
 #endif
@@ -144,10 +144,10 @@ struct result_double_serror foo() {
  * @brief Return type of `result_match()` function
  * 
  */
-enum result_enum {
+typedef enum q_result_enum {
   RES_OK,
   RES_ERR,
-};
+} q_result_enum_t;
 
 
 /**
@@ -157,7 +157,7 @@ enum result_enum {
  * @return true if passed result instance contain `ok` variant
  * @return false if passed result instance contain `err` variant
  */
-static inline bool result_is_ok(void* result) {
+static inline bool q_result_is_ok(void* result) {
   if (result) {
     return *((bool*)result);
   } else {
@@ -172,8 +172,8 @@ static inline bool result_is_ok(void* result) {
  * @return true if passed result instance contain `err` variant
  * @return false if passed result instance contain `ok` variant
  */
-static inline bool result_is_err(void* result) {
-  return !result_is_ok(result);
+static inline bool q_result_is_err(void* result) {
+  return !q_result_is_ok(result);
 }
 
 /**
@@ -182,8 +182,8 @@ static inline bool result_is_err(void* result) {
  * @return `RES_OK` if passed result instance contain `err` variant
  * @return `RES_ERR` if passed result instance contain `ok` variant
  */
-static inline enum result_enum result_match(void* result) {
-  if (result_is_ok(result)) {
+static inline enum q_result_enum q_result_match(void* result) {
+  if (q_result_is_ok(result)) {
     return RES_OK;
   } else {
     return RES_ERR;
@@ -191,15 +191,15 @@ static inline enum result_enum result_match(void* result) {
 }
 
 
-DECLARE_RESULT(int, serror)
-DECLARE_RESULT(size_t, serror)
-DECLARE_RESULT(char, serror)
-DECLARE_RESULT(double, serror)
-DECLARE_RESULT(bool, serror)
-DECLARE_RESULT(p_void, serror)
-DECLARE_RESULT(int_array, serror)
-DECLARE_RESULT(double_array, serror)
-DECLARE_RESULT(char_array, serror)
+Q_DECLARE_RESULT(int, serror)
+Q_DECLARE_RESULT(size_t, serror)
+Q_DECLARE_RESULT(char, serror)
+Q_DECLARE_RESULT(double, serror)
+Q_DECLARE_RESULT(bool, serror)
+Q_DECLARE_RESULT(void_p, serror)
+Q_DECLARE_RESULT(int_array, serror)
+Q_DECLARE_RESULT(double_array, serror)
+Q_DECLARE_RESULT(char_array, serror)
 
 
 

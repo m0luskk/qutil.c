@@ -3,13 +3,13 @@
 #include "../include/qlogger.h"
 
 START_TEST(mf_log_test)
-  void* mem = malloc(logger_min_req_memory);
+  void* mem = malloc(q_logger_min_req_memory);
   ASSERT(mem != nullptr);
-  auto logger = logger_create(mem, logger_min_req_memory, stderr, LOG_LEVEL_WARN);
+  auto logger = q_logger_create(mem, q_logger_min_req_memory, stderr, Q_LOG_LEVEL_WARN);
 
-  LOG_ERROR(logger, "another file");
+  Q_LOG_ERROR(logger, "another file");
   
   ASSERT(logger != nullptr);
-  logger_destroy(logger);
+  q_logger_destroy(logger);
   free(mem);
 END_TEST

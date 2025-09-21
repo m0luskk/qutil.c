@@ -11,59 +11,59 @@
 #include <string.h>
 
 /** @cond */
-#define _OPTION_VALUE_BODY(T) { return (struct option_##T){.has_value = true, ._value = val}; }
+#define _Q_OPTION_VALUE_BODY(T) { return (struct q_option_##T){.has_value = true, ._value = val}; }
 
-#define _OPTION_NONE_BODY(T) { return (struct option_##T){.has_value = false}; }
+#define _Q_OPTION_NONE_BODY(T) { return (struct q_option_##T){.has_value = false}; }
 
-#define _OPTION_UNWRAP_BODY(T) { if (opt.has_value) return opt._value; else abort(); }
+#define _Q_OPTION_UNWRAP_BODY(T) { if (opt.has_value) return opt._value; else abort(); }
 
-#define _OPTION_UNWRAP_OR_ARGS(T) const struct option_##T opt, T def
-#define _OPTION_UNWRAP_OR_BODY(T) { if (opt.has_value) return opt._value; else return def; }
+#define _Q_OPTION_UNWRAP_OR_ARGS(T) const struct q_option_##T opt, T def
+#define _Q_OPTION_UNWRAP_OR_BODY(T) { if (opt.has_value) return opt._value; else return def; }
 
-#define _OPTION_TAKE_BODY(T) { \
+#define _Q_OPTION_TAKE_BODY(T) { \
   if (!opt) abort(); \
   if (opt->has_value) { \
-    auto tmp = option_##T##_value(opt->_value); \
+    auto tmp = q_option_##T##_value(opt->_value); \
     opt->has_value = false; \
     memset(&(opt->_value), 0, sizeof(T)); /* TODO: memset_explicit */ \
     return tmp; \
   } else { \
-    return option_##T##_none(); \
+    return q_option_##T##_none(); \
   } \
 }
 
-#define _OPTION_OR_ELSE_ARGS(T) const struct option_##T opt, f_option_##T##_or_else f
-#define _OPTION_OR_ELSE_BODY(T) { if(opt.has_value) return opt; else return f(); } 
+#define _Q_OPTION_OR_ELSE_ARGS(T) const struct q_option_##T opt, q_option_##T##_or_else_f f
+#define _Q_OPTION_OR_ELSE_BODY(T) { if(opt.has_value) return opt; else return f(); } 
 
-#define OPTION_METHODS(T) \
-  O_M(_UNSQ_ATTR(), struct option_##T, option_##T##_value    , T val                           , _OPTION_VALUE_BODY(T) )    \
-  O_M(_UNSQ_ATTR(), struct option_##T, option_##T##_none     ,                                 , _OPTION_NONE_BODY(T)  )    \
-  O_M(            , T                , option_##T##_unwrap   , const struct option_##T opt     , _OPTION_UNWRAP_BODY(T))    \
-  O_M(_UNSQ_ATTR(), T                , option_##T##_unwrap_or, _OPTION_UNWRAP_OR_ARGS(T)       , _OPTION_UNWRAP_OR_BODY(T)) \
-  O_M(            , struct option_##T, option_##T##_take     , struct option_##T* restrict opt , _OPTION_TAKE_BODY(T))      \
-  O_M(            , struct option_##T, option_##T##_or_else  , _OPTION_OR_ELSE_ARGS(T)         , _OPTION_OR_ELSE_BODY(T))
+#define _Q_OPTION_METHODS(T) \
+  O_M(_Q_UNSQ_ATTR(), struct q_option_##T, q_option_##T##_value    , T val                             , _Q_OPTION_VALUE_BODY(T) )    \
+  O_M(_Q_UNSQ_ATTR(), struct q_option_##T, q_option_##T##_none     ,                                   , _Q_OPTION_NONE_BODY(T)  )    \
+  O_M(              , T                  , q_option_##T##_unwrap   , const struct q_option_##T opt     , _Q_OPTION_UNWRAP_BODY(T))    \
+  O_M(_Q_UNSQ_ATTR(), T                  , q_option_##T##_unwrap_or, _Q_OPTION_UNWRAP_OR_ARGS(T)       , _Q_OPTION_UNWRAP_OR_BODY(T)) \
+  O_M(              , struct q_option_##T, q_option_##T##_take     , struct q_option_##T* restrict opt , _Q_OPTION_TAKE_BODY(T))      \
+  O_M(              , struct q_option_##T, q_option_##T##_or_else  , _Q_OPTION_OR_ELSE_ARGS(T)         , _Q_OPTION_OR_ELSE_BODY(T))
 
 #define O_M(ATTR, RET, NAME, ARGS, BODY) [[maybe_unused]] ATTR static inline RET NAME(ARGS) BODY
 /** @endcond */
 
-#define DECLARE_OPTION(T) \
-struct option_##T { \
+#define Q_DECLARE_OPTION(T) \
+typedef struct q_option_##T { \
   bool has_value; /* TODO: const fields (with worked non-ub take() method) */ \
   T _value; \
-}; \
-typedef struct option_##T(*f_option_##T##_or_else)(); \
-OPTION_METHODS(T)
+} q_option_##T##_t; \
+typedef struct q_option_##T(*q_option_##T##_or_else_f)(); \
+_Q_OPTION_METHODS(T)
 
 #if defined(__GNUC__) || defined(__clang__)
-#ifdef R_PEDANTIC_SAFE
-  #define EXTENSION_ATTR __extension__
+#ifdef Q_PEDANTIC_SAFE
+  #define _Q_EXTENSION_ATTR __extension__
 #else
-  #define EXTENSION_ATTR
+  #define _Q_EXTENSION_ATTR
 #endif
 /**
  * @brief Defines function poiner thats using in `TRY` macro.
  */
-#define OPTION_PROPAGATE(T) [[maybe_unused]] struct option_##T(*const __f_opt_ret_none)() = option_##T##_none;
+#define Q_OPTION_PROPAGATE(T) [[maybe_unused]] struct q_option_##T(*const __f_opt_ret_none)() = q_option_##T##_none;
 
 /**
  * @brief If `expr` is the option type and contain the `none` variant, then propagates it from current function. Otherwise returns `value`
@@ -72,34 +72,34 @@ OPTION_METHODS(T)
  ```c
 NONE_PROPAGATE(double);
   
-auto i = OPT_TRY(none_int_opt()); // will propagate `none`
+auto i = Q_OPT_TRY(none_int_opt()); // will propagate `none`
   
-return option_double_value(i);
+return q_option_double_value(i);
  ```
  */
-#define OPT_TRY(expr) EXTENSION_ATTR ({ \
-    auto _tmp = (expr); \
-    if (!option_has_value(&_tmp)) { \
+#define Q_OPT_TRY(EXPR) _Q_EXTENSION_ATTR ({ \
+    auto _tmp = (EXPR); \
+    if (!q_option_has_value(&_tmp)) { \
         return __f_opt_ret_none(); \
     } \
     _tmp._value; \
 })
 
-#define OPT_UNWRAP(EXPR) EXTENSION_ATTR ({ \
+#define Q_OPT_UNWRAP(EXPR) _Q_EXTENSION_ATTR ({ \
   auto _tmp = (EXPR); \
-  if (!option_has_value(&_tmp)) { \
+  if (!q_option_has_value(&_tmp)) { \
     abort(); \
   } \
   _tmp._value; \
 })
 #endif
 
-enum option_enum {
+typedef enum q_option_enum {
   OPT_VALUE,
   OPT_NONE
-};
+} q_option_enum_t;
 
-static inline bool option_has_value(void* option) {
+static inline bool q_option_has_value(void* option) {
   if (option) {
     return *((bool*)option);
   } else {
@@ -107,8 +107,8 @@ static inline bool option_has_value(void* option) {
   }
 }
 
-static inline enum option_enum option_match(void* option) {
-  if (option_has_value(option)) {
+static inline enum q_option_enum q_option_match(void* option) {
+  if (q_option_has_value(option)) {
     return OPT_VALUE;
   } else {
     return OPT_NONE;
@@ -116,14 +116,14 @@ static inline enum option_enum option_match(void* option) {
 }
 
 
-DECLARE_OPTION(int)
-DECLARE_OPTION(size_t)
-DECLARE_OPTION(char)
-DECLARE_OPTION(double)
-DECLARE_OPTION(bool)
-DECLARE_OPTION(p_void)
-DECLARE_OPTION(int_array)
-DECLARE_OPTION(double_array)
-DECLARE_OPTION(char_array)
-DECLARE_OPTION(static_string)
+Q_DECLARE_OPTION(int)
+Q_DECLARE_OPTION(size_t)
+Q_DECLARE_OPTION(char)
+Q_DECLARE_OPTION(double)
+Q_DECLARE_OPTION(bool)
+Q_DECLARE_OPTION(void_p)
+Q_DECLARE_OPTION(int_array)
+Q_DECLARE_OPTION(double_array)
+Q_DECLARE_OPTION(char_array)
+Q_DECLARE_OPTION(q_static_string)
 
