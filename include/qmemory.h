@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _Q_MEMORY_H
+#define _Q_MEMORY_H
 
 #include <stdlib.h>
 #include <stdatomic.h>
@@ -96,3 +97,7 @@ static inline void q_arena_reset(struct q_arena* arena) {
   arena->_offset = 0;
   atomic_flag_clear_explicit(&arena->_lock, memory_order_release);
 }
+
+
+#endif
+

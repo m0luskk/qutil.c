@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _Q_OPTION_H
+#define _Q_OPTION_H
 
 /**
  * @file option.h
@@ -127,3 +128,5 @@ Q_DECLARE_OPTION(double_array)
 Q_DECLARE_OPTION(char_array)
 Q_DECLARE_OPTION(q_static_string)
 
+
+#endif

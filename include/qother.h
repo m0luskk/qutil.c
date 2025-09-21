@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _Q_OTHER_H
+#define _Q_OTHER_H
 
 /**
  * @file other.h
@@ -43,3 +44,6 @@ typedef void* void_p;
 Q_ARRAY_CONTAINER(int)
 Q_ARRAY_CONTAINER(double)
 Q_ARRAY_CONTAINER(char)
+
+
+#endif

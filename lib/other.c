@@ -1,4 +1,0 @@
-
-#include "../include/qresult.h"
-
-

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _Q_RESULT_H
+#define _Q_RESULT_H
 
 /**
  * @defgroup PublicAPI public api
@@ -202,5 +203,5 @@ Q_DECLARE_RESULT(double_array, serror)
 Q_DECLARE_RESULT(char_array, serror)
 
 
-
+#endif
 

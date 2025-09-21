@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _Q_LOGGER_H
+#define _Q_LOGGER_H
 
 #include <stdatomic.h>
 #include <stddef.h>
@@ -184,6 +185,4 @@ do { \
 #define _Q_FPRINTF_(STREAM, STRING) fputs(STRING, STREAM)
 
 
-// static inline void logger_basic_st_delete() {}
-
-
+#endif
