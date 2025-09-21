@@ -1,4 +1,7 @@
 # qutil.c
+> [!WARNING]
+> Work on the library is in progress
+
 Simple utilities library in C23 with no unnecessary overhead and implicit memory allocations.
 
 Unfortunately, for reason of no overhead goal, some functionality is difficult or even impossible for implement,  and already implemented functionality seems quite clumsy.
@@ -105,6 +108,7 @@ int main()
 ```
 
 # To do:
+- [ ] Documentation
 - [x] result type
 - - [x] error propagation (TRY macros)
   - [x] result_T_ERR_ok()
