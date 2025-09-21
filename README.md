@@ -1,7 +1,7 @@
 # qutil.c
 Simple utilities library in C23 with no unnecessary overhead and implicit memory allocations.
 
-Unfortunately, for reason of zero overhead goal, some functionality is difficult or even impossible for implement,  and already implemented functionality seems quite clumsy.
+Unfortunately, for reason of no overhead goal, some functionality is difficult or even impossible for implement,  and already implemented functionality seems quite clumsy.
 
 - [Result and option types](#result-and-option-types)
 - - [Result type](#result-type)
