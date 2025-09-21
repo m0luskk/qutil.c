@@ -143,10 +143,7 @@ int main()
     - [x] Console logging
     - [ ] syslog
     - [ ] extendable
-- [ ] memory
+- [x] memory
 - - [x] arena allocator
   - - [x] thread safety
-    - [ ] version with the ability to allocate new region in case of size exceeds
-  - [ ] span type
-  - [ ] memory_explicit()
 
