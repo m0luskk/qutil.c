@@ -24,11 +24,8 @@
   #define _Q_REPR_ATTR()
 #endif
 
-/**
- * @brief Contain static string pointer
- * for use in `option` and `result` types
- */
-typedef const char* q_static_string; 
+typedef const char* cstring; 
+typedef char* string;
 
 /**
  * @brief Contain constant `void*`

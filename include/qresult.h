@@ -41,7 +41,7 @@ IMPL_RESULT(user_ok_type, user_err_type);
 /**
  * @brief Contain static error string
  */
-typedef q_static_string serror;
+typedef cstring serror;
 
 Q_DECLARE_OPTION(serror)
 

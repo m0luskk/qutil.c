@@ -126,7 +126,7 @@ Q_DECLARE_OPTION(void_p)
 Q_DECLARE_OPTION(int_array)
 Q_DECLARE_OPTION(double_array)
 Q_DECLARE_OPTION(char_array)
-Q_DECLARE_OPTION(q_static_string)
+Q_DECLARE_OPTION(cstring)
 
 
 #endif
