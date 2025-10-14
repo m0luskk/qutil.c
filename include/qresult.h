@@ -70,12 +70,12 @@ Q_DECLARE_OPTION(serror)
 
 // R_M(ATTR, RET, NAME, ARGS, BODY)
 #define _Q_RESULT_METHODS(T, ERR) \
-  R_M(_Q_UNSQ_ATTR(), struct q_result_##T##_##ERR , q_result_##T##_##ERR##_ok         , T value                             , _Q_RESULT_OK_BODY(T, ERR)) \
-  R_M(_Q_UNSQ_ATTR(), struct q_result_##T##_##ERR , q_result_##T##_##ERR##_err        , ERR err_value                       , _Q_RESULT_ERR_BODY(T, ERR) ) \
-  R_M(_Q_UNSQ_ATTR(), struct q_option_##ERR       , q_result_##T##_##ERR##_get_err    , struct q_result_##T##_##ERR result  , _Q_RESULT_GET_ERR_BODY(T, ERR) ) \
-  R_M(_Q_UNSQ_ATTR(), struct q_option_##T         , q_result_##T##_##ERR##_get_value  , struct q_result_##T##_##ERR result  , _Q_RESULT_GET_VALUE_BODY(T, ERR) ) \
-  R_M(_Q_UNSQ_ATTR(), void                        , q_result_##T##_##ERR##_inspect    , _Q_RESULT_INSPECT_ARGS(T, ERR)      , _Q_RESULT_INSPECT_BODY(T, ERR)) \
-  R_M(_Q_UNSQ_ATTR(), void                        , q_result_##T##_##ERR##_inspect_err, _Q_RESULT_INSPECT_ERR_ARGS(T, ERR)  , _Q_RESULT_INSPECT_ERR_BODY(T, ERR)) \
+  R_M(Q_UNSQ_ATTR(), struct q_result_##T##_##ERR , q_result_##T##_##ERR##_ok         , T value                             , _Q_RESULT_OK_BODY(T, ERR)) \
+  R_M(Q_UNSQ_ATTR(), struct q_result_##T##_##ERR , q_result_##T##_##ERR##_err        , ERR err_value                       , _Q_RESULT_ERR_BODY(T, ERR) ) \
+  R_M(Q_UNSQ_ATTR(), struct q_option_##ERR       , q_result_##T##_##ERR##_get_err    , struct q_result_##T##_##ERR result  , _Q_RESULT_GET_ERR_BODY(T, ERR) ) \
+  R_M(Q_UNSQ_ATTR(), struct q_option_##T         , q_result_##T##_##ERR##_get_value  , struct q_result_##T##_##ERR result  , _Q_RESULT_GET_VALUE_BODY(T, ERR) ) \
+  R_M(Q_UNSQ_ATTR(), void                        , q_result_##T##_##ERR##_inspect    , _Q_RESULT_INSPECT_ARGS(T, ERR)      , _Q_RESULT_INSPECT_BODY(T, ERR)) \
+  R_M(Q_UNSQ_ATTR(), void                        , q_result_##T##_##ERR##_inspect_err, _Q_RESULT_INSPECT_ERR_ARGS(T, ERR)  , _Q_RESULT_INSPECT_ERR_BODY(T, ERR)) \
   R_M(              , T                           , q_result_##T##_##ERR##_unwrap     , struct q_result_##T##_##ERR result  , _Q_RESULT_UNWRAP_BODY(T, ERR) ) \
   R_M(              , struct q_result_##T##_##ERR , q_result_##T##_##ERR##_or_else    , _Q_RESULT_OR_ELSE_ARGS(T, ERR)      , _Q_RESULT_OR_ELSE_BODY(T, ERR) )
 

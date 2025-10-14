@@ -37,10 +37,10 @@
 #define _Q_OPTION_OR_ELSE_BODY(T) { if(opt.has_value) return opt; else return f(); } 
 
 #define _Q_OPTION_METHODS(T) \
-  O_M(_Q_UNSQ_ATTR(), struct q_option_##T, q_option_##T##_value    , T val                             , _Q_OPTION_VALUE_BODY(T) )    \
-  O_M(_Q_UNSQ_ATTR(), struct q_option_##T, q_option_##T##_none     ,                                   , _Q_OPTION_NONE_BODY(T)  )    \
+  O_M(Q_UNSQ_ATTR(), struct q_option_##T, q_option_##T##_value    , T val                             , _Q_OPTION_VALUE_BODY(T) )    \
+  O_M(Q_UNSQ_ATTR(), struct q_option_##T, q_option_##T##_none     ,                                   , _Q_OPTION_NONE_BODY(T)  )    \
   O_M(              , T                  , q_option_##T##_unwrap   , const struct q_option_##T opt     , _Q_OPTION_UNWRAP_BODY(T))    \
-  O_M(_Q_UNSQ_ATTR(), T                  , q_option_##T##_unwrap_or, _Q_OPTION_UNWRAP_OR_ARGS(T)       , _Q_OPTION_UNWRAP_OR_BODY(T)) \
+  O_M(Q_UNSQ_ATTR(), T                  , q_option_##T##_unwrap_or, _Q_OPTION_UNWRAP_OR_ARGS(T)       , _Q_OPTION_UNWRAP_OR_BODY(T)) \
   O_M(              , struct q_option_##T, q_option_##T##_take     , struct q_option_##T* restrict opt , _Q_OPTION_TAKE_BODY(T))      \
   O_M(              , struct q_option_##T, q_option_##T##_or_else  , _Q_OPTION_OR_ELSE_ARGS(T)         , _Q_OPTION_OR_ELSE_BODY(T))
 
