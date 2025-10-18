@@ -47,6 +47,8 @@
 #define O_M(ATTR, RET, NAME, ARGS, BODY) [[maybe_unused]] ATTR static inline RET NAME(ARGS) BODY
 /** @endcond */
 
+#define Q_OPTION(T) q_option_##T##_t
+
 #define Q_DECLARE_OPTION(T) \
 typedef struct q_option_##T { \
   bool has_value; /* TODO: const fields (with worked non-ub take() method) */ \
