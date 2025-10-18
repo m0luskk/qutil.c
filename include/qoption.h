@@ -64,7 +64,13 @@ _Q_OPTION_METHODS(T)
 /**
  * @brief Defines function poiner thats using in `TRY` macro.
  */
-#define Q_OPTION_PROPAGATE(T) [[maybe_unused]] struct q_option_##T(*const __f_opt_ret_none)() = q_option_##T##_none;
+#define Q_OPTION_CONTEXT(T) \
+[[maybe_unused]] struct q_option_##T(*const __f_opt_ret_none)() = q_option_##T##_none;   \
+[[maybe_unused]] struct q_option_##T(*const __f_opt_ret_value)(T) = q_option_##T##_value; \
+
+#define Q_OPT_NONE() __f_opt_ret_none()
+#define Q_OPT_VALUE(...) __f_opt_ret_value(__VA_ARGS__)
+#define Q_OPT_HAS_VALUE(EXPR) q_option_has_value(&(EXPR))
 
 /**
  * @brief If `expr` is the option type and contain the `none` variant, then propagates it from current function. Otherwise returns `value`
@@ -92,6 +98,13 @@ return q_option_double_value(i);
     abort(); \
   } \
   _tmp._value; \
+})
+
+#define Q_OPT_UNWRAP_MUT(EXPR) _Q_EXTENSION_ATTR ({ \
+  if (!q_option_has_value(&(EXPR))) { \
+    abort(); \
+  } \
+  &((EXPR)._value); \
 })
 #endif
 
