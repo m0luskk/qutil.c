@@ -57,7 +57,7 @@ struct q_option_int none_int_opt() {
 }
 
 struct q_option_double opt_tries() {
-  Q_OPTION_PROPAGATE(double);
+  Q_OPTION_CONTEXT(double);
   
   auto i = Q_OPT_TRY(none_int_opt());
   
