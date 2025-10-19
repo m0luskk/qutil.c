@@ -34,6 +34,11 @@
 #define Q_REPR_ATTR()
 #endif
 
+#define _Q_ABORT_HERE() \
+do { \
+  fprintf(stderr, "\naborted at %s:%d\n", __FILE__, __LINE__); \
+  abort(); \
+} while(0);\
 
 typedef const char* cstring; 
 typedef char* string;

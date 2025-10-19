@@ -1,3 +1,4 @@
+#include <string.h>
 #define Q_PEDANTIC_SAFE
 
 #include <stdio.h>
@@ -118,6 +119,32 @@ START_TEST(result_or_else) {
 }
 END_TEST
 
+START_TEST(result_ger_err) {
+  auto r = q_result_double_serror_err("hui");
+
+  auto err = Q_RES_GET_ERR_REF(&r);
+  ck_assert(err != nullptr);
+  ck_assert(strcmp(*err, "hui") == 0);
+  
+  auto err_copy = Q_RES_GET_ERR(r);
+  ck_assert(strcmp(err_copy, "hui") == 0);
+}
+END_TEST
+
+START_TEST(result_ger_ok) {
+  auto r = q_result_int_serror_ok(65);
+
+  auto ok = Q_RES_GET_OK_REF(&r);
+  ck_assert(ok != nullptr);
+  ck_assert(*ok == 65);
+  
+  auto ok_copy = Q_RES_GET_OK(r);
+  ck_assert(ok_copy == 65);
+}
+END_TEST
+
+
+
 START_TEST(option_match) {
   auto opt = q_option_int_value(52);
   ck_assert(q_option_has_value(&opt));
@@ -200,10 +227,13 @@ Suite* result_option_suite(void) {
   tcase_add_test(tc_core, option_try);
   tcase_add_test(tc_core, option_unwrap);
   tcase_add_test(tc_core, option_unwrap_or);
+
   tcase_add_test(tc_core, result_or_else);
   tcase_add_test(tc_core, result_unwrap);
   tcase_add_test(tc_core, result_match);
   tcase_add_test(tc_core, result_inspect);
+  tcase_add_test(tc_core, result_ger_err);
+  tcase_add_test(tc_core, result_ger_ok);
   
   suite_add_tcase(s, tc_core);
 

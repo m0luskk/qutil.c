@@ -16,13 +16,13 @@
 
 #define _Q_OPTION_NONE_BODY(T) { return (struct q_option_##T){.has_value = false}; }
 
-#define _Q_OPTION_UNWRAP_BODY(T) { if (opt.has_value) return opt._value; else abort(); }
+#define _Q_OPTION_UNWRAP_BODY(T) { if (opt.has_value) return opt._value; else _Q_ABORT_HERE(); }
 
 #define _Q_OPTION_UNWRAP_OR_ARGS(T) const struct q_option_##T opt, T def
 #define _Q_OPTION_UNWRAP_OR_BODY(T) { if (opt.has_value) return opt._value; else return def; }
 
 #define _Q_OPTION_TAKE_BODY(T) { \
-  if (!opt) abort(); \
+  if (!opt) _Q_ABORT_HERE(); \
   if (opt->has_value) { \
     auto tmp = q_option_##T##_value(opt->_value); \
     opt->has_value = false; \
@@ -41,7 +41,7 @@
   O_M(Q_UNSQ_ATTR(), struct q_option_##T, q_option_##T##_none     ,                                   , _Q_OPTION_NONE_BODY(T)  )    \
   O_M(              , T                  , q_option_##T##_unwrap   , const struct q_option_##T opt     , _Q_OPTION_UNWRAP_BODY(T))    \
   O_M(Q_UNSQ_ATTR(), T                  , q_option_##T##_unwrap_or, _Q_OPTION_UNWRAP_OR_ARGS(T)       , _Q_OPTION_UNWRAP_OR_BODY(T)) \
-  O_M(              , struct q_option_##T, q_option_##T##_take     , struct q_option_##T* restrict opt , _Q_OPTION_TAKE_BODY(T))      \
+  O_M(              , struct q_option_##T, q_option_##T##_take     , struct q_option_##T* opt , _Q_OPTION_TAKE_BODY(T))      \
   O_M(              , struct q_option_##T, q_option_##T##_or_else  , _Q_OPTION_OR_ELSE_ARGS(T)         , _Q_OPTION_OR_ELSE_BODY(T))
 
 #define O_M(ATTR, RET, NAME, ARGS, BODY) [[maybe_unused]] ATTR static inline RET NAME(ARGS) BODY
@@ -98,13 +98,13 @@ return q_option_double_value(i);
 #define Q_OPT_UNWRAP(EXPR) _Q_EXTENSION_ATTR ({ \
   auto _tmp = (EXPR); \
   if (!Q_OPT_HAS_VALUE(&_tmp)) { \
-    abort(); \
+    _Q_ABORT_HERE(); \
   } \
   _tmp._value; \
 })
 
 #define Q_OPT_UNWRAP_REF(EXPR) _Q_EXTENSION_ATTR ({ \
-  if (!Q_OPT_HAS_VALUE(EXPR)) { abort(); } \
+  if (!Q_OPT_HAS_VALUE(EXPR)) { _Q_ABORT_HERE(); } \
   &((EXPR)->_value); \
 })
 

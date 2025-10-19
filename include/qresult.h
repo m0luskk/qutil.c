@@ -60,7 +60,7 @@ Q_DECLARE_OPTION(serror)
 #define _Q_RESULT_INSPECT_ERR_ARGS(T, ERR) struct q_result_##T##_##ERR result, q_result_##T##_##ERR##_inspect_err_f f
 #define _Q_RESULT_INSPECT_ERR_BODY(T, ERR) { if (!result.is_ok) f(result._value.err); }
 
-#define _Q_RESULT_UNWRAP_BODY(T, ERR) { if (result.is_ok) return result._value.ok; else abort(); }
+#define _Q_RESULT_UNWRAP_BODY(T, ERR) { if (result.is_ok) return result._value.ok; else _Q_ABORT_HERE(); }
 
 //#define RESULT_AND_THEN_BODY(T, ERR) { if(!result) abort(); if (result->is_ok) return f(result->_value.ok); else return *result; }
 //#define RESULT_AND_THEN_ARGS(T, ERR) struct result_##T##_##ERR* result, f_result_##T##_##ERR##_and_then f
@@ -144,14 +144,34 @@ struct result_double_serror foo() {
 })
 #define Q_RES_UNWRAP(EXPR) _Q_EXTENSION_ATTR ({ \
   auto _tmp = (EXPR); \
-  if (!Q_RES_IS_OK(&_tmp)) abort(); \
+  if (!Q_RES_IS_OK(&_tmp)) _Q_ABORT_HERE(); \
   _tmp._value.ok; \
 })
 
 // EXPR is a pointer
 #define Q_RES_UNWRAP_REF(EXPR) _Q_EXTENSION_ATTR ({ \
-  if (!Q_RES_IS_OK(EXPR)) { abort(); } \
+  if (!Q_RES_IS_OK(EXPR)) { _Q_ABORT_HERE(); } \
   &((EXPR)->_value.ok); \
+})
+
+#define Q_RES_GET_ERR_REF(EXPR) _Q_EXTENSION_ATTR ({ \
+  if (Q_RES_IS_OK(EXPR)) { _Q_ABORT_HERE(); } \
+  &((EXPR)->_value.err); \
+})
+#define Q_RES_GET_ERR(EXPR) _Q_EXTENSION_ATTR ({ \
+  auto _tmp = (EXPR); \
+  if (Q_RES_IS_OK(&_tmp)) { _Q_ABORT_HERE(); } \
+  _tmp._value.err; \
+})
+
+#define Q_RES_GET_OK_REF(EXPR) _Q_EXTENSION_ATTR ({ \
+  if (!Q_RES_IS_OK(EXPR)) { _Q_ABORT_HERE(); } \
+  &((EXPR)->_value.ok); \
+})
+#define Q_RES_GET_OK(EXPR) _Q_EXTENSION_ATTR ({ \
+  auto _tmp = (EXPR); \
+  if (!Q_RES_IS_OK(&_tmp)) {_Q_ABORT_HERE(); } \
+  _tmp._value.ok; \
 })
 
 #endif
