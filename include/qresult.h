@@ -117,8 +117,11 @@ _Q_RESULT_METHODS(T, ERR)
 
 #define Q_RES_IS_OK(EXPR) (EXPR)->is_ok
 
-#define Q_RES_ERR(...) __f_res_ret_err(__VA_ARGS__)
-#define Q_RES_OK(...) __f_res_ret_ok(__VA_ARGS__)
+#define Q_RESULT_ERR(...) __f_res_ret_err(__VA_ARGS__)
+#define Q_RESULT_OK(...) __f_res_ret_ok(__VA_ARGS__)
+
+#define Q_ERR(...) __f_res_ret_err(__VA_ARGS__)
+#define Q_OK(...) __f_res_ret_ok(__VA_ARGS__)
 /**
  * @brief If `expr` is the result type and contain the `err` variant, then propagates it from current function. Otherwise return `ok` variant value
  * @attention Before using TRY macros user must use ERROR_PROPAGATE macros with `T` and `ERR` of result type of function
