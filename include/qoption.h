@@ -72,7 +72,8 @@ _Q_OPTION_METHODS(T)
 
 #define Q_OPT_NONE() __f_opt_ret_none()
 #define Q_OPT_VALUE(...) __f_opt_ret_value(__VA_ARGS__)
-#define Q_OPT_HAS_VALUE(EXPR) q_option_has_value(&(EXPR))
+
+#define Q_OPT_HAS_VALUE(OPT) (OPT)->has_value
 
 /**
  * @brief If `expr` is the option type and contain the `none` variant, then propagates it from current function. Otherwise returns `value`
@@ -87,27 +88,26 @@ return q_option_double_value(i);
  ```
  */
 #define Q_OPT_TRY(EXPR) _Q_EXTENSION_ATTR ({ \
-    auto _tmp = (EXPR); \
-    if (!q_option_has_value(&_tmp)) { \
-        return __f_opt_ret_none(); \
-    } \
-    _tmp._value; \
+  auto _tmp = (EXPR); \
+  if (!Q_OPT_HAS_VALUE(&_tmp)) { \
+      return __f_opt_ret_none(); \
+  } \
+  _tmp._value; \
 })
 
 #define Q_OPT_UNWRAP(EXPR) _Q_EXTENSION_ATTR ({ \
   auto _tmp = (EXPR); \
-  if (!q_option_has_value(&_tmp)) { \
+  if (!Q_OPT_HAS_VALUE(&_tmp)) { \
     abort(); \
   } \
   _tmp._value; \
 })
 
 #define Q_OPT_UNWRAP_MUT(EXPR) _Q_EXTENSION_ATTR ({ \
-  if (!q_option_has_value(&(EXPR))) { \
-    abort(); \
-  } \
-  &((EXPR)._value); \
+  if (!Q_OPT_HAS_VALUE(EXPR)) { abort(); } \
+  &((EXPR)->_value); \
 })
+
 #endif
 
 typedef enum q_option_enum {

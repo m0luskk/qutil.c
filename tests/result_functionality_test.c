@@ -65,7 +65,7 @@ struct q_option_double opt_tries() {
 }
 
 struct q_result_double_arithm_e some_arithmetic() {
-  Q_ERROR_PROPAGATE(double, arithm_e);
+  Q_RESULT_CONTEXT(double, arithm_e);
 
   auto div = Q_RES_TRY(divide(4, 0));
 
@@ -97,6 +97,10 @@ END_TEST
 
 START_TEST(result_unwrap)
   auto r = q_result_double_serror_ok(5.2);
+
+  double* d = Q_RES_UNWRAP_MUT(&r);
+  ASSERT(d != nullptr);
+  ASSERT(*d > 5.0);
 
   ASSERT(q_result_double_serror_unwrap(r) > 5.0);
   ASSERT(Q_RES_UNWRAP(r) > 5.0);
@@ -136,6 +140,10 @@ START_TEST(option_unwrap)
   ASSERT(opt.has_value);
 
   int i = Q_OPT_UNWRAP(opt);
+
+  int* ip = Q_OPT_UNWRAP_MUT(&opt);
+  ASSERT(ip != nullptr);
+  ASSERT(*ip == 5);
   ASSERT(i == 5);
 END_TEST
 

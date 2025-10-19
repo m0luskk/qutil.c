@@ -88,7 +88,7 @@ Q_DECLARE_OPTION(serror)
 #define Q_DECLARE_RESULT(T, ERR) \
 typedef struct q_result_##T##_##ERR { \
   const bool is_ok; \
-  const union { \
+  union { \
     T ok; \
     ERR err; \
   } _value; \
@@ -109,7 +109,14 @@ _Q_RESULT_METHODS(T, ERR)
  * @brief Defines function poiner thats using in `TRY` macro.
  */
 
-  #define Q_ERROR_PROPAGATE(T, ERR) [[maybe_unused]] struct q_result_##T##_##ERR(*const __f_res_ret_err)(ERR err) = q_result_##T##_##ERR##_err;
+#define Q_RESULT_CONTEXT(T, ERR) \
+[[maybe_unused]] struct q_result_##T##_##ERR(*const __f_res_ret_err)(ERR err) = q_result_##T##_##ERR##_err; \
+[[maybe_unused]] struct q_result_##T##_##ERR(*const __f_res_ret_ok)(T ok) = q_result_##T##_##ERR##_ok; \
+
+#define Q_RES_IS_OK(EXPR) (EXPR)->is_ok
+
+#define Q_RES_ERR(...) __f_res_ret_err(__VA_ARGS__)
+#define Q_RES_OK(...) __f_res_ret_ok(__VA_ARGS__)
 /**
  * @brief If `expr` is the result type and contain the `err` variant, then propagates it from current function. Otherwise return `ok` variant value
  * @attention Before using TRY macros user must use ERROR_PROPAGATE macros with `T` and `ERR` of result type of function
@@ -128,16 +135,23 @@ struct result_double_serror foo() {
  */
 #define Q_RES_TRY(EXPR) _Q_EXTENSION_ATTR ({ \
     auto _tmp = (EXPR); \
-    if (!q_result_is_ok(&_tmp)) { \
+    if (!Q_RES_IS_OK(&_tmp)) { \
         return __f_res_ret_err(_tmp._value.err); \
     } \
     _tmp._value.ok; \
 })
 #define Q_RES_UNWRAP(EXPR) _Q_EXTENSION_ATTR ({ \
   auto _tmp = (EXPR); \
-  if (!q_result_is_ok(&_tmp)) abort(); \
+  if (!Q_RES_IS_OK(&_tmp)) abort(); \
   _tmp._value.ok; \
 })
+
+// EXPR is a pointer
+#define Q_RES_UNWRAP_MUT(EXPR) _Q_EXTENSION_ATTR ({ \
+  if (!Q_RES_IS_OK(EXPR)) { abort(); } \
+  &((EXPR)->_value.ok); \
+})
+
 #endif
 
 
