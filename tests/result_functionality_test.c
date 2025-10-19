@@ -100,7 +100,7 @@ END_TEST
 START_TEST(result_unwrap) {
   auto r = q_result_double_serror_ok(5.2);
 
-  double* d = Q_RES_UNWRAP_MUT(&r);
+  double* d = Q_RES_UNWRAP_REF(&r);
   ck_assert(d != nullptr);
   ck_assert(*d > 5.0);
 
@@ -147,7 +147,7 @@ START_TEST(option_unwrap) {
 
   int i = Q_OPT_UNWRAP(opt);
 
-  int* ip = Q_OPT_UNWRAP_MUT(&opt);
+  int* ip = Q_OPT_UNWRAP_REF(&opt);
   ck_assert(ip != nullptr);
   ck_assert(*ip == 5);
   ck_assert(i == 5);

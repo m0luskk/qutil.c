@@ -103,7 +103,7 @@ return q_option_double_value(i);
   _tmp._value; \
 })
 
-#define Q_OPT_UNWRAP_MUT(EXPR) _Q_EXTENSION_ATTR ({ \
+#define Q_OPT_UNWRAP_REF(EXPR) _Q_EXTENSION_ATTR ({ \
   if (!Q_OPT_HAS_VALUE(EXPR)) { abort(); } \
   &((EXPR)->_value); \
 })

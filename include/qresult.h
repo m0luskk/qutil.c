@@ -147,7 +147,7 @@ struct result_double_serror foo() {
 })
 
 // EXPR is a pointer
-#define Q_RES_UNWRAP_MUT(EXPR) _Q_EXTENSION_ATTR ({ \
+#define Q_RES_UNWRAP_REF(EXPR) _Q_EXTENSION_ATTR ({ \
   if (!Q_RES_IS_OK(EXPR)) { abort(); } \
   &((EXPR)->_value.ok); \
 })
