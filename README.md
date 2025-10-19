@@ -1,7 +1,7 @@
 # qutil.c
 > [!WARNING]
-> Work on the library is in progress
-> In this state library interface is unstable and even code examples may be not working
+> Work on the library is in progress.
+> In this state library interface is unstable and even code examples may be not working.
 
 Simple utilities library in C23 with no unnecessary overhead and implicit memory allocations.
 
