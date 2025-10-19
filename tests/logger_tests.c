@@ -1,4 +1,4 @@
-#include "tests.h"
+#include <check.h>
 
 #include <stdio.h>
 #include <string.h>
@@ -6,82 +6,88 @@
 
 #include "../include/qlogger.h"
 
-START_TEST(logger_init_fail)
+START_TEST(logger_init_fail) {
   void* mem = malloc(72);
-  ASSERT(mem != nullptr);
+  ck_assert(mem != nullptr);
   auto logger = q_logger_create(mem, 72, stderr, Q_LOG_LEVEL_DEBUG);
 
-  ASSERT(logger == nullptr);
+  ck_assert(logger == nullptr);
   free(mem);
+}
 END_TEST
 
-START_TEST(logger_init_success)
+START_TEST(logger_init_success) {
   void* mem = malloc(q_logger_min_req_memory);
-  ASSERT(mem != nullptr);
+  ck_assert(mem != nullptr);
   auto logger = q_logger_create(mem, q_logger_min_req_memory, stderr, Q_LOG_LEVEL_DEBUG);
 
-  ASSERT(logger != nullptr);
+  ck_assert(logger != nullptr);
   q_logger_destroy(logger);
   free(mem);
+}
 END_TEST
 
-START_TEST(f_log_test)
+START_TEST(f_log_test) {
   void* mem = malloc(q_logger_min_req_memory);
-  ASSERT(mem != nullptr);
+  ck_assert(mem != nullptr);
   auto logger = q_logger_create(mem, q_logger_min_req_memory, stderr, Q_LOG_LEVEL_INFO);
-  ASSERT(logger->_fmt_buf[0] != 0);
+  ck_assert(logger->_fmt_buf[0] != 0);
 
   Q_LOG_INFO(logger, "long formatted log %d, %zu}", 42, sizeof(int));
   Q_LOG_CRITICAL(logger, "short log %d-", 12);
   Q_LOG_TRACE(logger, "hiden log %d}", 12);
 
-  ASSERT(logger != nullptr);
+  ck_assert(logger != nullptr);
   q_logger_destroy(logger);
   free(mem);
+}
 END_TEST
 
-START_TEST(log_test)
+START_TEST(log_test) {
   void* mem = malloc(q_logger_min_req_memory);
-  ASSERT(mem != nullptr);
+  ck_assert(mem != nullptr);
   auto logger = q_logger_create(mem, q_logger_min_req_memory, stderr, Q_LOG_LEVEL_WARN);
 
   Q_LOG_ERROR(logger, "without formatting");
   Q_LOG_INFO(logger, "hiden");
   
-  ASSERT(logger != nullptr);
+  ck_assert(logger != nullptr);
   q_logger_destroy(logger);
   free(mem);
+}
 END_TEST
 
-START_TEST(sink_add_fail)
+START_TEST(sink_add_fail) {
   void* mem = malloc(q_logger_min_req_memory);
-  ASSERT(mem != nullptr);
+  ck_assert(mem != nullptr);
   auto logger = q_logger_create(mem, q_logger_min_req_memory, stderr, Q_LOG_LEVEL_WARN);
   
   int n = q_logger_add_sink(logger, q_sink_get(stdout, Q_LOG_LEVEL_INFO));
-  ASSERT(n == -1);
+  ck_assert(n == -1);
 
-  ASSERT(logger != nullptr);
+  ck_assert(logger != nullptr);
   q_logger_destroy(logger);
   free(mem);
+}
 END_TEST
 
-START_TEST(multy_sink_log)
+START_TEST(multy_sink_log) {
   void* mem = malloc(q_logger_min_req_memory + 50);
-  ASSERT(mem != nullptr);
+  ck_assert(mem != nullptr);
   auto logger = q_logger_create(mem, q_logger_min_req_memory + 50, stderr, Q_LOG_LEVEL_WARN);
   
   int n = q_logger_add_sink(logger, q_sink_get(stdout, Q_LOG_LEVEL_INFO));
-  ASSERT(n == 0);
+  ck_assert(n == 0);
 
-  ASSERT(logger->_sinks_count == 2);
+  ck_assert(logger->_sinks_count == 2);
 
   Q_LOG_INFO(logger, "one n = %d", n);
   Q_LOG_WARN(logger, "two n = %d", n);
 
-  ASSERT(logger != nullptr);
+  ck_assert(logger != nullptr);
   q_logger_destroy(logger);
   free(mem);
+}
 END_TEST
 
 size_t custom_fmt(size_t str_buf_size, char str_buf[static restrict str_buf_size]) {
@@ -91,18 +97,19 @@ size_t custom_fmt(size_t str_buf_size, char str_buf[static restrict str_buf_size
   return strlen(str_buf);
 }
 
-START_TEST(logger_custom_fmt)
+START_TEST(logger_custom_fmt) {
   void* mem = malloc(q_logger_min_req_memory);
-  ASSERT(mem != nullptr);
+  ck_assert(mem != nullptr);
   auto logger = q_logger_create(mem, q_logger_min_req_memory, stderr, Q_LOG_LEVEL_INFO);
   
   q_logger_set_fmt(logger, custom_fmt);
 
   Q_LOG_INFO(logger, "faskdm %d", 2);
 
-  ASSERT(logger != nullptr);
+  ck_assert(logger != nullptr);
   q_logger_destroy(logger);
   free(mem);
+}
 END_TEST
 
 int thread_func1(void* lg) {
@@ -142,9 +149,9 @@ int thread_func4(void* lg) {
   return 0;
 }
 
-START_TEST(logger_mt)
+START_TEST(logger_mt) {
   void* mem = malloc(q_logger_min_req_memory);
-  ASSERT(mem != nullptr);
+  ck_assert(mem != nullptr);
   auto logger = q_logger_create(mem, q_logger_min_req_memory, stderr, Q_LOG_LEVEL_DEBUG);
   
   Q_LOG_DEBUG(logger, "FORMAT, ...");
@@ -168,8 +175,32 @@ START_TEST(logger_mt)
 
   Q_LOG_INFO(logger, "faskdm %d", 2);
 
-  ASSERT(logger != nullptr);
+  ck_assert(logger != nullptr);
   q_logger_destroy(logger);
   free(mem);
+}
 END_TEST
+
+
+Suite* logger_suite(void) {
+  Suite* s;
+  TCase* tc_core;
+
+  s = suite_create("logger");
+
+  tc_core = tcase_create("Core");
+
+  tcase_add_test(tc_core, log_test);
+  tcase_add_test(tc_core, logger_custom_fmt);
+  tcase_add_test(tc_core, logger_mt);
+  tcase_add_test(tc_core, logger_init_success);
+  tcase_add_test(tc_core, logger_init_fail);
+  tcase_add_test(tc_core, multy_sink_log);
+  tcase_add_test(tc_core, sink_add_fail);
+  tcase_add_test(tc_core, f_log_test);
+  
+  suite_add_tcase(s, tc_core);
+
+  return s;
+}
 

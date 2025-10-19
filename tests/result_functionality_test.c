@@ -1,12 +1,12 @@
-#include <assert.h>
+#define Q_PEDANTIC_SAFE
+
 #include <stdio.h>
 #include <stdlib.h>
 
-#define Q_PEDANTIC_SAFE
-
-#include "tests.h"
 #include "../include/qresult.h"
 #include "../include/qoption.h"
+
+#include <check.h>
 
 typedef struct {
   size_t s;
@@ -76,103 +76,138 @@ struct q_result_double_arithm_e some_arithmetic() {
   return q_result_double_arithm_e_ok(div);
 }
 
-START_TEST(result_match)
+START_TEST(result_match) {
   auto r = some_arithmetic();
 
   switch (q_result_match(&r)) {
     case RES_OK:
-      ASSERT(r.is_ok);
+      ck_assert(r.is_ok);
       printf("ok: %f\n", Q_OPT_UNWRAP(q_result_double_arithm_e_get_value(r)));
       break;
     case RES_ERR:
-      ASSERT(!r.is_ok);
+      ck_assert(!r.is_ok);
       printf("error: %d\n", Q_OPT_UNWRAP(q_result_double_arithm_e_get_err(r))); 
       break;
   }
+}
 END_TEST
 
-START_TEST(result_inspect)
+START_TEST(result_inspect) {
   q_result_double_arithm_e_inspect(some_arithmetic(), inspect);
+}
 END_TEST
 
-START_TEST(result_unwrap)
+START_TEST(result_unwrap) {
   auto r = q_result_double_serror_ok(5.2);
 
   double* d = Q_RES_UNWRAP_MUT(&r);
-  ASSERT(d != nullptr);
-  ASSERT(*d > 5.0);
+  ck_assert(d != nullptr);
+  ck_assert(*d > 5.0);
 
-  ASSERT(q_result_double_serror_unwrap(r) > 5.0);
-  ASSERT(Q_RES_UNWRAP(r) > 5.0);
+  ck_assert(q_result_double_serror_unwrap(r) > 5.0);
+  ck_assert(Q_RES_UNWRAP(r) > 5.0);
+}
 END_TEST
 
-START_TEST(result_or_else)
+START_TEST(result_or_else) {
   auto r = q_result_double_serror_err("hui");
 
   auto t = q_result_double_serror_or_else(r, or_else);
 
-  ASSERT(q_result_double_serror_unwrap(t) < 5.2);
+  ck_assert(q_result_double_serror_unwrap(t) < 5.2);
+}
 END_TEST
 
-START_TEST(option_match)
+START_TEST(option_match) {
   auto opt = q_option_int_value(52);
-  ASSERT(q_option_has_value(&opt));
-  ASSERT(opt.has_value);
-  ASSERT(opt._value == 52);
+  ck_assert(q_option_has_value(&opt));
+  ck_assert(opt.has_value);
+  ck_assert(opt._value == 52);
   
   switch (q_option_match(&opt)) {
     case OPT_VALUE:
-      ASSERT(opt.has_value);
+      ck_assert(opt.has_value);
       break;
     case OPT_NONE:
-      ASSERT(!opt.has_value);
+      ck_assert(!opt.has_value);
       break;
   }
+}
 END_TEST
 
-START_TEST(option_try)
+START_TEST(option_try) {
   auto opt = opt_tries();
-  ASSERT(!opt.has_value);
+  ck_assert(!opt.has_value);
+}
 END_TEST
 
-START_TEST(option_unwrap)
+START_TEST(option_unwrap) {
   auto opt = q_option_int_value(5);
-  ASSERT(opt.has_value);
+  ck_assert(opt.has_value);
 
   int i = Q_OPT_UNWRAP(opt);
 
   int* ip = Q_OPT_UNWRAP_MUT(&opt);
-  ASSERT(ip != nullptr);
-  ASSERT(*ip == 5);
-  ASSERT(i == 5);
+  ck_assert(ip != nullptr);
+  ck_assert(*ip == 5);
+  ck_assert(i == 5);
+}
 END_TEST
 
-START_TEST(option_unwrap_or)
+START_TEST(option_unwrap_or) {
   auto opt = q_option_int_none();
-  ASSERT(!opt.has_value);
+  ck_assert(!opt.has_value);
 
   int i = q_option_int_unwrap_or(opt, 5);
-  ASSERT(i == 5);
+  ck_assert(i == 5);
+}
 END_TEST
 
-START_TEST(option_take)
+START_TEST(option_take) {
   auto opt = q_option_int_value(5);
-  ASSERT(opt.has_value);
+  ck_assert(opt.has_value);
 
   auto taken = q_option_int_take(&opt);
-  ASSERT(q_option_int_unwrap(taken) == 5);
-  ASSERT(!opt.has_value)
+  ck_assert(q_option_int_unwrap(taken) == 5);
+  ck_assert(!opt.has_value);
+}
 END_TEST
 
-START_TEST(option_or_else)
+START_TEST(option_or_else) {
   auto value = q_option_int_value(5);
-  ASSERT(value.has_value);
+  ck_assert(value.has_value);
   auto none = q_option_int_none();
-  ASSERT(!none.has_value);
+  ck_assert(!none.has_value);
 
   auto v = q_option_int_or_else(value, opt_or_else);
-  ASSERT(v._value == 5)
+  ck_assert(v._value == 5);
   auto n = q_option_int_or_else(none, opt_or_else);
-  ASSERT(n._value == 1)
+  ck_assert(n._value == 1);
+}
 END_TEST
+
+Suite* result_option_suite(void) {
+  Suite* s;
+  TCase* tc_core;
+
+  s = suite_create("result_option");
+
+  tc_core = tcase_create("Core");
+
+  tcase_add_test(tc_core, option_or_else);
+  tcase_add_test(tc_core, option_match);
+  tcase_add_test(tc_core, option_take);
+  tcase_add_test(tc_core, option_try);
+  tcase_add_test(tc_core, option_unwrap);
+  tcase_add_test(tc_core, option_unwrap_or);
+  tcase_add_test(tc_core, result_or_else);
+  tcase_add_test(tc_core, result_unwrap);
+  tcase_add_test(tc_core, result_match);
+  tcase_add_test(tc_core, result_inspect);
+  
+  suite_add_tcase(s, tc_core);
+
+  return s;
+}
+
 
