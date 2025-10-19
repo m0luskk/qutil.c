@@ -82,6 +82,8 @@ Q_DECLARE_OPTION(serror)
 #define R_M(ATTR, RET, NAME, ARGS, DEF) [[maybe_unused]] ATTR static inline RET NAME(ARGS) DEF
 /** @endcond */
 
+#define Q_RESULT(T, ERR) q_result_##T##_##ERR##_t
+
 /**
  * @brief Declare result structure of types `T` as `ok` variant and `ERR` as `err` variant.
  */
