@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -g -fstrict-aliasing -Wstrict-aliasing -Wall -Wextra -pedantic -std=c2x -Iinclude -fsanitize=undefined -fsanitize=address -fsanitize=leak # -O2 # -fsanitize=thread
+CFLAGS = -g -Wformat-nonliteral -fstrict-aliasing -Wstrict-aliasing -Wall -Wextra -pedantic -std=c2x -Iinclude -fsanitize=undefined -fsanitize=address -fsanitize=leak # -O2 # -fsanitize=thread
 LDFLAGS = -lcheck -lsubunit -lm
 BUILD_DIR = build
 TARGET = $(BUILD_DIR)/tests

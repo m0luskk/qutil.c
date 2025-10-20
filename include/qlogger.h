@@ -153,6 +153,8 @@ static inline void q_logger_destroy(struct q_logger* logger) {
   mtx_destroy(&logger->_mtx);
 }
 
+
+
 #define Q_LOG_TRACE(LOGGER, FORMAT, ...)    _Q_LOG(LOGGER, Q_LOG_LEVEL_TRACE, FORMAT __VA_OPT__(,) __VA_ARGS__)
 #define Q_LOG_DEBUG(LOGGER, FORMAT, ...)    _Q_LOG(LOGGER, Q_LOG_LEVEL_DEBUG, FORMAT __VA_OPT__(,) __VA_ARGS__)
 #define Q_LOG_INFO(LOGGER, FORMAT, ...)     _Q_LOG(LOGGER, Q_LOG_LEVEL_INFO, FORMAT __VA_OPT__(,) __VA_ARGS__)
@@ -171,8 +173,10 @@ do { \
   for(size_t i = 0; i < LOGGER->_sinks_count; ++i) { \
     if ((LOGGER->_sinks[i]._level & LEVEL) == LEVEL) { \
       mtx_lock(&LOGGER->_mtx); \
+      SUPPRESS_FORMAT_NONLITERAL_BEGIN /* Supress `warning: format not a string literal, argument types not checked [-Wformat-nonliteral]` */ \
       snprintf(LOGGER->_message_buf, sizeof(LOGGER->_message_buf), LOGGER->_fmt_buf, time_str_buf, _q_log_colored_levels_strings[LEVEL], "" FORMAT "\n"); \
       _Q_FPRINTF(LOGGER->_sinks[i]._stream, LOGGER->_message_buf, __VA_ARGS__); \
+      SUPPRESS_FORMAT_NONLITERAL_END \
       mtx_unlock(&LOGGER->_mtx); \
     } \
   } \
@@ -184,5 +188,12 @@ do { \
 #define _Q_FPRINTF_FORMATED(STREAM, FORMAT, ...) fprintf(STREAM, FORMAT, __VA_ARGS__)
 #define _Q_FPRINTF_(STREAM, STRING) fputs(STRING, STREAM)
 
+// Works both clang and gcc
+#define SUPPRESS_FORMAT_NONLITERAL_BEGIN \
+  _Pragma("GCC diagnostic push") \
+  _Pragma("GCC diagnostic ignored \"-Wformat-nonliteral\"")
+
+#define SUPPRESS_FORMAT_NONLITERAL_END \
+  _Pragma("GCC diagnostic pop")
 
 #endif
