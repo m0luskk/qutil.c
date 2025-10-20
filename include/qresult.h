@@ -102,10 +102,12 @@ _Q_RESULT_METHODS(T, ERR)
 
 
 #if defined(__GNUC__) || defined(__clang__)
-#ifdef Q_PEDANTIC_SAFE
-  #define _Q_EXTENSION_ATTR __extension__
-#else
-  #define _Q_EXTENSION_ATTR
+#ifndef _Q_EXTENSION_ATTR
+  #ifdef Q_PEDANTIC_SAFE
+    #define _Q_EXTENSION_ATTR __extension__
+  #else
+    #define _Q_EXTENSION_ATTR
+  #endif
 #endif
 /**
  * @brief Defines function poiner thats using in `TRY` macro.

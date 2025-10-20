@@ -58,10 +58,12 @@ typedef struct q_option_##T(*q_option_##T##_or_else_f)(); \
 _Q_OPTION_METHODS(T)
 
 #if defined(__GNUC__) || defined(__clang__)
-#ifdef Q_PEDANTIC_SAFE
-  #define _Q_EXTENSION_ATTR __extension__
-#else
-  #define _Q_EXTENSION_ATTR
+#ifndef _Q_EXTENSION_ATTR
+  #ifdef Q_PEDANTIC_SAFE
+    #define _Q_EXTENSION_ATTR __extension__
+  #else
+    #define _Q_EXTENSION_ATTR
+  #endif
 #endif
 /**
  * @brief Defines function poiner thats using in `TRY` macro.
