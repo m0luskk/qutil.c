@@ -93,19 +93,19 @@ return q_option_double_value(i);
  ```
  */
 #define Q_OPT_TRY(EXPR) _Q_EXTENSION_ATTR ({ \
-  auto _tmp = (EXPR); \
-  if (!Q_OPT_HAS_VALUE(&_tmp)) { \
+  auto __tmp = (EXPR); \
+  if (!Q_OPT_HAS_VALUE(&__tmp)) { \
       return __f_opt_ret_none(); \
   } \
-  _tmp._value; \
+  __tmp._value; \
 })
 
 #define Q_OPT_UNWRAP(EXPR) _Q_EXTENSION_ATTR ({ \
-  auto _tmp = (EXPR); \
-  if (!Q_OPT_HAS_VALUE(&_tmp)) { \
+  auto __tmp = (EXPR); \
+  if (!Q_OPT_HAS_VALUE(&__tmp)) { \
     _Q_ABORT_HERE(); \
   } \
-  _tmp._value; \
+  __tmp._value; \
 })
 
 #define Q_OPT_UNWRAP_REF(EXPR) _Q_EXTENSION_ATTR ({ \

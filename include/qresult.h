@@ -141,16 +141,16 @@ struct result_double_serror foo() {
  ```
  */
 #define Q_RES_TRY(EXPR) _Q_EXTENSION_ATTR ({ \
-    auto _tmp = (EXPR); \
-    if (!Q_RES_IS_OK(&_tmp)) { \
-        return __f_res_ret_err(_tmp._value.err); \
+    auto __tmp = (EXPR); \
+    if (!Q_RES_IS_OK(&__tmp)) { \
+        return __f_res_ret_err(__tmp._value.err); \
     } \
-    _tmp._value.ok; \
+    __tmp._value.ok; \
 })
 #define Q_RES_UNWRAP(EXPR) _Q_EXTENSION_ATTR ({ \
-  auto _tmp = (EXPR); \
-  if (!Q_RES_IS_OK(&_tmp)) _Q_ABORT_HERE(); \
-  _tmp._value.ok; \
+  auto __tmp = (EXPR); \
+  if (!Q_RES_IS_OK(&__tmp)) _Q_ABORT_HERE(); \
+  __tmp._value.ok; \
 })
 
 // EXPR is a pointer
@@ -174,9 +174,9 @@ struct result_double_serror foo() {
   &((EXPR)->_value.ok); \
 })
 #define Q_RES_GET_OK(EXPR) _Q_EXTENSION_ATTR ({ \
-  auto _tmp = (EXPR); \
-  if (!Q_RES_IS_OK(&_tmp)) {_Q_ABORT_HERE(); } \
-  _tmp._value.ok; \
+  auto __tmp = (EXPR); \
+  if (!Q_RES_IS_OK(&__tmp)) {_Q_ABORT_HERE(); } \
+  __tmp._value.ok; \
 })
 
 #endif

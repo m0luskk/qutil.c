@@ -165,17 +165,17 @@ static inline void q_logger_destroy(struct q_logger* logger) {
 constexpr size_t _time_str_buf_size = 20;
 #define _Q_LOG(LOGGER, LEVEL, FORMAT, ...) \
 do { \
-  time_t now = time(NULL); \
-  struct tm local_tm; \
-  localtime_r(&now, &local_tm); \
-  char time_str_buf[_time_str_buf_size] = {}; \
-  strftime(time_str_buf, sizeof(time_str_buf), "%Y-%m-%d %H:%M:%S", &local_tm); \
-  for(size_t i = 0; i < LOGGER->_sinks_count; ++i) { \
-    if ((LOGGER->_sinks[i]._level & LEVEL) == LEVEL) { \
+  time_t __now = time(NULL); \
+  struct tm __local_tm; \
+  localtime_r(&__now, &__local_tm); \
+  char __time_str_buf[_time_str_buf_size] = {}; \
+  strftime(__time_str_buf, sizeof(__time_str_buf), "%Y-%m-%d %H:%M:%S", &__local_tm); \
+  for(size_t __i = 0; __i < LOGGER->_sinks_count; ++__i) { \
+    if ((LOGGER->_sinks[__i]._level & LEVEL) == LEVEL) { \
       mtx_lock(&LOGGER->_mtx); \
       SUPPRESS_FORMAT_NONLITERAL_BEGIN /* Supress `warning: format not a string literal, argument types not checked [-Wformat-nonliteral]` */ \
-      snprintf(LOGGER->_message_buf, sizeof(LOGGER->_message_buf), LOGGER->_fmt_buf, time_str_buf, _q_log_colored_levels_strings[LEVEL], "" FORMAT "\n"); \
-      _Q_FPRINTF(LOGGER->_sinks[i]._stream, LOGGER->_message_buf, __VA_ARGS__); \
+      snprintf(LOGGER->_message_buf, sizeof(LOGGER->_message_buf), LOGGER->_fmt_buf, __time_str_buf, _q_log_colored_levels_strings[LEVEL], "" FORMAT "\n"); \
+      _Q_FPRINTF(LOGGER->_sinks[__i]._stream, LOGGER->_message_buf, __VA_ARGS__); \
       SUPPRESS_FORMAT_NONLITERAL_END \
       mtx_unlock(&LOGGER->_mtx); \
     } \
